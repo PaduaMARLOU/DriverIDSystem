@@ -43,7 +43,7 @@ h1 {
 
 .logo {
     width: 200px;
-    margin-bottom: 20px;
+    margin-bottom: -20px;
     cursor: pointer;
     transition: transform 0.5s ease;
 }
@@ -87,7 +87,7 @@ h1 {
     background-color: #e53935;
 }
 
-/* Footer Styles */
+
 footer {
     position: fixed;
     bottom: 0;

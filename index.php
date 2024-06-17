@@ -11,7 +11,7 @@
         <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
             <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
         </a>
-        <h1>Barangay Estefania Driver's ID System</h1>
+        <h1>Driver's Portal <br>Registration Booking</h1>
         <div>
             <a href="registrationpage.php" class="btn btn-register">Register</a>
             <a href="renewpage.php" class="btn btn-renew">Renew</a>
