@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Estefania Driver's ID System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://i0.wp.com/digicastnegros.com/wp-content/uploads/2021/12/estefania-hall-2.png?w=777&ssl=1');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.5s ease;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            transition: all 0.5s ease;
+            color: #333;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transform: translateZ(40px);
+        }
+
+        .logo {
+            width: 200px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .btn {
+            padding: 30px 60px; /* Increased padding */
+            margin: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.5s ease;
+            font-size: 1.5em;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-register {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-renew {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-register:hover {
+            background-color: #45a049;
+        }
+
+        .btn-renew:hover {
+            background-color: #e53935;
+        }
+
+        /* Footer Styles */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
+            <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
+        </a>
+        <h1>Barangay Estefania Driver's ID System</h1>
+        <div>
+            <a href="registrationpage.php" class="btn btn-register">Register</a>
+            <a href="renewpage.php" class="btn btn-renew">Renew</a>
+        </div>
+    </div>
+    <footer>
+        © 2024 Capstone Project of BSIS 3-A Group 4
+    </footer>
+</body>
+</html>
