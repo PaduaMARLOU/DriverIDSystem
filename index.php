@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barangay Estefania Driver's ID System</title>
     <link rel="stylesheet" type="text/css" href="driverportalcss/indexstyle.css">
+    <title>Barangay Estefania Driver's ID System</title>
 </head>
 <body>
     <div class="container">
