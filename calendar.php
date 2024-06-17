@@ -2,6 +2,26 @@
 date_default_timezone_set('Asia/Manila');
 
 function build_calendar($month, $year) {
+    // Define holidays
+    $holidays = array(
+        '2024-01-01' => 'New Year\'s Day',
+        '2024-02-25' => 'EDSA People Power Revolution Anniversary',
+        '2024-04-09' => 'Araw ng Kagitingan',
+        '2024-04-18' => 'Maundy Thursday',
+        '2024-04-19' => 'Good Friday',
+        '2024-05-01' => 'Labor Day',
+        '2024-06-12' => 'Independence Day',
+        '2024-08-21' => 'Ninoy Aquino Day',
+        '2024-08-26' => 'National Heroes Day',
+        '2024-11-01' => 'All Saints\' Day',
+        '2024-11-02' => 'All Souls\' Day',
+        '2024-11-30' => 'Bonifacio Day',
+        '2024-12-08' => 'Feast of the Immaculate Conception',
+        '2024-12-25' => 'Christmas Day',
+        '2024-12-30' => 'Rizal Day'
+        // Add other holidays as needed
+    );
+
     // Database connection
     $mysqli = new mysqli('localhost', 'root', '', 'driver_id_system');
     // SQL query to count bookings for each day
@@ -28,7 +48,8 @@ function build_calendar($month, $year) {
     $dayOfWeek = $dateComponents['wday'];
 
     $datetoday = date('Y-m-d');
-   
+    $currentTime = date('H:i');
+
     $calendar = "<table class='table table-bordered'>";
     $calendar .= "<center><h2>$monthName $year</h2>";
     $calendar.= "<a class='btn btn-xs btn-success' href='?month=".date('m', mktime(0, 0, 0, (int)$month-1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, (int)$month-1, 1, $year))."'>Previous Month</a> ";
@@ -68,8 +89,9 @@ function build_calendar($month, $year) {
         $eventNum = 0;
         $today = $date == date('Y-m-d') ? "today" : "";
 
-        if ($date < date('Y-m-d') || $dayname == 'saturday' || $dayname == 'sunday') {
-            $calendar .= "<td class='not-available'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
+        if ($date < date('Y-m-d') || $dayname == 'saturday' || $dayname == 'sunday' || isset($holidays[$date]) || ($date == date('Y-m-d') && $currentTime >= '15:00')) {
+            $holidayText = isset($holidays[$date]) ? "<br>".$holidays[$date] : "";
+            $calendar .= "<td class='not-available'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>$holidayText";
         } elseif (isset($bookings[$date]) && $bookings[$date] >= 30) {
             $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Full</button>";
         } else {
