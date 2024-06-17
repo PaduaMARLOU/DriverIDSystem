@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://i0.wp.com/digicastnegros.com/wp-content/uploads/2021/12/estefania-hall-2.png?w=777&ssl=1');
+            background-image: url('img/Barangay\ Estefania\ Hall.jpeg');
             background-size: cover;
             background-position: center;
             height: 100vh;
