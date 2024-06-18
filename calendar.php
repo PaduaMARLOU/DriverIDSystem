@@ -122,15 +122,24 @@ function build_calendar($month, $year) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="driverportalcss/calendarstyle.css">
+    <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
     <title>Barangay Estefania Online Appointment for ID Registration</title>
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="alert alert-danger" style="background:#2ecc71; border:none; color:#fff; text-align:center;">
-                    <h1 style="margin: 0;">Barangay Estefania Online Appointment Booking for ID Registration</h1>
+                <div class="alert alert-danger" style="background:#2ecc71; border:none; color:#fff; text-align:center; display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative;">
+                    <a href="index.php" style="left: 10px; top: 10px; text-decoration: none; background: #fff; color: #2ecc71; padding: 5px 10px; border-radius: 5px; margin-bottom: 10px;">Back to Driver's Portal</a>
+                    <div style="display: flex; align-items: center;">
+                        <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" style="height: 75px; margin-right: 10px;">
+                        <h1 style="margin: 0;">Online Appointment Booking for ID Registration</h1>
+                    </div>
+                    <br>
+                    <p><strong>Magpili sang gusto nga petsa sa kalendaryo para magparehistro kag pindoton ang "Book Now".</strong><br><i>Makita kung pila na lang ang bilin nga pwede magparehistro sa amo na nga adlaw sa may "Slots Left".</i></p>
                 </div>
+            </div>
+
                     
                 <?php
                     $dateComponents = getdate();

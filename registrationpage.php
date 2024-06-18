@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
 <style>
 body {
   background-image: url('img/paper.jpeg');
