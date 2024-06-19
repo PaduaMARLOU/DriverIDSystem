@@ -276,12 +276,12 @@ if(isset($_POST['submit'])){
 
 
                 <div class="form-group">
-                    <label for="pic_2x2">Upload 2x2 Picture: <i class="faded-text">*I-click ang upload para ka butang sang imo nga picture*</i></label>
+                    <label for="pic_2x2">Upload 2x2 Picture: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang imo nga picture*</i></label>
                     <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="doc_proof">Upload Proof of Document: <i class="faded-text">*I-click ang upload para ka butang sang imo nga proof of documents parehas sang mga Government Valid ID nga Philippine ID, Senior ID, SSS ID, kag ibang pa nga documento parehas sang  Barangay Residency.*</i></label>
+                    <label for="doc_proof">Upload Proof of Document: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang imo nga proof of documents parehas sang mga Government Valid ID nga Philippine ID, Senior ID, SSS ID, kag ibang pa nga documento parehas sang  Barangay Residency.*</i></label>
                     <input type="file" class="form-control" name="doc_proof" id="doc_proof">
                 </div>
 
