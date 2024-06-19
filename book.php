@@ -140,8 +140,22 @@ if(isset($_POST['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
-    <link rel="stylesheet" href="/css/main.css">
+    <!-- <link rel="stylesheet" href="/css/main.css"> -->
     <title>Online Booking System</title>
+    <style>
+        .faded-text {
+            opacity: 0.5; /* Adjust the value between 0 and 1 as needed */
+        }
+        .instruction-box {
+            border: 2px solid #000;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            text-align: justify;
+        }
+    </style>
 </head>
 
 <body>
@@ -151,13 +165,18 @@ if(isset($_POST['submit'])){
             <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" style="height: 50px; margin-right: 10px;">
             <h1 style="margin: 0;">Book for Date: <?php echo date('m/d/Y', strtotime($date)) ?></h1>
         </div>
-        
+
+        <div class="instruction-box">
+            <h4><strong>Pahanumdom: </strong>May duwa ka pamaagi para magsabat kag nakadepende ini sa pamangkutanon. Ang isa, pinduton ang box kag magpili sang sabat. Ang isa pa gid, pinduton kag i-type ang sabat sa box. Pagkatapos masabat tanan nga pamangkot, palihog pinduton ang <strong style="color: #337ab7;">"Submit"</strong> button nga ara sa idalom. Kung nagsala pili sang adlaw, pwede maclick ang <strong style="color: #2ecc71;">"Back to Choose Date"</strong> nga ara sa ibabaw.</h4>
+            <h5><i>Palihog basahon ang mga nakabutang kag sabton sang klaro kag matuod-tuod ang mga salabton. Madamo gid nga Salamat.</i></h5>
+        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <?php echo isset($message)?$message:'';?>
                 <form action="" method="POST" autocomplete="off">
                 <div class="form-group">
-                    <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad):</label>
+                    <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad): <i class="faded-text">*Magpili kung E-Bike, Tricycle, ukon Trisikad and imo ginamaneho*</i></label>
                     <select class="form-control" name="driver_category" id="driver_category" required>
                         <option value="">Select Driver Category</option>
                         <option value="E-Bike">E-Bike</option>
@@ -167,38 +186,43 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="form-group">
-                    <label for="first_name">First Name:</label>
+                    <label for="first_name">First Name: <i class="faded-text">*Una nga pangalan*</i></label>
                     <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="middle_name">Middle Name:</label>
-                    <input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="Middle Name" required>
+                    <label for="middle_name">Middle Name: <i class="faded-text">*Ibutang ang apelyido sang imo iloy sang single pa siya. Kung waay ka middle name, pwede lang nga indi magbutang.*</i></label>
+                    <input type="text" class="form-control" name="middle_name" id="middle_name" placeholder="Middle Name">
                 </div>
 
                 <div class="form-group">
-                    <label for="last_name">Last Name:</label>
+                    <label for="last_name">Last Name: <i class="faded-text">*Apelyido*</i></label>
                     <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="nickname">Nickname:</label>
+                    <label for="suffix_name">Suffix: <i class="faded-text">*Kung may Jr.(Junior), Sr.(Senior), III(The Third), IV(The Fourth), etc. diri ibutang, Example: Jr.*</i></label>
+                    <input type="text" class="form-control" name="suffix_name" id="suffix_name" placeholder="Suffix">
+                </div>
+
+                <div class="form-group">
+                    <label for="nickname">Nickname: <i class="faded-text">*Hayo mo. Example: Dodong, Boy Boy, Tagok, etc.*</i></label>
                     <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="birth_date">Birth Date:</label>
+                    <label for="birth_date">Birth Date: <i class="faded-text">*Birthday mo ukon sang San-o ka gin-bata?*</i></label>
                     <input type="date" class="form-control" name="birth_date" id="birth_date" required>
                 </div>
 
 
                 <div class="form-group">
-                    <label for="birth_place">Birth Place (e.g., Bacolod City):</label>
+                    <label for="birth_place">Birth Place (e.g., Bacolod City): <i class="faded-text">*Sa diin ka ginbata nga lugar?*</i></label>
                     <input type="text" class="form-control" name="birth_place" id="birth_place" placeholder="Birth Place" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="sex">Sex (Male or Female):</label>
+                    <label for="sex">Sex (Male or Female): <i class="faded-text">*Halin sang sugod sang ginbata ka, ano imo kasarian?*</i></label>
                     <select class="form-control" name="sex" id="sex" required>
                         <option value="">Select Sex</option>
                         <option value="Male">Male</option>
@@ -207,18 +231,18 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Full Address:</label>
+                    <label for="address">Full Address: <i class="faded-text">*Kumpleto nga address. Example: Phase 1 Block 1 Lot 1, Katigbak Street, West Homes 1, Barangay Estefania, Bacolod City, 6100*</i></label>
                     <input type="text" class="form-control" name="address" id="address" placeholder="Address" required>
                 </div>
 
 
                 <div class="form-group">
-                    <label for="mobile_number">Mobile Number (e.g., 09123456789):</label>
+                    <label for="mobile_number">Mobile Number (e.g., 09123456789): <i class="faded-text">*Ang onse kabilog nga numero sang imo sim card nga ginagamit kag nagasugod sa 09...*</i></label>
                     <input type="text" class="form-control" name="mobile_number" id="mobile_number" placeholder="Mobile Number" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="civil_status">Civil Status (e.g., Single, Married, etc.):</label>
+                    <label for="civil_status">Civil Status (e.g., Single, Married, etc.): <i class="faded-text">*Kung Single ka kag waay sang asawa, Married kung kasal kag may asawa, may ka Live-In, Widowed kung balo, Seperated kung kasal kag nagbulagay, kag Divorced kung ang pagbulagay may papeles nga legal.*</i></label>
                     <select class="form-control" name="civil_status" id="civil_status" required>
                         <option value="">Select Civil Status</option>
                         <option value="Single">Single</option>
@@ -231,53 +255,53 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="form-group">
-                    <label for="religion">Religion (e.g., Christian, Islam, Buddhism, etc.):</label>
-                    <input type="text" class="form-control" name="religion" id="religion" placeholder="Religion" required>
+                    <label for="religion">Religion (e.g., Christian, Islam, Buddhism, etc.):  <i class="faded-text">*Imo nga Relihiyon. Kung waay, pwede lang indi pagbutangan.*</i></label>
+                    <input type="text" class="form-control" name="religion" id="religion" placeholder="Religion">
                 </div>
 
                 <div class="form-group">
-                    <label for="citizenship">Citizenship (e.g., Filipino):</label>
+                    <label for="citizenship">Citizenship (e.g., Filipino): <i class="faded-text">*Lahi*</i></label>
                     <input type="text" class="form-control" name="citizenship" id="citizenship" placeholder="Citizenship" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="height">Height (cm, e.g., 170cm):</label>
-                    <input type="text" class="form-control" name="height" id="height" placeholder="Height (cm)" required>
+                    <label for="height">Height (feet & inches): <i class="faded-text">*Kataason. Example 5 feet 4 inches, pwede mabutang 5'4"*</i></label>
+                    <input type="text" class="form-control" name="height" id="height" placeholder="Height (feet & inches)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="weight">Weight (kg, e.g., 70kg):</label>
+                    <label for="weight">Weight (kg, e.g., 70kg): <i class="faded-text">*Pila imo kilo?*</i></label>
                     <input type="text" class="form-control" name="weight" id="weight" placeholder="Weight (kg)" required>
                 </div>
 
 
                 <div class="form-group">
-                    <label for="pic_2x2">Upload 2x2 Picture:</label>
-                    <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*">
+                    <label for="pic_2x2">Upload 2x2 Picture: <i class="faded-text">*I-click ang upload para ka butang sang imo nga picture*</i></label>
+                    <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="doc_proof">Upload Proof of Document:</label>
+                    <label for="doc_proof">Upload Proof of Document: <i class="faded-text">*I-click ang upload para ka butang sang imo nga proof of documents parehas sang mga Government Valid ID nga Philippine ID, Senior ID, SSS ID, kag ibang pa nga documento parehas sang  Barangay Residency.*</i></label>
                     <input type="file" class="form-control" name="doc_proof" id="doc_proof">
                 </div>
 
                 <div class="form-group">
-                    <label for="name_to_notify">Name of Person to Notify in case of Emergency:</label>
+                    <label for="name_to_notify">Name of Person to Notify in case of Emergency: <i class="faded-text">*Kumpleto nga pangalan sang imo kilala nga pwede macontact kung may emerhensya*</i></label>
                     <input type="text" class="form-control" name="name_to_notify" id="name_to_notify" placeholder="Name to Notify" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="relationship">Relationship (e.g., Father, Niece, Wife, etc.):</label>
+                    <label for="relationship">Relationship (e.g., Father, Niece, Wife, etc.): <i class="faded-text">*Ano mo siya?*</i></label>
                     <input type="text" class="form-control" name="relationship" id="relationship" placeholder="Relationship" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="num_to_notify">Number of Person to Notify in case of emergency (e.g., 09123456789):</label>
-                    <input type="text" class="form-control" name="num_to_notify" id="num_to_notify" placeholder="Number to Notify" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" requiredss>
+                    <label for="num_to_notify">Number of Person to Notify in case of emergency (e.g., 09123456789): <i class="faded-text">*Ano iya  number?*</i></label>
+                    <input type="text" class="form-control" name="num_to_notify" id="num_to_notify" placeholder="Number to Notify" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="vehicle_ownership">Vehicle Ownership (Owned or Rented):</label>
+                    <label for="vehicle_ownership">Vehicle Ownership (Owned or Rented): <i class="faded-text">*Ikaw ang tag-iya ukon nagarenta sang imo nga ginabyahe?*</i></label>
                     <select class="form-control" name="vehicle_ownership" id="vehicle_ownership" required>
                         <option value="">Select Vehicle Ownership</option>
                         <option value="Owned">Owned</option>
@@ -286,32 +310,32 @@ if(isset($_POST['submit'])){
                 </div>
 
                 <div class="form-group">
-                    <label for="name_of_owner">Name of Owner:</label>
+                    <label for="name_of_owner">Name of Owner: <i class="faded-text">*Pangalan sang tag-iya*</i></label>
                     <input type="text" class="form-control" name="name_of_owner" id="name_of_owner" placeholder="Name of Owner" required>
                 </div>
                 <div class="form-group">
-                    <label for="addr_of_owner">Address of Owner:</label>
+                    <label for="addr_of_owner">Address of Owner: <i class="faded-text">*Address sang tag-iya*</i></label>
                     <input type="text" class="form-control" name="addr_of_owner" id="addr_of_owner" placeholder="Address of Owner" required>
                 </div>
                 <div class="form-group">
-                    <label for="owner_phone_num">Owner Phone Number:</label>
+                    <label for="owner_phone_num">Owner Phone Number: <i class="faded-text">*Contact number sang tag-iya*</i></label>
                     <input type="text" class="form-control" name="owner_phone_num" id="owner_phone_num" placeholder="Owner Phone Number" required>
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_color">Vehicle Color:</label>
+                    <label for="vehicle_color">Vehicle Color: <i class="faded-text">*Ano nga color sang imo ginabyahe? Example: Green, Yellow, Red with Black, etc.*</i></label>
                     <input type="text" class="form-control" name="vehicle_color" id="vehicle_color" placeholder="Vehicle Color" required>
                 </div>
                 <div class="form-group">
-                    <label for="brand">Brand:</label>
-                    <input type="text" class="form-control" name="brand" id="brand" placeholder="Brand" required>
+                    <label for="brand">Brand: <i class="faded-text">*Brand sang imo ginabyahe. Kung waay brand nga Trisikad ukon E-bike, pwede lang indi pagbutngan.*</i></label>
+                    <input type="text" class="form-control" name="brand" id="brand" placeholder="Brand">
                 </div>
                 <div class="form-group">
-                    <label for="plate_num">Plate Number:</label>
+                    <label for="plate_num">Plate Number: <i class="faded-text">*Plate number sang imo Tricycle. Kung E-Bike ukon Trisikad nga wala plate number, pwede lang indi pagbutngan.*</i></label>
                     <input type="text" class="form-control" name="plate_num" id="plate_num" placeholder="Plate Number">
                 </div>
 
                 <div class="form-group">
-                    <label for="association">Select Association:</label>
+                    <label for="association">Select Association: <i class="faded-text">*Sa diin ka nga asosasyon gaintra?*</i></label>
                     <select class="form-control" name="association" id="association" required>
                         <option value="">Select Association</option>
                         <?php
