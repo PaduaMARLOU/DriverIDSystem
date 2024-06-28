@@ -1,4 +1,7 @@
 <?php
+
+include 'connections.php';
+
 if(isset($_GET['date'])){
     $date = $_GET['date'];
 }
@@ -9,6 +12,7 @@ if(isset($_POST['submit'])){
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
+    $suffix_name = $_POST['suffix_name'];
     $nickname = $_POST['nickname'];
     $birth_date = $_POST['birth_date'];
     $birth_place = $_POST['birth_place'];
@@ -40,29 +44,21 @@ if(isset($_POST['submit'])){
     $birth_date_str = $birth_date->format('Y-m-d');
 
 
+    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, suffix_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, pic_2x2, doc_proof, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, association) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$suffix_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$pic_2x2', '$doc_proof', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
 
-    $conn = new mysqli('localhost', 'root', '', 'driver_id_system');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, pic_2x2, doc_proof, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, association) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$pic_2x2', '$doc_proof', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
-
-
-    if($conn->query($sql_driver)){
-        $last_inserted_id = $conn->insert_id; // Get the last inserted ID
+    if($connections->query($sql_driver)){
+        $last_inserted_id = $connections->insert_id; // Get the last inserted ID
 
         // Now insert into tbl_appointment
         $sql_appointment = "INSERT INTO tbl_appointment(DATE, fk_driver_id) VALUES ('$date', '$last_inserted_id')";
 
-        if($conn->query($sql_appointment)){
+        if($connections->query($sql_appointment)){
             // Appointment insertion successful
-            $sched_id = $conn->insert_id; // Get the last inserted ID
+            $sched_id = $connections->insert_id; // Get the last inserted ID
 
             // Update tbl_driver with sched_id
             $sql_update_sched_id = "UPDATE tbl_driver SET fk_sched_id = '$sched_id' WHERE driver_id = '$last_inserted_id'";
-            if($conn->query($sql_update_sched_id)){
+            if($connections->query($sql_update_sched_id)){
                 // Formatting the driver category abbreviation based on its value
                 switch ($driver_category) {
                     case 'E-Bike':
@@ -86,17 +82,17 @@ if(isset($_POST['submit'])){
                     // Update formatted ID in tbl_driver table
                     $sql_update_formatted_id = "UPDATE tbl_driver SET formatted_id = '$formatted_id' WHERE driver_id = $last_inserted_id";
 
-                    if ($conn->query($sql_update_formatted_id)) {
+                    if ($connections->query($sql_update_formatted_id)) {
                         // Insert into tbl_vehicle
                         $sql_insert_vehicle = "INSERT INTO tbl_vehicle(vehicle_category, fk_driver_id, name_of_owner, addr_of_owner, owner_phone_num, vehicle_color, brand, plate_num) VALUES ('$driver_category', '$last_inserted_id', '$name_of_owner', '$addr_of_owner', '$owner_phone_num', '$vehicle_color', '$brand', '$plate_num')";
-                        if ($conn->query($sql_insert_vehicle)) {
+                        if ($connections->query($sql_insert_vehicle)) {
                             // Get the ID of the last inserted vehicle
-                            $last_vehicle_id = $conn->insert_id;
+                            $last_vehicle_id = $connections->insert_id;
 
                             // Update tbl_driver with fk_vehicle_id
                             $sql_update_driver_fk_vehicle_id = "UPDATE tbl_driver SET fk_vehicle_id = '$last_vehicle_id' WHERE driver_id = '$last_inserted_id'";
 
-                            if ($conn->query($sql_update_driver_fk_vehicle_id)) {
+                            if ($connections->query($sql_update_driver_fk_vehicle_id)) {
                                 $message = "<div class='alert alert-success'>Booking Successful</div>";
                                 header("Location: success.php?date=$date");
                                 exit();
@@ -124,9 +120,11 @@ if(isset($_POST['submit'])){
         $message = "<div class='alert alert-danger'>Booking was not Successful</div>";
     }
 
-    $conn->close(); // Close the database connection
+    $connections->close(); // Close the database connection
 }
 ?>
+
+
 
 
 
@@ -177,7 +175,7 @@ if(isset($_POST['submit'])){
                 <form action="" method="POST" autocomplete="off">
                 <div class="form-group">
                     <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad): <i class="faded-text">*Magpili kung E-Bike, Tricycle, ukon Trisikad and imo ginamaneho*</i></label>
-                    <select class="form-control" name="driver_category" id="driver_category" required>
+                    <select class="form-control" name="driver_category" id="driver_category" >
                         <option value="">Select Driver Category</option>
                         <option value="E-Bike">E-Bike</option>
                         <option value="Tricycle">Tricycle</option>
@@ -187,7 +185,7 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="first_name">First Name: <i class="faded-text">*Una nga pangalan*</i></label>
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" required>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name" >
                 </div>
 
                 <div class="form-group">
@@ -197,7 +195,7 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="last_name">Last Name: <i class="faded-text">*Apelyido*</i></label>
-                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" required>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" >
                 </div>
 
                 <div class="form-group">
@@ -207,23 +205,23 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="nickname">Nickname: <i class="faded-text">*Hayo mo. Example: Dodong, Boy Boy, Tagok, etc.*</i></label>
-                    <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" required>
+                    <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" >
                 </div>
 
                 <div class="form-group">
                     <label for="birth_date">Birth Date: <i class="faded-text">*Birthday mo ukon sang San-o ka gin-bata?*</i></label>
-                    <input type="date" class="form-control" name="birth_date" id="birth_date" required>
+                    <input type="date" class="form-control" name="birth_date" id="birth_date" >
                 </div>
 
 
                 <div class="form-group">
                     <label for="birth_place">Birth Place (e.g., Bacolod City): <i class="faded-text">*Sa diin ka ginbata nga lugar?*</i></label>
-                    <input type="text" class="form-control" name="birth_place" id="birth_place" placeholder="Birth Place" required>
+                    <input type="text" class="form-control" name="birth_place" id="birth_place" placeholder="Birth Place" >
                 </div>
 
                 <div class="form-group">
                     <label for="sex">Sex (Male or Female): <i class="faded-text">*Halin sang sugod sang ginbata ka, ano imo kasarian?*</i></label>
-                    <select class="form-control" name="sex" id="sex" required>
+                    <select class="form-control" name="sex" id="sex" >
                         <option value="">Select Sex</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -232,18 +230,18 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="address">Full Address: <i class="faded-text">*Kumpleto nga address. Example: Phase 1 Block 1 Lot 1, Katigbak Street, West Homes 1, Barangay Estefania, Bacolod City, 6100*</i></label>
-                    <input type="text" class="form-control" name="address" id="address" placeholder="Address" required>
+                    <input type="text" class="form-control" name="address" id="address" placeholder="Address" >
                 </div>
 
 
                 <div class="form-group">
                     <label for="mobile_number">Mobile Number (e.g., 09123456789): <i class="faded-text">*Ang onse kabilog nga numero sang imo sim card nga ginagamit kag nagasugod sa 09...*</i></label>
-                    <input type="text" class="form-control" name="mobile_number" id="mobile_number" placeholder="Mobile Number" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" required>
+                    <input type="text" class="form-control" name="mobile_number" id="mobile_number" placeholder="Mobile Number" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" >
                 </div>
 
                 <div class="form-group">
                     <label for="civil_status">Civil Status (e.g., Single, Married, etc.): <i class="faded-text">*Kung Single ka kag waay sang asawa, Married kung kasal kag may asawa, may ka Live-In, Widowed kung balo, Seperated kung kasal kag nagbulagay, kag Divorced kung ang pagbulagay may papeles nga legal.*</i></label>
-                    <select class="form-control" name="civil_status" id="civil_status" required>
+                    <select class="form-control" name="civil_status" id="civil_status" >
                         <option value="">Select Civil Status</option>
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
@@ -261,23 +259,23 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="citizenship">Citizenship (e.g., Filipino): <i class="faded-text">*Lahi*</i></label>
-                    <input type="text" class="form-control" name="citizenship" id="citizenship" placeholder="Citizenship" required>
+                    <input type="text" class="form-control" name="citizenship" id="citizenship" placeholder="Citizenship" >
                 </div>
 
                 <div class="form-group">
                     <label for="height">Height (feet & inches): <i class="faded-text">*Kataason. Example 5 feet 4 inches, pwede mabutang 5'4"*</i></label>
-                    <input type="text" class="form-control" name="height" id="height" placeholder="Height (feet & inches)" required>
+                    <input type="text" class="form-control" name="height" id="height" placeholder="Height (feet & inches)" >
                 </div>
 
                 <div class="form-group">
                     <label for="weight">Weight (kg, e.g., 70kg): <i class="faded-text">*Pila imo kilo?*</i></label>
-                    <input type="text" class="form-control" name="weight" id="weight" placeholder="Weight (kg)" required>
+                    <input type="text" class="form-control" name="weight" id="weight" placeholder="Weight (kg)" >
                 </div>
 
 
                 <div class="form-group">
                     <label for="pic_2x2">Upload 2x2 Picture: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang imo nga picture*</i></label>
-                    <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*" required>
+                    <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*">
                 </div>
 
                 <div class="form-group">
@@ -287,22 +285,22 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="name_to_notify">Name of Person to Notify in case of Emergency: <i class="faded-text">*Kumpleto nga pangalan sang imo kilala nga pwede macontact kung may emerhensya*</i></label>
-                    <input type="text" class="form-control" name="name_to_notify" id="name_to_notify" placeholder="Name to Notify" required>
+                    <input type="text" class="form-control" name="name_to_notify" id="name_to_notify" placeholder="Name to Notify" >
                 </div>
 
                 <div class="form-group">
                     <label for="relationship">Relationship (e.g., Father, Niece, Wife, etc.): <i class="faded-text">*Ano mo siya?*</i></label>
-                    <input type="text" class="form-control" name="relationship" id="relationship" placeholder="Relationship" required>
+                    <input type="text" class="form-control" name="relationship" id="relationship" placeholder="Relationship" >
                 </div>
 
                 <div class="form-group">
                     <label for="num_to_notify">Number of Person to Notify in case of emergency (e.g., 09123456789): <i class="faded-text">*Ano iya  number?*</i></label>
-                    <input type="text" class="form-control" name="num_to_notify" id="num_to_notify" placeholder="Number to Notify" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" required>
+                    <input type="text" class="form-control" name="num_to_notify" id="num_to_notify" placeholder="Number to Notify" maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number" >
                 </div>
 
                 <div class="form-group">
                     <label for="vehicle_ownership">Vehicle Ownership (Owned or Rented): <i class="faded-text">*Ikaw ang tag-iya ukon nagarenta sang imo nga ginabyahe?*</i></label>
-                    <select class="form-control" name="vehicle_ownership" id="vehicle_ownership" required>
+                    <select class="form-control" name="vehicle_ownership" id="vehicle_ownership" >
                         <option value="">Select Vehicle Ownership</option>
                         <option value="Owned">Owned</option>
                         <option value="Rented">Rented</option>
@@ -311,19 +309,19 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="name_of_owner">Name of Owner: <i class="faded-text">*Pangalan sang tag-iya*</i></label>
-                    <input type="text" class="form-control" name="name_of_owner" id="name_of_owner" placeholder="Name of Owner" required>
+                    <input type="text" class="form-control" name="name_of_owner" id="name_of_owner" placeholder="Name of Owner" >
                 </div>
                 <div class="form-group">
                     <label for="addr_of_owner">Address of Owner: <i class="faded-text">*Address sang tag-iya*</i></label>
-                    <input type="text" class="form-control" name="addr_of_owner" id="addr_of_owner" placeholder="Address of Owner" required>
+                    <input type="text" class="form-control" name="addr_of_owner" id="addr_of_owner" placeholder="Address of Owner" >
                 </div>
                 <div class="form-group">
                     <label for="owner_phone_num">Owner Phone Number: <i class="faded-text">*Contact number sang tag-iya*</i></label>
-                    <input type="text" class="form-control" name="owner_phone_num" id="owner_phone_num" placeholder="Owner Phone Number" required>
+                    <input type="text" class="form-control" name="owner_phone_num" id="owner_phone_num" placeholder="Owner Phone Number" >
                 </div>
                 <div class="form-group">
                     <label for="vehicle_color">Vehicle Color: <i class="faded-text">*Ano nga color sang imo ginabyahe? Example: Green, Yellow, Red with Black, etc.*</i></label>
-                    <input type="text" class="form-control" name="vehicle_color" id="vehicle_color" placeholder="Vehicle Color" required>
+                    <input type="text" class="form-control" name="vehicle_color" id="vehicle_color" placeholder="Vehicle Color" >
                 </div>
                 <div class="form-group">
                     <label for="brand">Brand: <i class="faded-text">*Brand sang imo ginabyahe. Kung waay brand nga Trisikad ukon E-bike, pwede lang indi pagbutngan.*</i></label>
@@ -336,7 +334,7 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="association">Select Association: <i class="faded-text">*Sa diin ka nga asosasyon gaintra?*</i></label>
-                    <select class="form-control" name="association" id="association" required>
+                    <select class="form-control" name="association" id="association" >
                         <option value="">Select Association</option>
                         <?php
                         include("connections.php");

@@ -1,6 +1,6 @@
  <?php
 
-$connections = mysqli_connect("localhost", "root", "", "driver_id_system");
+$connections = mysqli_connect("localhost", "root", "", "driver_id_system2");
 
 if(mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL:" . mysqli_connect_errno();
@@ -8,6 +8,7 @@ if(mysqli_connect_errno()) {
 
 ?>
 
+<!--
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
@@ -68,3 +69,4 @@ if(mysqli_connect_errno()) {
 }
 
 </style>
+-->

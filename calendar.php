@@ -19,13 +19,13 @@ function build_calendar($month, $year) {
         '2024-12-08' => 'Feast of the Immaculate Conception',
         '2024-12-25' => 'Christmas Day',
         '2024-12-30' => 'Rizal Day'
-        // Add other holidays as needed
+        // Add other holidays as needed/ ***Admin should have the capability to add in the Admin portal***
     );
 
     // Database connection
-    $mysqli = new mysqli('localhost', 'root', '', 'driver_id_system');
+    include "connections.php";
     // SQL query to count bookings for each day
-    $stmt = $mysqli->prepare("SELECT DATE, COUNT(*) AS bookings_count FROM tbl_appointment WHERE MONTH(DATE) = ? AND YEAR(DATE) = ? GROUP BY DATE");
+    $stmt = $connections->prepare("SELECT DATE, COUNT(*) AS bookings_count FROM tbl_appointment WHERE MONTH(DATE) = ? AND YEAR(DATE) = ? GROUP BY DATE");
     $stmt->bind_param('ss', $month, $year);
     $bookings = array();
     if ($stmt->execute()) {
