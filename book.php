@@ -36,21 +36,26 @@ if(isset($_POST['submit'])){
     $vehicle_color = $_POST['vehicle_color'];
     $brand = $_POST['brand'];
     $plate_num = $_POST['plate_num'];
+    $vehicle_img_front = $_POST['vehicle_img_front'];
+    $vehicle_img_back = $_POST['vehicle_img_back'];
     $association = $_POST['association'];
 
+    //dates
+    date_default_timezone_set('Asia/Manila');
     $birth_date = new DateTime($birth_date);
     $current_date = new DateTime();
+    $current_date_str = $current_date->format('Y-m-d H:i:s');
     $age = $current_date->diff($birth_date)->y;
     $birth_date_str = $birth_date->format('Y-m-d');
 
 
-    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, suffix_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, pic_2x2, doc_proof, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, association) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$suffix_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$pic_2x2', '$doc_proof', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
+    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, suffix_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, pic_2x2, doc_proof, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, fk_association_id) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$suffix_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$pic_2x2', '$doc_proof', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
 
     if($connections->query($sql_driver)){
         $last_inserted_id = $connections->insert_id; // Get the last inserted ID
 
         // Now insert into tbl_appointment
-        $sql_appointment = "INSERT INTO tbl_appointment(DATE, fk_driver_id) VALUES ('$date', '$last_inserted_id')";
+        $sql_appointment = "INSERT INTO tbl_appointment(fk_driver_id, DATE, booking_date) VALUES ('$last_inserted_id', '$date', '$current_date_str')";
 
         if($connections->query($sql_appointment)){
             // Appointment insertion successful
@@ -84,7 +89,7 @@ if(isset($_POST['submit'])){
 
                     if ($connections->query($sql_update_formatted_id)) {
                         // Insert into tbl_vehicle
-                        $sql_insert_vehicle = "INSERT INTO tbl_vehicle(vehicle_category, fk_driver_id, name_of_owner, addr_of_owner, owner_phone_num, vehicle_color, brand, plate_num) VALUES ('$driver_category', '$last_inserted_id', '$name_of_owner', '$addr_of_owner', '$owner_phone_num', '$vehicle_color', '$brand', '$plate_num')";
+                        $sql_insert_vehicle = "INSERT INTO tbl_vehicle(vehicle_category, fk_driver_id, name_of_owner, addr_of_owner, owner_phone_num, vehicle_color, brand, plate_num, vehicle_img_front, vehicle_img_back) VALUES ('$driver_category', '$last_inserted_id', '$name_of_owner', '$addr_of_owner', '$owner_phone_num', '$vehicle_color', '$brand', '$plate_num', '$vehicle_img_front', '$vehicle_img_back')";
                         if ($connections->query($sql_insert_vehicle)) {
                             // Get the ID of the last inserted vehicle
                             $last_vehicle_id = $connections->insert_id;
@@ -331,27 +336,33 @@ if(isset($_POST['submit'])){
                     <label for="plate_num">Plate Number: <i class="faded-text">*Plate number sang imo Tricycle. Kung E-Bike ukon Trisikad nga wala plate number, pwede lang indi pagbutngan.*</i></label>
                     <input type="text" class="form-control" name="plate_num" id="plate_num" placeholder="Plate Number">
                 </div>
+                <div class="form-group">
+                    <label for="vehicle_img_front">Front Image of Vehicle: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang atubang nga picture sang imo ginamaneho*</i></label>
+                    <input type="file" class="form-control" name="vehicle_img_front" id="vehicle_img_front" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="vehicle_img_back">Front Image of Vehicle: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang atubang nga picture sang imo ginamaneho*</i></label>
+                    <input type="file" class="form-control" name="vehicle_img_back" id="vehicle_img_back" accept="image/*">
+                </div>
 
                 <div class="form-group">
                     <label for="association">Select Association: <i class="faded-text">*Sa diin ka nga asosasyon gaintra?*</i></label>
-                    <select class="form-control" name="association" id="association" >
+                    <select class="form-control" name="association" id="association">
                         <option value="">Select Association</option>
                         <?php
                         include("connections.php");
 
-                        $query = "SELECT association_name, association_area FROM tbl_association";
+                        $query = "SELECT association_id, association_name, association_area FROM tbl_association";
                         $result = mysqli_query($connections, $query);
 
-                        $associations = [];
                         if ($result && mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
-                                $associations[] = $row;
-                            }
-                            foreach ($associations as $association): ?>
-                                <option value="<?= $association['association_name'] ?>">
-                                    <?= $association['association_name'] ?> - <?= $association['association_area'] ?>
+                                ?>
+                                <option value="<?= $row['association_id'] ?>">
+                                    <?= $row['association_name'] ?> - <?= $row['association_area'] ?>
                                 </option>
-                            <?php endforeach;
+                                <?php
+                            }
                         } else {
                             echo "<option disabled>No associations found</option>";
                         }
@@ -360,6 +371,7 @@ if(isset($_POST['submit'])){
                         ?>
                     </select>
                 </div>
+
 
 
                 <button type="submit" name="submit" class="btn btn-primary">Submit</button>
