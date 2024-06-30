@@ -8,6 +8,8 @@ if(isset($_GET['date'])){
 
 if(isset($_POST['submit'])){
 
+    // Sanitize and validate input data as needed
+
     $driver_category = $_POST['driver_category'];
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
@@ -24,8 +26,6 @@ if(isset($_POST['submit'])){
     $citizenship = $_POST['citizenship'];
     $height = $_POST['height'];
     $weight = $_POST['weight'];
-    $pic_2x2 = $_POST['pic_2x2'];
-    $doc_proof = $_POST['doc_proof'];
     $name_to_notify = $_POST['name_to_notify'];
     $relationship = $_POST['relationship'];
     $num_to_notify = $_POST['num_to_notify'];
@@ -36,35 +36,33 @@ if(isset($_POST['submit'])){
     $vehicle_color = $_POST['vehicle_color'];
     $brand = $_POST['brand'];
     $plate_num = $_POST['plate_num'];
-    $vehicle_img_front = $_POST['vehicle_img_front'];
-    $vehicle_img_back = $_POST['vehicle_img_back'];
     $association = $_POST['association'];
 
-    //dates
+    // Handle dates
     date_default_timezone_set('Asia/Manila');
-    $birth_date = new DateTime($birth_date);
+    $birth_date_obj = new DateTime($birth_date);
     $current_date = new DateTime();
     $current_date_str = $current_date->format('Y-m-d H:i:s');
-    $age = $current_date->diff($birth_date)->y;
-    $birth_date_str = $birth_date->format('Y-m-d');
+    $age = $current_date->diff($birth_date_obj)->y;
+    $birth_date_str = $birth_date_obj->format('Y-m-d');
 
+    // Prepare and execute SQL queries
+    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, suffix_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, fk_association_id) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$suffix_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
 
-    $sql_driver = "INSERT INTO tbl_driver(driver_category, first_name, middle_name, last_name, suffix_name, nickname, age, birth_date, birth_place, sex, address, mobile_number, civil_status, religion, citizenship, height, weight, pic_2x2, doc_proof, name_to_notify, relationship, num_to_notify, vehicle_ownership, verification_stat, fk_association_id) VALUES ('$driver_category', '$first_name', '$middle_name', '$last_name', '$suffix_name', '$nickname', '$age', '$birth_date_str', '$birth_place', '$sex', '$address', '$mobile_number', '$civil_status', '$religion', '$citizenship', '$height', '$weight', '$pic_2x2', '$doc_proof', '$name_to_notify', '$relationship', '$num_to_notify', '$vehicle_ownership', 'Pending', '$association')";
+    if ($connections->query($sql_driver)) {
+        $last_inserted_id = $connections->insert_id;
 
-    if($connections->query($sql_driver)){
-        $last_inserted_id = $connections->insert_id; // Get the last inserted ID
-
-        // Now insert into tbl_appointment
+        // Insert into tbl_appointment
         $sql_appointment = "INSERT INTO tbl_appointment(fk_driver_id, DATE, booking_date) VALUES ('$last_inserted_id', '$date', '$current_date_str')";
 
-        if($connections->query($sql_appointment)){
-            // Appointment insertion successful
-            $sched_id = $connections->insert_id; // Get the last inserted ID
+        if ($connections->query($sql_appointment)) {
+            $sched_id = $connections->insert_id;
 
             // Update tbl_driver with sched_id
             $sql_update_sched_id = "UPDATE tbl_driver SET fk_sched_id = '$sched_id' WHERE driver_id = '$last_inserted_id'";
-            if($connections->query($sql_update_sched_id)){
-                // Formatting the driver category abbreviation based on its value
+            if ($connections->query($sql_update_sched_id)) {
+
+                // Format driver category abbreviation
                 switch ($driver_category) {
                     case 'E-Bike':
                         $formatted_category = 'ETRK';
@@ -80,27 +78,88 @@ if(isset($_POST['submit'])){
                         break;
                 }
 
-                // Generate the formatted ID
+                // Generate formatted ID
                 if (!empty($formatted_category)) {
                     $formatted_id = sprintf("%s-%04d", $formatted_category, $last_inserted_id);
 
-                    // Update formatted ID in tbl_driver table
+                    // Update formatted ID in tbl_driver
                     $sql_update_formatted_id = "UPDATE tbl_driver SET formatted_id = '$formatted_id' WHERE driver_id = $last_inserted_id";
 
                     if ($connections->query($sql_update_formatted_id)) {
+
                         // Insert into tbl_vehicle
-                        $sql_insert_vehicle = "INSERT INTO tbl_vehicle(vehicle_category, fk_driver_id, name_of_owner, addr_of_owner, owner_phone_num, vehicle_color, brand, plate_num, vehicle_img_front, vehicle_img_back) VALUES ('$driver_category', '$last_inserted_id', '$name_of_owner', '$addr_of_owner', '$owner_phone_num', '$vehicle_color', '$brand', '$plate_num', '$vehicle_img_front', '$vehicle_img_back')";
+                        $sql_insert_vehicle = "INSERT INTO tbl_vehicle(vehicle_category, fk_driver_id, name_of_owner, addr_of_owner, owner_phone_num, vehicle_color, brand, plate_num) VALUES ('$driver_category', '$last_inserted_id', '$name_of_owner', '$addr_of_owner', '$owner_phone_num', '$vehicle_color', '$brand', '$plate_num')";
+
                         if ($connections->query($sql_insert_vehicle)) {
-                            // Get the ID of the last inserted vehicle
                             $last_vehicle_id = $connections->insert_id;
 
                             // Update tbl_driver with fk_vehicle_id
                             $sql_update_driver_fk_vehicle_id = "UPDATE tbl_driver SET fk_vehicle_id = '$last_vehicle_id' WHERE driver_id = '$last_inserted_id'";
-
                             if ($connections->query($sql_update_driver_fk_vehicle_id)) {
-                                $message = "<div class='alert alert-success'>Booking Successful</div>";
-                                header("Location: success.php?date=$date");
-                                exit();
+
+                                // Everything else is successful, proceed with file uploads
+
+                                // File upload handling
+                                $uploadDir = 'uploads/';
+                                $driversDir = $uploadDir . 'drivers/';
+                                $documentsDir = $uploadDir . 'documents/';
+                                $vehiclesDir = $uploadDir . 'vehicles/';
+
+                                // Ensure directories exist or create them
+                                if (!is_dir($driversDir)) {
+                                    mkdir($driversDir, 0755, true);
+                                }
+                                if (!is_dir($documentsDir)) {
+                                    mkdir($documentsDir, 0755, true);
+                                }
+                                if (!is_dir($vehiclesDir)) {
+                                    mkdir($vehiclesDir, 0755, true);
+                                }
+
+                                // Function to handle file upload and return path
+                                function handleFileUpload($file, $targetDir, $formatted_id) {
+                                    $fileName = uniqid() . '_' . $formatted_id . '_' . basename($file['name']);
+                                    $targetPath = $targetDir . $fileName;
+                                    if (move_uploaded_file($file['tmp_name'], $targetPath)) {
+                                        return $targetPath;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+
+                                // Upload 2x2 picture
+                                $pic_2x2_path = handleFileUpload($_FILES['pic_2x2'], $driversDir, $formatted_id);
+
+                                // Upload document proof
+                                $doc_proof_path = handleFileUpload($_FILES['doc_proof'], $documentsDir, $formatted_id);
+
+                                // Upload vehicle front and back images
+                                $vehicle_img_front_path = handleFileUpload($_FILES['vehicle_img_front'], $vehiclesDir, $formatted_id);
+                                $vehicle_img_back_path = handleFileUpload($_FILES['vehicle_img_back'], $vehiclesDir, $formatted_id);
+
+                                // Check if all uploads were successful
+                                if ($pic_2x2_path && $doc_proof_path && $vehicle_img_front_path && $vehicle_img_back_path) {
+
+                                    // Update tbl_driver with file paths
+                                    $sql_update_driver_files = "UPDATE tbl_driver SET pic_2x2 = '$pic_2x2_path', doc_proof = '$doc_proof_path' WHERE driver_id = '$last_inserted_id'";
+                                    if ($connections->query($sql_update_driver_files)) {
+
+                                        // Insert into tbl_vehicle with vehicle images
+                                        $sql_update_vehicle_images = "UPDATE tbl_vehicle SET vehicle_img_front = '$vehicle_img_front_path', vehicle_img_back = '$vehicle_img_back_path' WHERE vehicle_id = '$last_vehicle_id'";
+                                        if ($connections->query($sql_update_vehicle_images)) {
+
+                                            $message = "<div class='alert alert-success'>Booking Successful</div>";
+                                            header("Location: success.php?date=$date");
+                                            exit();
+                                        } else {
+                                            $message = "<div class='alert alert-danger'>Failed to update vehicle images</div>";
+                                        }
+                                    } else {
+                                        $message = "<div class='alert alert-danger'>Failed to update driver with file paths</div>";
+                                    }
+                                } else {
+                                    $message = "<div class='alert alert-danger'>Failed to upload files</div>";
+                                }
                             } else {
                                 $message = "<div class='alert alert-danger'>Failed to update driver with vehicle ID</div>";
                             }
@@ -114,20 +173,20 @@ if(isset($_POST['submit'])){
                     $message = "<div class='alert alert-danger'>Invalid driver category</div>";
                 }
             } else {
-                // Failed to update tbl_driver with sched_id
                 $message = "<div class='alert alert-danger'>Failed to update driver with sched_id</div>";
             }
         } else {
-            // Appointment insertion failed
             $message = "<div class='alert alert-danger'>Failed to insert appointment</div>";
         }
     } else {
         $message = "<div class='alert alert-danger'>Booking was not Successful</div>";
     }
 
-    $connections->close(); // Close the database connection
+    $connections->close(); // Close database connection
 }
 ?>
+
+
 
 
 
@@ -177,7 +236,7 @@ if(isset($_POST['submit'])){
         <div class="row">
             <div class="col-md-12">
                 <?php echo isset($message)?$message:'';?>
-                <form action="" method="POST" autocomplete="off">
+                <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
                 <div class="form-group">
                     <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad): <i class="faded-text">*Magpili kung E-Bike, Tricycle, ukon Trisikad and imo ginamaneho*</i></label>
                     <select class="form-control" name="driver_category" id="driver_category" >
@@ -285,7 +344,7 @@ if(isset($_POST['submit'])){
 
                 <div class="form-group">
                     <label for="doc_proof">Upload Proof of Document: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang imo nga proof of documents parehas sang mga Government Valid ID nga Philippine ID, Senior ID, SSS ID, kag ibang pa nga documento parehas sang  Barangay Residency.*</i></label>
-                    <input type="file" class="form-control" name="doc_proof" id="doc_proof">
+                    <input type="file" class="form-control" name="doc_proof" id="doc_proof" accept="image/*">
                 </div>
 
                 <div class="form-group">
