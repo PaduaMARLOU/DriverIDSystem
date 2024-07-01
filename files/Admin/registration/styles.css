@@ -1,0 +1,456 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    text-shadow: 1px 1px 10px black;
+}
+
+*::selection {
+    background-color: #62f37ad7;
+}
+
+body {
+    background-image: url('registration/img/email.\ simple\ flat\ gradient\ illustration.\ jade.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: none;
+    height: 8em;
+    transition: transform 0.4s ease, height 0.4s, filter 0.4s;
+}
+
+.logo:hover {
+    height: 145px;
+    filter: drop-shadow(1px 5px 10px white);
+}
+
+#menu-btn {
+    position: relative;
+    border: 2px solid white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 23px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.3s;
+}
+
+#menu-btn:hover {
+    font-size: 24.5px;
+    padding-left: 12px;
+    padding-right: 11.5px;
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.497);
+    background-color: rgba(64, 250, 129, 0.623);
+}
+
+.btn-pop-up {
+    position: relative;
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 4px;
+    height: 39px;
+    width: 110px;
+    font-size: 23px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-pop-up:hover {
+    font-size: 24.5px;
+    height: 42px;
+    width: 115px;
+    background-color: rgba(96, 72, 250, 0.623);
+    box-shadow: 1px 1px 10px rgba(255, 255, 255, 0.497);
+}
+
+.welc {
+    position: relative;
+    top: 1em;
+    text-shadow: 1px 1px 10px rgb(36, 36, 36);
+}
+
+
+.h {
+    position: relative;
+    top: -.75em;
+    text-shadow: 1px 1px 10px rgb(61, 57, 57);
+}
+
+.line {
+    position: relative;
+    background: white;
+    height: 1.5px;
+    width: 41em;
+    left: -.1px;
+    top: -1.6em;
+}
+
+.registration .id-form .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: white;
+    font-size: 2em;
+    color: rgb(123, 114, 114);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 5px;
+    cursor: pointer;
+}
+
+.registration {
+    position: relative;
+    top: -15px;
+    transform: scale(0);
+    transition: transform 0.4s;
+}
+
+.registration.active-popup {
+    transform: scale(1);
+}
+
+.icon {
+    position: relative;
+    bottom: -14px;
+    left: -6px;
+    font-size: 38px;
+    filter: drop-shadow(2px 2px 10px rgb(150, 146, 146));
+}
+
+.t-box {
+    position: relative;
+    text-shadow: none;
+    height: 2.4em;
+    width: 14em;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.529);
+    border-radius: 3px;
+    color: black;
+}
+
+.id-form {
+    position: relative;
+    border: 2px solid white;
+    border-radius: 8px;
+    width: 40em;
+    padding-right: 1.1em;
+    height: 22.5em;
+    padding-top: 2em;
+    box-shadow: 1px 1px 10px rgb(86, 85, 85);
+    backdrop-filter: blur(100px);
+    top: 4em;
+    padding-bottom: 12em;
+}
+
+
+#lname {
+    position: relative;
+    bottom: -.05em;
+    left: -15.2em;
+}
+
+#fname {
+    position: relative;
+    right: -.7em;
+    top: -4.2em;
+}
+
+#mname {
+    position: relative;
+    right: -16.55em;
+    top: -8.45em;
+}
+
+#nname {
+    position: relative;
+    top: -7.4em;
+    left: -15.2em;
+}
+
+#age {
+    position: relative;
+    top: -11.63em;
+    right: -.75em;   
+}
+
+#birth_date {
+    position: relative;
+    top: -15.86em;
+    right: -16.65em;
+}
+
+#birth_place {
+    position: relative;
+    top: -15em;
+    right: 15.15em;
+}
+
+#sex {
+    position: relative;
+    top: -19.25em;
+    left: .8em;
+    height: 2.7em;
+    width: 14.5em;
+}
+
+#addr {
+    position: relative;
+    top: -23.5em;
+    right: -16.8em;
+    width: 14em;
+    height: 2.4em;
+}
+
+#phone_num {
+    position: relative;
+    top: -22em;
+    right: 15.15em;
+}
+
+#civ-stat {
+    position: relative;
+    top: -26.2em;
+    right: -.9em;
+    height: 2.6em;
+    width: 14.5em;
+}
+
+#religion {
+    position: relative;
+    top: -30.3em;
+    width: 14.1em;
+    height: 2.3em;
+    right: -24.18em;
+}
+
+#cit_ship {
+    position: relative;
+    top: -24.7em;
+    right: 22.55em;
+    height: 2.6em;
+    width: 14.4em;
+}
+
+#height {
+    position: relative;
+    top: -28.85em;
+    right: -.90em;
+    height: 2.4em;
+    width: 14.1em;
+}
+
+#weight {
+    position: relative;
+    top: -33.1em;
+    right: -16.85em;
+}
+
+#vehicle {
+    position: relative;
+    top: -39.4em;
+    right: -16.9em;
+    height: 2.6em;
+    width: 14.5em;
+}
+
+.error {
+    position: absolute;
+    top: 3.7em;
+    right: 58.5px;
+    color: #FE2020;
+    text-shadow: 1px 1px 10px #ffffff;
+    font-size: 18px;
+}
+
+.error::selection {
+    color: rgb(0, 0, 0);
+}
+
+#lnameErr {
+    position: absolute;
+    top: 9.3em;
+    left: -20.3em;
+}
+
+#fnameErr {
+    position: absolute;
+    top: 9.3em;
+    left: 3.5em;
+}
+
+#mnameErr {
+    position: absolute;
+    top: 9.3em;
+    right: .90em;
+}
+
+#nnameErr {
+    position: absolute;
+    top: 13.25em;
+    right: 25.2em;
+}
+
+#nnameErr2 {
+    position: absolute;
+    top: 13.25em;
+    right: 25.2em;
+}
+
+#ageErr {
+    position: absolute;
+    top: 13.3em;
+    left: 3.5em;
+}
+
+#birthdayErr {
+    position: absolute;
+    top: 13.4em;
+    right: 1.5em;
+}
+
+#birthplaceErr {
+    position: absolute;
+    top: 17.3em;
+    right: 25.1em;
+}
+
+#sexErr {
+    position: absolute;
+    top: 17.3em;
+    right: 13.8em;
+}
+
+#addrErr {
+    position: absolute;
+    top: 17.3em;
+    right: 2em;
+}
+
+#phone-numErr {
+    position: absolute;
+    top: 21.5em;
+    left: -20.4em;
+}
+
+#civ_statErr {
+    position: absolute;
+    top: 21.5em;
+    left: 3.7em;
+}
+
+#religionErr {
+    position: absolute;
+    top: 21.5em;
+    right: 35px;
+}
+
+#cit-shipErr {
+    position: absolute;
+    top: 25.7em;
+    right: 25em;
+}
+
+#heightErr {
+    position: absolute;
+    top: 25.7em;
+    left: 3.3em;
+}
+
+#weightErr {
+    position: absolute;
+    top: 25.7em;
+    right: 2.2em;
+}
+
+#nnameErr2 {
+    position: absolute;
+    right: 24.78em;
+}
+
+#religionErr2 {
+    position: absolute;
+    top: 21.55em;
+    right: 1.1em;
+
+}
+
+#weightErr2 {
+    position: absolute;
+    top: 25.8em;
+    right: .5em;
+}
+
+.select {
+    color: black;
+    height: 2.4em;
+    width: 14em;
+}
+
+.register-btn {
+    position: relative;
+    top: -24.5em;
+    background: rgba(255, 183, 50, 0.926);
+    border: 2px solid white;
+    border-radius: 3px;
+    height: 3em;
+    width: 20em;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background-color 0.2s, height 0.2s, width 0.2s, box-shadow 0.2s;
+}
+
+.register-btn:hover {
+    background-color: #4759fcc7;
+    height: 3.2em;
+    width: 22em;
+    box-shadow: 1px 1px 10px rgb(226, 223, 223);
+}
+
+.register-btn:active {
+    background-color: #54f469c7;
+}
+
+/*Custom Scrollbar*/
+::-webkit-scrollbar {
+    width: 13.5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #fc86dd54;    
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(rgba(255, 24, 24, 0.682),rgb(254, 142, 51));
+    border-radius: 10px;
+    filter: drop-shadow(1px 1px 10px black);
+}
+
+.empty {
+    position: absolute;
+    top: 24em;
+    right: 5.3em;
+    font-size: 25px;
+    color: white;
+    text-shadow: 1px 1px 10px #ff0000;
+}
+
+.empty::selection {
+    color: rgb(255, 255, 255);
+    text-shadow: none;
+}
+
+
