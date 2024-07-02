@@ -1,104 +1,97 @@
 <?php
 
 include("../connections.php");
-
 session_start();
 
-
 if (isset($_SESSION["username"])) {
-	$username = $_SESSION["username"];
+    $username = $_SESSION["username"];
+    $query_account_type = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $get_account_type = mysqli_fetch_assoc($query_account_type);
+    $account_type = $get_account_type["account_type"];
 
-	$query_account_type = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
-
-	$get_account_type = mysqli_fetch_assoc($query_account_type);
-
-	$account_type = $get_account_type["account_type"];
-
-	if ($account_type == 1) {
-		echo "<script>window.location.href='Admin';</script>";
-	} else {
-		
-	}
+    if ($account_type == 1 || $account_type == 2) {
+        echo "<script>window.location.href='Admin';</script>";
+    } else {
+        // Handle non-admin user if needed
+    }
 }
 
 date_default_timezone_set("Asia/Manila");
 $date_now = date("m/d/Y");
 $time_now = date("h:i a");
-$notify = $attempt = $log_time = "";
+$notify = $attempt = $relog_time = "";
 
-$end_time = date("h: i A", strtotime("+15 minutes", strtotime($time_now)));
-
+$end_time = date("Y-m-d H:i:s", strtotime("+15 minutes"));
+$end_time_display = date("m/d/Y h:i A", strtotime($end_time));
 
 $username = $password = "";
 $usernameErr = $passwordErr = "";
 
 if (isset($_POST["btnLogin"])) {
-	if (empty($_POST["username"])) {
-		$usernameErr = "Username is required";
-	} else {
-		$username = $_POST["username"];
-	}
+    if (empty($_POST["username"])) {
+        $usernameErr = "Username is required";
+    } else {
+        $username = $_POST["username"];
+    }
 
-	if (empty($_POST["password"])) {
-		$passwordErr = "Password is required";
-	} else {
-		$password = $_POST["password"];
-	}
+    if (empty($_POST["password"])) {
+        $passwordErr = "Password is required";
+    } else {
+        $password = $_POST["password"];
+    }
 
-	if ($username and $password) {
-		$check_username = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
-		$check_row = mysqli_num_rows($check_username);
+    if ($username && $password) {
+        $check_username = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+        $check_row = mysqli_num_rows($check_username);
 
-		if ($check_row > 0) {
-			$fetch = mysqli_fetch_assoc($check_username);
-			$db_password = $fetch["password"];
-			$db_attempt = $fetch["attempt"];
-			$db_log_time = strtotime($fetch["log_time"]);
-			$my_log_time = $fetch["log_time"];
-			$new_time = strtotime($time_now);
+        if ($check_row > 0) {
+            $fetch = mysqli_fetch_assoc($check_username);
+            $db_password = $fetch["password"];
+            $db_attempt = $fetch["attempt"];
+            $db_relog_time = strtotime($fetch["relog_time"]);
+            $my_relog_time = date("m/d/Y h:i A", $db_relog_time);
+            $new_time = strtotime("now");
 
-			$account_type = $fetch["account_type"];
+            $account_type = $fetch["account_type"];
 
-			if ($account_type == "1") {
-				if ($db_log_time <= $new_time) {
-					if ($db_password == $password) {
-						$_SESSION["username"] = $username;
-						mysqli_query($connections, "UPDATE tbl_admin SET attempt='', log_time='' WHERE username='$username'");
-						echo "<script>window.location.href='Admin';</script>";
-					} else {
-						$attempt = (int)$db_attempt + 1;
+            if ($account_type == 1 || $account_type == 2) {
+                if ($db_relog_time <= $new_time) {
+                    if ($db_password == $password) {
+                        $_SESSION["username"] = $username;
+                        $login_time = date("Y-m-d H:i:s");
+                        mysqli_query($connections, "UPDATE tbl_admin SET attempt=0, relog_time=NULL, login_time='$login_time' WHERE username='$username'");
+                        echo "<script>window.location.href='Admin';</script>";
+                    } else {
+                        $attempt = (int)$db_attempt + 1;
 
-						if ($attempt >= 3) {
-							$attempt = 3;
-
-							mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt', log_time='$end_time' WHERE username='$username'");
-							$notify = "You already reach the three (3) times attempt to login. Please login after 15 minutes: <b>$end_time</b>";
-						} else {
-							mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt' WHERE username='$username'");
-							$passwordErr = "Password is incorrect";
-							$notify = "Login Attempt: <b>$attempt</b>";
-						}
-					}
-				} else {
-					$notify = "I'm sorry you have to wait until: <b>$my_log_time</b> before login";
-				}
-			} else {
-				if ($db_password == $password) {
-					$_SESSION["username"] = $username;
-					echo "<script>
-						    alert('Please wait for the confirmation of the Super Admin for your Admin privileges.');
-						</script>";
-				} else {
-					$passwordErr = "Hi, you're password is incorrect. Please wait for the confirmation of the Super Admin for your Admin privileges.";
-				}
-			}
-		} else {
-			$usernameErr = "Username is not registered!";
-		}
-	}
+                        if ($attempt >= 3) {
+                            $attempt = 3;
+                            mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt', relog_time='$end_time' WHERE username='$username'");
+                            $notify = "You have reached the maximum of three (3) login attempts. Please try again after 15 minutes: <b>$end_time_display</b>";
+                        } else {
+                            mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt' WHERE username='$username'");
+                            $passwordErr = "Password is incorrect";
+                            $notify = "Login Attempt: <b>$attempt</b>";
+                        }
+                    }
+                } else {
+                    $notify = "You must wait until: <b>$my_relog_time</b> before you can login again.";
+                }
+            } elseif ($account_type == 3) {
+                $notify = "Please wait for the confirmation of the Super Admin for your Admin privileges.";
+            } else {
+                $passwordErr = "Your account type is not recognized.";
+            }
+        } else {
+            $usernameErr = "Username is not registered!";
+        }
+    }
 }
-
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">

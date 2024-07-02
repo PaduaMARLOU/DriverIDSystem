@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
         $fetch = mysqli_fetch_assoc($authentication);
         $account_type = $fetch["account_type"];
 
-        if($account_type != 1){
+        if($account_type != 1 && $account_type != 2){
             header("Location: ../../Forbidden.php");
             exit; // Ensure script stops executing after redirection
         }

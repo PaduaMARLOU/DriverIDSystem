@@ -20,11 +20,11 @@
 
     body {
       background-image: url('../img/High-resolution\ photography\ of\ computer\ code\ art\ a.jpg');
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			text-align: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      text-align: center;
       overflow-x: hidden;
       overflow-y: hidden;
     }
@@ -62,6 +62,7 @@
       position: relative;
       top: 10em;
     }
+
     .loader::before {
       content: "";
       position: absolute;
@@ -71,8 +72,9 @@
       background: currentColor;
       animation: l6 3s infinite;
     }
+
     @keyframes l6 {
-        100% {inset:0}
+        100% { inset:0 }
     }
   </style>
 </head>
@@ -84,30 +86,48 @@
     </div>
 
     <div class="main-log">
-    <center>
-      <div class="loader"></div>
-    </center>
-    
+      <center>
+        <div class="loader"></div>
+      </center>
 
-    <?php
-    session_start();
+      <?php
+      session_start();
+      include '../connections.php';
 
-    $logout = md5($_SESSION['username']);
-    $username_md5 = md5($logout);
-    unset($_SESSION['username']);
+      if (isset($_SESSION['username'])) {
+          $username = $_SESSION['username'];
+          $logout = md5($username);
+          $username_md5 = md5($logout);
 
-    session_unset();
-    session_destroy();
+          date_default_timezone_set("Asia/Manila");
+          $logout_time = date('Y-m-d H:i:s');
 
-    echo "<center class='log-out'><h2>Logging out...</h2></center></div></div>";
+          $sql = "UPDATE tbl_admin SET logout_time = '$logout_time' WHERE username = '$username'";
 
-  // Redirect after 3 seconds
-    echo "<script>
-          setTimeout(function() {
-              window.location.href = 'login.php?logout=$logout&v_1=$username_md5';
-          }, 3000); 
-        </script>";
-  exit();
-  ?>
+          if ($connections->query($sql) === TRUE) {
+              // Successfully updated logout_time
+          } else {
+              echo "Error updating record: " . $connections->error;
+          }
+
+          unset($_SESSION['username']);
+          session_unset();
+          session_destroy();
+
+          echo "<center class='log-out'><h2>Logging out...</h2></center>";
+      } else {
+          echo "<center class='log-out'><h2>No user is logged in.</h2></center>";
+      }
+
+      // Redirect after 3 seconds
+      echo "<script>
+            setTimeout(function() {
+                window.location.href = 'login.php?logout=$logout&v_1=$username_md5';
+            }, 3000); 
+          </script>";
+      exit();
+      ?>
+    </div>
+  </div>
 </body>
 </html>

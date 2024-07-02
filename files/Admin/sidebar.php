@@ -14,7 +14,7 @@
 	    $account_type = $fetch["account_type"];
 	    $first_name = $fetch["first_name"];
 
-	    if($account_type != 1){
+	    if($account_type != 1 && $account_type != 2){
 	        header("Location: ../../Forbidden.php");
 	        exit; // Ensure script stops executing after redirection
 	    }
