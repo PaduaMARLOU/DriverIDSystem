@@ -122,7 +122,7 @@
       // Redirect after 3 seconds
       echo "<script>
             setTimeout(function() {
-                window.location.href = 'login.php?logout=$logout&v_1=$username_md5';
+                window.location.href = 'index.php?logout=$logout&v_1=$username_md5';
             }, 3000); 
           </script>";
       exit();

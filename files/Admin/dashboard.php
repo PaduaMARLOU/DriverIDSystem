@@ -52,13 +52,28 @@
 ?>
 
 				<div class="row">
-				    <div class="col-sm-12">
-				        <div class="well">
-				            <h1><?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?></h1>
-				            <h3>Welcome to the Drivers ID System <strong>Admin <?php echo $first_name; ?></strong></h3>
-				        </div>
-				    </div>
+					<div class="col-sm-12">
+						<div class="well">
+							<h1>
+								<?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?>
+								<span id="time"></span>
+							</h1>
+							<h3>Welcome to the Drivers ID System <strong>Admin <?php echo $first_name; ?></strong></h3>
+						</div>
+					</div>
 				</div>
+
+				<script>
+					function updateTime() {
+						const options = { timeZone: 'Asia/Manila', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+						const now = new Intl.DateTimeFormat('en-US', options).format(new Date());
+						document.getElementById('time').textContent = `(${now})`;
+					}
+
+					setInterval(updateTime, 1000);
+					updateTime(); // Initial call to display the time immediately
+				</script>
+
 
 				<div class="row">
 
@@ -108,61 +123,79 @@
 
 
 				<div class="row">
-				    <div class="col-sm-12">
-				        <div class="panel panel-default">
-				            <div class="panel-heading">
-				                <div class="panel-title">Latest Registered Drivers</div>
-				                <div class="panel-options">
-				                    <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
-				                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-				                    <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-				                    <a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
-				                </div>
-				            </div>
-				            <table class="table table-bordered table-responsive">
-				                <thead>
-				                    <tr>
-				                        <th>ID #</th>
-				                        <th>Name</th>
-				                        <th>Vehicle Type</th>
-				                        <th>Association</th>
-				                    </tr>
-				                </thead>
-				                <tbody>
-				                    <?php
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="panel-title">Latest Registered Drivers</div>
+								<div class="panel-options">
+									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+								</div>
+							</div>
+							<table class="table table-bordered table-responsive">
+								<thead>
+									<tr>
+										<th>ID #</th>
+										<th>Name</th>
+										<th>Vehicle Type</th>
+										<th>Association</th>
+										<th>Verified by</th>
+										<th>Verified On</th> <!-- New column for Verified On -->
+									</tr>
+								</thead>
+								<tbody>
+									<?php
 									// Assuming you have already established a database connection
 									include "../../connections.php";
 
 									// Fetch data from the database and order by driver_registered in descending order
-									$query = "SELECT driver_id, formatted_id, first_name, middle_name, last_name, driver_category, association, driver_registered FROM tbl_driver WHERE verification_stat = 'Registered' ORDER BY driver_registered DESC, driver_id DESC LIMIT 30";
+									$query = "SELECT d.driver_id, d.driver_category, d.formatted_id, d.first_name, d.middle_name, d.last_name, 
+													d.suffix_name, d.nickname, a.association_name, a.association_area, 
+													ad.first_name AS verified_by, d.driver_registered
+											FROM tbl_driver d
+											LEFT JOIN tbl_association a ON d.fk_association_id = a.association_id
+											LEFT JOIN tbl_admin ad ON d.fk_admin_id = ad.admin_id
+											WHERE d.verification_stat = 'Registered' AND d.renew_stat = 'Active'
+											ORDER BY d.driver_registered DESC, d.driver_id DESC
+											LIMIT 30";
 
 									$result = mysqli_query($connections, $query);
 
 									// Check if query was successful
 									if ($result) {
-									    while ($row = mysqli_fetch_assoc($result)) {
-									        ?>
-									        <tr>
-									            <td><?php echo $row['formatted_id']; ?></td>
-									            <td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?></td>
-									            <td><?php echo $row['driver_category']; ?></td>
-									            <td><?php echo $row['association']; ?></td>
-									        </tr>
-									        <?php
-									    }
+										while ($row = mysqli_fetch_assoc($result)) {
+											?>
+											<tr>
+												<td><?php echo $row['formatted_id']; ?></td>
+												<td><?php echo $row['first_name'] . ' ' . $row['middle_name'] . ' ' . $row['last_name']; ?>
+													<?php echo !empty($row['suffix_name']) ? ' ' . $row['suffix_name'] . '.' : ''; ?>
+													<?php echo !empty($row['nickname']) ? ' "' . $row['nickname'] . '"' : ''; ?>
+												</td>
+												<td><?php echo $row['driver_category']; ?></td>
+												<td><?php echo $row['association_name'] . ' - ' . $row['association_area']; ?></td>
+												<td><?php echo $row['verified_by']; ?></td>
+												<td><?php echo date('Y-m-d h:i A', strtotime($row['driver_registered'])); ?></td> <!-- Display verified date in 12-hour format -->
+											</tr>
+											<?php
+										}
 									} else {
-									    echo "<tr><td colspan='4'>No registered drivers found.</td></tr>";
+										echo "<tr><td colspan='6'>No registered drivers found.</td></tr>";
 									}
 
 									// Close the database connection
 									mysqli_close($connections);
 									?>
-
-				                </tbody>
-				            </table>
-				        </div>
-				    </div>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
+
+
+
+
 
 
 
@@ -239,63 +272,66 @@
 
 
 			<div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <h4>
-                        Association Statistics
-                        <br>
-                        <small>Number of Associations and Drivers per Association</small>
-                    </h4>
-                </div>
-                <div class="panel-options">
-                    <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
-                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-                    <a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-                    <a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
-                </div>
-            </div>
-            <div class="panel-body no-padding">
-                <div id="association-stats">
-                    <?php
-                    // Assuming you have a database connection established
-                    include "../../connections.php";
-                    // Retrieve data from the tbl_driver table
-                    $query = "SELECT association, COUNT(*) as num_drivers FROM tbl_driver GROUP BY association";
-                    $result = mysqli_query($connections, $query); // assuming $connection is your database connection
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">
+								<h4>
+									Association Statistics
+									<br>
+									<small>Number of Associations and Drivers per Association</small>
+								</h4>
+							</div>
+							<div class="panel-options">
+								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+							</div>
+						</div>
+						<div class="panel-body no-padding">
+							<div id="association-stats">
+								<?php
+								// Assuming you have a database connection established
+								include "../../connections.php";
+								// Retrieve data from tbl_driver with association details
+								$query = "SELECT d.fk_association_id, a.association_category, a.association_name, a.association_area, 
+										COUNT(*) as num_drivers
+										FROM tbl_driver d
+										INNER JOIN tbl_association a ON d.fk_association_id = a.association_id
+										WHERE d.verification_stat = 'Registered' AND d.renew_stat = 'Active'
+										GROUP BY d.fk_association_id";
+								$result = mysqli_query($connections, $query); // assuming $connection is your database connection
 
-                    // Check if there are any associations
-                    if(mysqli_num_rows($result) > 0) {
-                        // Loop through the fetched data and generate HTML dynamically
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            // Generate random light background color
-                            $random_color = sprintf('#%06X', mt_rand(0xE0E0E0, 0xFFFFFF));
-                            ?>
-                            <div class="association" style="display: inline-block; background-color: <?php echo $random_color; ?>; border-radius: 20px; padding: 10px; margin: 5px;">
-                                <h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association']); ?></h5>
-                                <p style="margin-bottom: 5px; color: #333;">Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
-                            </div>
-                        <?php
-                        }
-                    } else {
-                        // If no associations found
-                        echo "<p>No associations found.</p>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								// Check if there are any associations
+								if(mysqli_num_rows($result) > 0) {
+									// Loop through the fetched data and generate HTML dynamically
+									while ($row = mysqli_fetch_assoc($result)) {
+										// Generate random light background color
+										$random_color = sprintf('#%06X', mt_rand(0xE0E0E0, 0xFFFFFF));
+										?>
+										<div class="association" style="display: inline-block; background-color: <?php echo $random_color; ?>; border-radius: 20px; padding: 10px; margin: 5px;">
+											<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
+											<p style="margin-bottom: 5px; color: #333;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
+											<p style="margin-bottom: 5px; color: #333;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
+											<p style="margin-bottom: 5px; color: #333;">Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
+										</div>
+									<?php
+									}
+								} else {
+									// If no associations found
+									echo "<p>No associations found.</p>";
+								}
+								?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-
-
-
-		
-					
-		<div class="row">
-			<div class="col-sm-13">
+		<!-- Di lang pagkaksa kay ga black tanan ang ari sa dalom hahahaha -->
+			<div class="row" style="display: none;">
+				<div class="col-sm-13">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<div class="panel-title">
@@ -305,7 +341,7 @@
 									<small>current server uptime</small>
 								</h4>
 							</div>
-			
+
 							<div class="panel-options">
 								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
@@ -313,14 +349,12 @@
 								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
 							</div>
 						</div>
-			
+
 						<div class="panel-body no-padding">
 							<div id="rickshaw-chart-demo-2">
 								<div id="rickshaw-legend"></div>
 							</div>
 						</div>
 					</div>
-			
 				</div>
 			</div>
-		</div>

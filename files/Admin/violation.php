@@ -51,7 +51,7 @@
         include "../../connections.php";
 
         // Fetch data from the database and count the number of violations for each driver
-        $query = "SELECT d.formatted_id, d.first_name, d.middle_name, d.last_name, d.driver_category, d.association, d.renew_stat, 
+        $query = "SELECT d.formatted_id, d.first_name, d.middle_name, d.last_name, d.driver_category, d.fk_association_id, d.renew_stat, 
                   COUNT(v.fk_driver_id) AS num_violations
                   FROM tbl_driver d
                   LEFT JOIN tbl_violation v ON d.driver_id = v.fk_driver_id
@@ -113,7 +113,7 @@
                             <td><?php echo $row['formatted_id']; ?></td>
                             <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
                             <td><?php echo $row['driver_category']; ?></td>
-                            <td><?php echo $row['association']; ?></td>
+                            <td><?php echo $row['fk_association_id']; ?></td>
                             <td><?php echo $row['renew_stat']; ?></td>
                             <td class="center"><?php echo $row['num_violations']; ?></td>
                             <td>

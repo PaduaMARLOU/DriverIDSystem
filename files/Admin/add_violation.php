@@ -1,25 +1,27 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+session_start();
 
-    include("../../connections.php");
+include("../../connections.php");
 
-    if(isset($_SESSION["email"])) {
-        $email = $_SESSION["email"];
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
 
-        $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE email='$email'");
-        $fetch = mysqli_fetch_assoc($authentication);
-        $account_type = $fetch["account_type"];
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $admin_id = $fetch["admin_id"]; // Assuming admin_id is the primary key of tbl_admin
 
-        if($account_type != 1){
-            header("Location: ../../Forbidden.php");
-            exit; // Ensure script stops executing after redirection
-        }
-    } else {
+    $_SESSION["admin_id"] = $admin_id; // Store admin_id in session
+
+    $account_type = $fetch["account_type"];
+
+    if($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
+} else {
+    header("Location: ../../Forbidden.php");
+    exit; // Ensure script stops executing after redirection
+}
 
 // Initialize variables
 $driver_row = null;
@@ -46,9 +48,12 @@ if(isset($_GET['driver_id'])) {
                 $violation_description = mysqli_real_escape_string($connections, $_POST['violation_description']);
                 $violation_date = $_POST['violation_date'];
 
+                // Format the date for MySQL datetime format
+                $formatted_date = date('Y-m-d H:i:s', strtotime($violation_date));
+
                 // Insert the violation into tbl_violation only if driver_id exists
-                $insert_query = "INSERT INTO tbl_violation (violation_category, violation_description, violation_date, fk_driver_id) 
-                                 SELECT '$violation_category', '$violation_description', '$violation_date', driver_id 
+                $insert_query = "INSERT INTO tbl_violation (violation_category, violation_description, violation_date, fk_driver_id, fk_admin_id) 
+                                 SELECT '$violation_category', '$violation_description', '$formatted_date', driver_id, '" . $_SESSION["admin_id"] . "' 
                                  FROM tbl_driver WHERE formatted_id = '$driver_id'";
                 $insert_result = mysqli_query($connections, $insert_query);
 
@@ -90,7 +95,7 @@ if(isset($_GET['driver_id'])) {
         }
         input[type="text"],
         textarea,
-        input[type="date"],
+        input[type="datetime-local"],
         input[type="submit"] {
             width: calc(100% - 22px); /* Adjusted width */
             padding: 10px;
@@ -149,8 +154,8 @@ if(isset($_GET['driver_id'])) {
                 <label for="violation_description">Violation Description:</label><br>
                 <textarea id="violation_description" name="violation_description"><?php if(isset($_POST['violation_description'])) echo htmlspecialchars($_POST['violation_description']); ?></textarea><br>
                 
-                <label for="violation_date">Violation Date:</label><br>
-                <input type="date" id="violation_date" name="violation_date" value="<?php if(isset($_POST['violation_date'])) echo htmlspecialchars($_POST['violation_date']); ?>"><br>
+                <label for="violation_date">Violation Date and Time:</label><br>
+                <input type="datetime-local" id="violation_date" name="violation_date" value="<?php if(isset($_POST['violation_date'])) echo htmlspecialchars($_POST['violation_date']); ?>"><br>
                 
                 <input type="submit" value="Submit">
             </form>

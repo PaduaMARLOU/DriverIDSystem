@@ -55,91 +55,95 @@
 		// Assuming you have already established a database connection
 		include "../../connections.php";
 
-		// Fetch data from the database
-		$query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, association, verification_stat, renew_stat FROM tbl_driver WHERE verification_stat = 'Registered'";
+		// Fetch data from the database including association details
+		$query = "SELECT d.formatted_id, d.first_name, d.middle_name, d.last_name, d.driver_category, a.association_name, a.association_area, d.verification_stat, d.renew_stat 
+				FROM tbl_driver d
+				LEFT JOIN tbl_association a ON d.fk_association_id = a.association_id
+				WHERE d.verification_stat = 'Registered'";
 		$result = mysqli_query($connections, $query);
 
 		// Check if query was successful
 		if ($result) {
-		    ?>
-		    <h3>Export Driver Data</h3>
-		    <br />
+			?>
+			<h3>Export Driver Data</h3>
+			<br />
 
-		    <script type="text/javascript">
-		        jQuery(document).ready(function($) {
-		            var $table4 = jQuery("#table-4");
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					var $table4 = jQuery("#table-4");
 
-		            $table4.DataTable({
-		                dom: 'Bfrtip',
-		                buttons: [
-		                    'copyHtml5',
-		                    'excelHtml5',
-		                    'csvHtml5',
-		                    'pdfHtml5'
-		                ]
-		            });
-		        });
-		    </script>
+					$table4.DataTable({
+						dom: 'Bfrtip',
+						buttons: [
+							'copyHtml5',
+							'excelHtml5',
+							'csvHtml5',
+							'pdfHtml5'
+						]
+					});
+				});
+			</script>
 
-		    <table class="table table-bordered datatable" id="table-4">
-		        <thead>
-		            <tr>
-		                <th>Driver ID</th>
-		                <th>Driver Name</th>
-		                <th>Vehicle Type</th>
-		                <th>Association</th>
-		                <th>Driver Status</th>
-		                <th>Actions</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <?php
-		            // Loop through each row of data
-		            while ($row = mysqli_fetch_assoc($result)) {
-		                ?>
-		                <tr>
-		                    <td><?php echo $row['formatted_id']; ?></td>
-		                    <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
-		                    <td><?php echo $row['driver_category']; ?></td>
-		                    <td><?php echo $row['association']; ?></td>
-		                    <td class="center"><?php echo $row['verification_stat'] . ' (' . $row['renew_stat'] . ')'; ?></td>
-		                    <td>
-							    <a href="edit_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-default btn-sm btn-icon icon-left edit-btn">
-							        <i class="entypo-pencil"></i>
-							        Edit
-							    </a>
-							    <a href="delete_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-danger btn-sm btn-icon icon-left delete-btn">
-							        <i class="entypo-cancel"></i>
-							        Delete
-							    </a>
+			<table class="table table-bordered datatable" id="table-4">
+				<thead>
+					<tr>
+						<th>Driver ID</th>
+						<th>Driver Name</th>
+						<th>Vehicle Type</th>
+						<th>Association</th>
+						<th>Driver Status</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					// Loop through each row of data
+					while ($row = mysqli_fetch_assoc($result)) {
+						?>
+						<tr>
+							<td><?php echo $row['formatted_id']; ?></td>
+							<td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
+							<td><?php echo $row['driver_category']; ?></td>
+							<td><?php echo $row['association_name'] . ' - ' . $row['association_area']; ?></td>
+							<td class="center"><?php echo $row['verification_stat'] . ' (' . $row['renew_stat'] . ')'; ?></td>
+							<td>
+								<a href="edit_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-default btn-sm btn-icon icon-left edit-btn">
+									<i class="entypo-pencil"></i>
+									Edit
+								</a>
+								<a href="delete_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-danger btn-sm btn-icon icon-left delete-btn">
+									<i class="entypo-cancel"></i>
+									Delete
+								</a>
 							</td>
-		                </tr>
-		            <?php
-		            }
-		            ?>
-		        </tbody>
-		        <tfoot>
-		            <tr>
-		                <th>Driver ID</th>
-		                <th>Driver Name</th>
-		                <th>Vehicle Type</th>
-		                <th>Association</th>
-		                <th>Driver Status</th>
-		                <th>Actions</th>
-		            </tr>
-		        </tfoot>
-		    </table>
+						</tr>
+					<?php
+					}
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th>Driver ID</th>
+						<th>Driver Name</th>
+						<th>Vehicle Type</th>
+						<th>Association</th>
+						<th>Driver Status</th>
+						<th>Actions</th>
+					</tr>
+				</tfoot>
+			</table>
 
-		    <br />
+			<br />
 		<?php
 		} else {
-		    // Query failed
-		    echo "Error: " . mysqli_error($connections);
+			// Query failed
+			echo "Error: " . mysqli_error($connections);
 		}
 
 		// Close the database connection
 		mysqli_close($connections);
 		?>
+
 
 
 		<br>
@@ -156,8 +160,6 @@
 	</div>
 
 </div>
-
-
 
 
 
