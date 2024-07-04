@@ -1,25 +1,25 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
 
-    include("../../connections.php");
+session_start();
 
-    if(isset($_SESSION["email"])) {
-        $email = $_SESSION["email"];
+include("../../connections.php");
 
-        $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE email='$email'");
-        $fetch = mysqli_fetch_assoc($authentication);
-        $account_type = $fetch["account_type"];
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
 
-        if($account_type != 1){
-            header("Location: ../../Forbidden.php");
-            exit; // Ensure script stops executing after redirection
-        }
-    } else {
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
+
+    if($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
+} else {
+    header("Location: ../../Forbidden.php");
+    exit; // Ensure script stops executing after redirection
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -89,6 +89,11 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="form-group">
                         <label for="last_name">Last Name:</label>
                         <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Last Name" required value="<?php echo $driver_row['last_name']; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="suffix_name">Suffix Name:</label>
+                        <input type="text" class="form-control" name="suffix_name" id="suffix_name" placeholder="Suffix Name" required value="<?php echo $driver_row['suffix_name']; ?>">
                     </div>
 
                     <div class="form-group">
@@ -164,12 +169,21 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="form-group">
                         <label for="pic_2x2">Upload 2x2 Picture:</label>
                         <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*">
+                        <?php if (!empty($driver_row['pic_2x2'])): ?>
+                            <p>Current File: <?php echo $driver_row['pic_2x2']; ?></p>
+                            <input type="hidden" name="current_pic_2x2" value="<?php echo $driver_row['pic_2x2']; ?>">
+                        <?php endif; ?>
                     </div>
 
                     <div class="form-group">
                         <label for="doc_proof">Upload Proof of Document:</label>
                         <input type="file" class="form-control" name="doc_proof" id="doc_proof">
+                        <?php if (!empty($driver_row['doc_proof'])): ?>
+                            <p>Current File: <?php echo $driver_row['doc_proof']; ?></p>
+                            <input type="hidden" name="current_doc_proof" value="<?php echo $driver_row['doc_proof']; ?>">
+                        <?php endif; ?>
                     </div>
+
 
                     <div class="form-group">
                         <label for="name_to_notify">Name of Person to Notify in case of Emergency:</label>
@@ -221,17 +235,36 @@ if (session_status() === PHP_SESSION_NONE) {
                     </div>
 
                     <div class="form-group">
+                        <label for="vehicle_img_front">Front Image of Vehicle:</label>
+                        <input type="file" class="form-control" name="vehicle_img_front" id="vehicle_img_front" accept="image/*">
+                        <?php if (!empty($vehicle_row['vehicle_img_front'])): ?>
+                            <p>Current File: <?php echo $vehicle_row['vehicle_img_front']; ?></p>
+                            <input type="hidden" name="current_vehicle_img_front" value="<?php echo $vehicle_row['vehicle_img_front']; ?>">
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicle_img_back">Back Image of Vehicle:</label>
+                        <input type="file" class="form-control" name="vehicle_img_back" id="vehicle_img_back" accept="image/*">
+                        <?php if (!empty($vehicle_row['vehicle_img_back'])): ?>
+                            <p>Current File: <?php echo $vehicle_row['vehicle_img_back']; ?></p>
+                            <input type="hidden" name="current_vehicle_img_back" value="<?php echo $vehicle_row['vehicle_img_back']; ?>">
+                        <?php endif; ?>
+                    </div>
+
+
+                    <div class="form-group">
                         <label for="association">Select Association:</label>
                         <select class="form-control" name="association" id="association" required>
                             <option value="">Select Association</option>
                             <?php
-                            $query = "SELECT association_name, association_area FROM tbl_association";
+                            $query = "SELECT association_id, association_name, association_area FROM tbl_association";
                             $result = $connections->query($query);
 
                             if ($result && $result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
-                                    $selected = ($row['association_name'] === $driver_row['association']) ? 'selected' : '';
-                                    echo "<option value='{$row['association_name']}' $selected>{$row['association_name']} - {$row['association_area']}</option>";
+                                    $selected = ($row['association_id'] === $driver_row['fk_association_id']) ? 'selected' : '';
+                                    echo "<option value='{$row['association_id']}' $selected>{$row['association_name']} - {$row['association_area']}</option>";
                                 }
                             } else {
                                 echo "<option disabled>No associations found</option>";
@@ -239,6 +272,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             ?>
                         </select>
                     </div>
+
 
                     <button type="submit" name="submit" class="btn btn-success">Submit</button>
                     <a href="driver.php" class="btn btn-success">Back</a>

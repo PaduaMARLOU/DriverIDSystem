@@ -1,25 +1,23 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+session_start();
 
-    include("../../connections.php");
+include("../../connections.php");
 
-    if(isset($_SESSION["email"])) {
-        $email = $_SESSION["email"];
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
 
-        $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE email='$email'");
-        $fetch = mysqli_fetch_assoc($authentication);
-        $account_type = $fetch["account_type"];
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
 
-        if($account_type != 1){
-            header("Location: ../../Forbidden.php");
-            exit; // Ensure script stops executing after redirection
-        }
-    } else {
+    if($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
+} else {
+    header("Location: ../../Forbidden.php");
+    exit; // Ensure script stops executing after redirection
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
@@ -28,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST['first_name'];
     $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
+    $suffix_name = $_POST['suffix_name'];
     $nickname = $_POST['nickname'];
     $birth_date = $_POST['birth_date'];
     $birth_place = $_POST['birth_place'];
@@ -57,13 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age_interval = $current_date_obj->diff($birth_date_obj);
     $age = $age_interval->y;
 
-
     // Prepare SQL statements
-    $driver_insert_sql = "UPDATE tbl_driver SET 
+    $driver_update_sql = "UPDATE tbl_driver SET 
         driver_category = ?, 
         first_name = ?, 
         middle_name = ?, 
-        last_name = ?, 
+        last_name = ?,
+        suffix_name = ?, 
         nickname = ?,
         age = ?, 
         birth_date = ?, 
@@ -78,11 +77,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         weight = ?, 
         name_to_notify = ?, 
         relationship = ?, 
-        num_to_notify = ?, 
-        association = ? 
+        num_to_notify = ?,
+        vehicle_ownership =?, 
+        fk_association_id = ? 
         WHERE formatted_id = ?";
 
-    $vehicle_insert_sql = "UPDATE tbl_vehicle SET 
+    $vehicle_update_sql = "UPDATE tbl_vehicle SET 
         name_of_owner = ?, 
         addr_of_owner = ?, 
         owner_phone_num = ?, 
@@ -92,16 +92,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         WHERE fk_driver_id IN (SELECT driver_id FROM tbl_driver WHERE formatted_id = ?)";
 
     // Prepare and bind parameters for driver update
-    $driver_stmt = $connections->prepare($driver_insert_sql);
-    $driver_stmt->bind_param("sssssisssssssssssssss", 
-        $driver_category, $first_name, $middle_name, $last_name, 
+    $driver_stmt = $connections->prepare($driver_update_sql);
+    $driver_stmt->bind_param("ssssssissssssssssssssss", 
+        $driver_category, $first_name, $middle_name, $last_name, $suffix_name, 
         $nickname, $age, $birth_date, $birth_place, $sex, $address, 
         $mobile_number, $civil_status, $religion, $citizenship, 
         $height, $weight, $name_to_notify, $relationship, 
-        $num_to_notify, $association, $formatted_id);
+        $num_to_notify, $vehicle_ownership, $association, $formatted_id);
 
     // Prepare and bind parameters for vehicle update
-    $vehicle_stmt = $connections->prepare($vehicle_insert_sql);
+    $vehicle_stmt = $connections->prepare($vehicle_update_sql);
     $vehicle_stmt->bind_param("sssssss", 
         $name_of_owner, $addr_of_owner, $owner_phone_num, 
         $vehicle_color, $brand, $plate_num, $formatted_id);
@@ -112,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if both updates were successful
     if ($driver_update_result && $vehicle_update_result) {
+        // Success message and display updated details
         echo "<!DOCTYPE html>
                 <html lang='en'>
                 <head>
@@ -226,4 +227,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close database connection
 $connections->close();
 ?>
-

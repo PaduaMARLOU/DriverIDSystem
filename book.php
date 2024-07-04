@@ -189,12 +189,6 @@ if(isset($_POST['submit'])){
 
 
 
-
-
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -400,7 +394,7 @@ if(isset($_POST['submit'])){
                     <input type="file" class="form-control" name="vehicle_img_front" id="vehicle_img_front" accept="image/*">
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_img_back">Front Image of Vehicle: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang atubang nga picture sang imo ginamaneho*</i></label>
+                    <label for="vehicle_img_back">Back Image of Vehicle: <i class="faded-text">*I-click ang "Choose  File" para ka upload sang atubang nga picture sang imo ginamaneho*</i></label>
                     <input type="file" class="form-control" name="vehicle_img_back" id="vehicle_img_back" accept="image/*">
                 </div>
 
