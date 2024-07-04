@@ -4,10 +4,10 @@ session_start();
 
 include("../../connections.php");
 
-if(isset($_SESSION["email"])) {
-    $email = $_SESSION["email"];
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
 
-    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE email='$email'");
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
     $fetch = mysqli_fetch_assoc($authentication);
     $account_type = $fetch["account_type"];
 
