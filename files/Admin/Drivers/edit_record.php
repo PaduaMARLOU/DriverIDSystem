@@ -13,11 +13,11 @@
         $account_type = $fetch["account_type"];
         
         if($account_type != 1){
-            header("Location: ../../../Forbidden.php");
+            header("Location: ../../../Forbidden2.php");
             exit; // Ensure script stops executing after redirection
         }
     } else {
-        header("Location: ../../../Forbidden.php");
+        header("Location: ../../../Forbidden2.php");
         exit; // Ensure script stops executing after redirection
     }
 
