@@ -38,7 +38,7 @@ if(isset($_SESSION["username"])) {
 <body>
     <div class="container">
         <h2>Edit Record</h2>
-        <form action="update_driver_success.php" method="POST">
+        <form action="update_driver_success.php" method="POST" enctype="multipart/form-data">
             <?php
             // Include database connection
             include("../../connections.php");
