@@ -51,7 +51,7 @@
     include "../../connections.php";
 
     // Fetch data from the database where verification_stat is 'Registered' and renew_stat is 'Active'
-    $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, association, verification_stat, renew_stat FROM tbl_driver WHERE verification_stat = 'Registered' AND renew_stat = 'Active'";
+    $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, fk_association_id, verification_stat, renew_stat FROM tbl_driver WHERE verification_stat = 'Registered' AND renew_stat = 'Active'";
     $result = mysqli_query($connections, $query);
 
     // Check if query was successful
@@ -97,7 +97,7 @@
                         <td><?php echo $row['formatted_id']; ?></td>
                         <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
                         <td><?php echo $row['driver_category']; ?></td>
-                        <td><?php echo $row['association']; ?></td>
+                        <td><?php echo $row['fk_association_id']; ?></td>
                         <td class="center"><?php echo $row['verification_stat']; ?></td>
                         <td class="center"><?php echo $row['renew_stat']; ?></td>
                         <td>

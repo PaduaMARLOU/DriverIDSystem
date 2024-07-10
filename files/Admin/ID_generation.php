@@ -1,32 +1,31 @@
 <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
 
-    include("../../connections.php");
+session_start();
 
-    if(isset($_SESSION["email"])) {
-        $email = $_SESSION["email"];
+include("../../connections.php");
 
-        $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE email='$email'");
-        $fetch = mysqli_fetch_assoc($authentication);
-        $account_type = $fetch["account_type"];
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
 
-        if($account_type != 1){
-            header("Location: ../../Forbidden.php");
-            exit; // Ensure script stops executing after redirection
-        }
-    } else {
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
+
+    if($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
+} else {
+    header("Location: ../../Forbidden.php");
+    exit; // Ensure script stops executing after redirection
+}
 
     // Check if driver ID is provided in the URL
     if(isset($_GET['id'])) {
         $driver_id = $_GET['id'];
 
         // Fetch driver details from the database based on driver ID
-        $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, association FROM tbl_driver WHERE formatted_id = '$driver_id'";
+        $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, fk_association_id FROM tbl_driver WHERE formatted_id = '$driver_id'";
         $result = mysqli_query($connections, $query);
 
         // Check if query was successful
@@ -40,7 +39,7 @@
                     $driver_name .= ' ' . $row['middle_name'];
                 }
                 $vehicle_type = $row['driver_category'];
-                $association = !empty($row['association']) ? $row['association'] : 'N/A';
+                $association = !empty($row['fk_association_id']) ? $row['fk_association_id'] : 'N/A';
 
                 // Generate driver data string for QR code
                 $driver_data = "Driver ID: $driver_id\nDriver Name: $driver_name\nVehicle Type: $vehicle_type\nAssociation: $association";

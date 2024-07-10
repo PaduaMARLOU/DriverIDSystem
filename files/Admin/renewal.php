@@ -51,7 +51,7 @@
 	    include "../../connections.php";
 
 	    // Fetch data from the database where renew_stat is 'To Renewal' or blank
-	    $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, association, renew_stat FROM tbl_driver WHERE renew_stat IN ('For Renewal', 'Revoked due to Violations')";
+	    $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, fk_association_id, renew_stat FROM tbl_driver WHERE renew_stat IN ('For Renewal', 'Revoked due to Violations')";
 	    $result = mysqli_query($connections, $query);
 
 	    // Check if query was successful
@@ -96,7 +96,7 @@
 	                        <td><?php echo $row['formatted_id']; ?></td>
 	                        <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
 	                        <td><?php echo $row['driver_category']; ?></td>
-	                        <td><?php echo $row['association']; ?></td>
+	                        <td><?php echo $row['fk_association_id']; ?></td>
 	                        <td class="center"><?php echo $row['renew_stat']; ?></td>
 	                        <td>
 	                            <a href="#" class="btn btn-info btn-sm btn-icon icon-left" onclick="confirmRenew('<?php echo $row['formatted_id']; ?>')">
