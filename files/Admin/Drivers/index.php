@@ -2,7 +2,7 @@
 
 session_start();
 
-include("../../connections.php");
+include("../../../connections.php");
 
 if(isset($_SESSION["username"])) {
     $username = $_SESSION["username"];

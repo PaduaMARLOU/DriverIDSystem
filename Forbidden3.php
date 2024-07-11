@@ -6,7 +6,7 @@ include("connections.php");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="3;url=javascript:window.history.back();">
+    <meta http-equiv="refresh" content="3;url=javascript:window.close();">
     <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
     <title>Permission Denied</title>
 </head>
@@ -31,7 +31,7 @@ include("connections.php");
             seconds--;
             document.getElementById("countdown").textContent = "You will vanish within " + seconds + " seconds!";
             if (seconds <= 0) {
-                window.history.back();
+                window.close();
             }
         }
         setInterval(countdown, 1000);

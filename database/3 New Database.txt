@@ -93,7 +93,8 @@ CREATE TABLE `tbl_violation` (
   `fk_admin_id` int(11) DEFAULT NULL, /*Changed to NULL*/
   `violation_category` enum('Improper Garbage Disposal','Driving Under the Influence (DUI)','Parking Violations','Reckless Driving','Violence or Theft','Unauthorized Transport Operations','Noise Violations','Illegal Parking of Tricycles','Other...(Please Specify in Description)') NOT NULL, /*Changed to NOT NULL*/
   `violation_description` varchar(255) DEFAULT NULL,
-  `violation_date` datetime NOT NULL /*Changed Format from date to datetime*/
+  `violation_date` datetime NOT NULL, /*Changed Format from date to datetime*/
+  `renewed_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

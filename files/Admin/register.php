@@ -58,7 +58,7 @@
                     </a>
                     <h1 class="customregister-h1">Barangay Estefania Admin Access Registration Portal</h1>
                     <div>
-                        <a href="#" class="customregister-btn customregister-btn-admin">Admin</a>
+                        <a href="#" class="customregister-btn customregister-btn-admin" id="adminButton">Admin</a>
                         <a href="#" class="customregister-btn customregister-btn-driver" id="driverButton">Driver</a>
                     </div>
                 </div>
@@ -70,7 +70,11 @@
     </div>
 
     <script>
-        // Open registration page in a new tab when clicking on Driver button
+        // Open admin registration page in a new tab when clicking on Driver button
+        document.getElementById('adminButton').onclick = function() {
+            window.open("admin_register.php", "_blank");
+        };
+        // Open driver registration page in a new tab when clicking on Driver button
         document.getElementById('driverButton').onclick = function() {
             window.open("../../registrationpage.php", "_blank");
         };

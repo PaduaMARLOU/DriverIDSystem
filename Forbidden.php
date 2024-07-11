@@ -7,6 +7,7 @@ include("connections.php");
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="3;url=index.php">
+    <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
     <title>Permission Denied</title>
 </head>
 <body>
