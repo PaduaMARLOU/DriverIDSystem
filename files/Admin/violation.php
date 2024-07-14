@@ -7,7 +7,7 @@
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
     <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
-	<title>Barangay Estefania Admin - Driver ID System</title>
+    <title>Barangay Estefania Admin - Driver ID System</title>
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
@@ -51,7 +51,7 @@
             if ($result) {
                 // Update renew_stat for drivers with more than 3 violations
                 while ($row = mysqli_fetch_assoc($result)) {
-                    if ($row['num_violations'] % 3 == 0 && $row['num_violations'] > 0) {
+                    if ($row['num_violations'] >= 3 && $row['num_violations'] % 3 == 0) {
                         // Update renew_stat to indicate renewal needed only if renewed_date is null or empty
                         $update_query = "UPDATE tbl_driver SET renew_stat = 'Revoked due to Violations' WHERE formatted_id = '" . $row['formatted_id'] . "'";
                         mysqli_query($connections, $update_query);
@@ -98,7 +98,15 @@
                                 <td><?php echo $row['driver_category']; ?></td>
                                 <td><?php echo $row['association']; ?></td>
                                 <td><?php echo $row['renew_stat']; ?></td>
-                                <td class="center"><?php echo $row['num_violations']; ?></td>
+                                <td class="center">
+                                    <?php
+                                    if ($row['num_violations'] >= 3 && $row['num_violations'] % 3 == 0) {
+                                        echo $row['num_violations'] . " - Maximum violations reached, requires renewal (Please efresh this page)";
+                                    } else {
+                                        echo $row['num_violations'];
+                                    }
+                                    ?>
+                                </td>
                                 <td>
                                     <a href="add_violation.php?driver_id=<?php echo $row['formatted_id']; ?>" class="btn btn-danger btn-sm btn-icon icon-left">
                                         <i class="entypo-flag"></i>
