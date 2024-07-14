@@ -7,8 +7,8 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<link rel="icon" href="assets/images/favicon.ico">
-	<title>Neon | Data Tables</title>
+	<link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+	<title>Barangay Estefania Admin - Driver ID System</title>
 
 	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
