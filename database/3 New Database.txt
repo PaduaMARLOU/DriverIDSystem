@@ -13,7 +13,8 @@ CREATE TABLE `tbl_admin` (
   `logout_time` datetime DEFAULT NULL, /*added*/
   `account_type` int(1) NOT NULL,
   `date_registered` datetime NOT NULL, /*add*/
-  `img` varchar(255) NOT NULL
+  `img` varchar(255) DEFAULT NULL,
+  `status` varchar(100) NOT NULL /*new add*/
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
