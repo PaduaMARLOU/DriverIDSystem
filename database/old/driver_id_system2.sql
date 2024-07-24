@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2024 at 04:56 PM
+-- Generation Time: Jul 04, 2024 at 10:51 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -51,8 +51,8 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`admin_id`, `first_name`, `middle_name`, `last_name`, `sex`, `mobile_number`, `username`, `password`, `attempt`, `relog_time`, `login_time`, `logout_time`, `account_type`, `date_registered`, `img`) VALUES
-(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-07-15 00:08:05', '2024-07-15 00:07:52', 1, '0000-00-00 00:00:00', ''),
-(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-07-12 00:05:53', '2024-07-12 00:07:29', 2, '0000-00-00 00:00:00', ''),
+(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-07-03 17:54:51', '2024-07-03 17:52:12', 1, '0000-00-00 00:00:00', ''),
+(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-07-02 19:21:38', '2024-07-02 19:22:00', 2, '0000-00-00 00:00:00', ''),
 (3, 'asdada', 'asdada', 'dsadas', 'dasdasd', '09090909090', 'admin3', '123', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
@@ -157,9 +157,9 @@ CREATE TABLE `tbl_driver` (
 --
 
 INSERT INTO `tbl_driver` (`driver_id`, `driver_category`, `formatted_id`, `first_name`, `middle_name`, `last_name`, `suffix_name`, `nickname`, `age`, `birth_date`, `birth_place`, `sex`, `address`, `mobile_number`, `civil_status`, `religion`, `citizenship`, `height`, `weight`, `pic_2x2`, `doc_proof`, `name_to_notify`, `relationship`, `num_to_notify`, `vehicle_ownership`, `verification_stat`, `fk_association_id`, `driver_registered`, `renew_stat`, `fk_sched_id`, `fk_vehicle_id`, `fk_admin_id`) VALUES
-(2, 'E-Bike', 'ETRK-0002', 'Wabafet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 0, 0, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Revoked due to Violations', 1, 1, NULL),
+(2, 'E-Bike', 'ETRK-0002', 'Wabafet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 0, 0, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
 (3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 0, 0, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
-(4, 'E-Bike', 'ETRK-0004', 'Dorder', 'Ma', 'Lodi', 'Jr', 'asdsad', 22, '2002-05-01', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-12 01:20:32', 'Active', 3, 3, 1),
+(4, 'E-Bike', 'ETRK-0004', 'Dorder', 'Ma', 'Lodi', 'Jr', 'asdsad', 22, '2002-05-01', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 3, 3, NULL),
 (5, 'E-Bike', 'ETRK-0005', 'malo', 'Ma', 'Lodi', 'Jr', 'asdsad', 20, '2003-08-17', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 4, 4, NULL),
 (7, 'E-Bike', 'ETRK-0007', 'malo', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-28', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 5, 5, NULL),
 (8, 'E-Bike', 'ETRK-0008', 'Aduken', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 6, 6, NULL),
@@ -227,51 +227,17 @@ CREATE TABLE `tbl_violation` (
   `fk_admin_id` int(11) DEFAULT NULL,
   `violation_category` enum('Improper Garbage Disposal','Driving Under the Influence (DUI)','Parking Violations','Reckless Driving','Violence or Theft','Unauthorized Transport Operations','Noise Violations','Illegal Parking of Tricycles','Other...(Please Specify in Description)') NOT NULL,
   `violation_description` varchar(255) DEFAULT NULL,
-  `violation_date` datetime NOT NULL,
-  `renewed_date` datetime DEFAULT NULL
+  `violation_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_violation`
 --
 
-INSERT INTO `tbl_violation` (`violation_id`, `fk_driver_id`, `fk_admin_id`, `violation_category`, `violation_description`, `violation_date`, `renewed_date`) VALUES
-(1, 2, NULL, 'Driving Under the Influence (DUI)', 'Apuchu', '2024-06-30 00:00:00', '2024-07-11 20:22:15'),
-(2, 3, 1, 'Parking Violations', 'ckvv', '2024-06-30 00:00:00', '2024-07-11 20:26:46'),
-(3, 2, 1, 'Improper Garbage Disposal', 'dasdasdadas', '2024-07-01 20:05:00', '2024-07-11 20:22:15'),
-(4, 2, 1, 'Improper Garbage Disposal', 'sdafsadfasdf', '2024-06-30 01:21:00', '2024-07-11 20:22:15'),
-(5, 3, 1, 'Improper Garbage Disposal', 'asdasdasdsa', '2024-06-30 02:15:00', '2024-07-11 20:26:46'),
-(6, 3, 1, 'Improper Garbage Disposal', 'asdasdas', '2024-07-09 02:26:00', '2024-07-11 20:26:46'),
-(7, 2, 1, 'Parking Violations', 'asdasdasd', '2024-05-26 02:27:00', '2024-07-11 20:42:13'),
-(8, 2, 1, 'Improper Garbage Disposal', 'asdasdas', '2024-06-30 02:28:00', '2024-07-11 20:42:13'),
-(9, 3, 1, 'Parking Violations', 'asdasdasd', '2024-06-30 02:28:00', '2024-07-11 20:42:00'),
-(10, 2, 1, 'Violence or Theft', 'asdasdasd', '2024-06-30 02:29:00', '2024-07-11 20:42:13'),
-(11, 3, 1, 'Illegal Parking of Tricycles', 'fafdasdas', '2024-06-30 02:30:00', '2024-07-11 20:42:00'),
-(12, 4, 1, 'Illegal Parking of Tricycles', 'sadasdasd', '2024-06-30 02:30:00', '2024-07-11 20:35:36'),
-(13, 4, 1, 'Parking Violations', 'asdasdasd', '2024-06-30 02:32:00', '2024-07-11 20:35:36'),
-(14, 3, 1, 'Improper Garbage Disposal', 'sadasdasd', '2024-06-30 02:33:00', '2024-07-11 20:42:00'),
-(15, 4, 1, 'Driving Under the Influence (DUI)', 'asdasdas', '2024-06-30 02:34:00', '2024-07-11 20:35:36'),
-(16, 2, 1, 'Violence or Theft', 'oijp;kl', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
-(17, 2, 1, 'Reckless Driving', 'sadasdas', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
-(18, 2, 1, 'Reckless Driving', 'asdasdas', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
-(19, 2, 1, 'Parking Violations', 'adas', '2024-06-30 03:02:00', '2024-07-12 03:06:58'),
-(20, 2, 1, 'Parking Violations', 'asdasd', '2024-06-30 03:02:00', '2024-07-12 03:06:58'),
-(21, 2, 1, 'Parking Violations', 'sadasd', '2024-06-30 03:02:00', '2024-07-12 03:06:58'),
-(22, 2, 1, 'Parking Violations', 'asdasd', '2024-06-30 03:08:00', '2024-07-12 03:17:45'),
-(23, 2, 1, 'Parking Violations', 'asdasd', '2024-06-30 03:09:00', '2024-07-12 03:17:45'),
-(24, 2, 1, 'Reckless Driving', 'asdasd', '2024-06-30 03:09:00', '2024-07-12 03:17:45'),
-(25, 3, 1, 'Reckless Driving', 'asdasd', '2024-06-30 03:16:00', '2024-07-12 03:17:48'),
-(26, 3, 1, 'Reckless Driving', 'sadas', '2024-06-30 03:16:00', '2024-07-12 03:17:48'),
-(27, 3, 1, 'Parking Violations', 'asdasd', '2024-06-30 03:16:00', '2024-07-12 03:17:48'),
-(30, 2, 1, 'Parking Violations', 'asdasdasd', '2024-06-30 02:08:00', '2024-07-15 02:09:53'),
-(31, 2, 1, 'Noise Violations', 'wsdasdasd', '2024-06-30 02:08:00', '2024-07-15 02:09:53'),
-(32, 2, 1, 'Driving Under the Influence (DUI)', 'wsdasdasd', '2024-06-30 02:08:00', '2024-07-15 02:09:53'),
-(33, 2, 1, 'Parking Violations', '12213123', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
-(34, 2, 1, 'Driving Under the Influence (DUI)', '21312312', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
-(35, 2, 1, 'Parking Violations', '12312312', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
-(36, 2, 1, 'Parking Violations', '123123', '2024-06-30 02:10:00', NULL),
-(37, 2, 1, 'Reckless Driving', '21321321', '2024-06-30 02:11:00', NULL),
-(38, 2, 1, 'Reckless Driving', '213123', '2024-06-30 02:11:00', NULL);
+INSERT INTO `tbl_violation` (`violation_id`, `fk_driver_id`, `fk_admin_id`, `violation_category`, `violation_description`, `violation_date`) VALUES
+(1, 2, NULL, 'Driving Under the Influence (DUI)', 'Apuchu', '2024-06-30 00:00:00'),
+(2, 3, 1, 'Parking Violations', 'ckvv', '2024-06-30 00:00:00'),
+(3, 2, 1, 'Improper Garbage Disposal', 'dasdasdadas', '2024-07-01 20:05:00');
 
 --
 -- Indexes for dumped tables
@@ -359,7 +325,7 @@ ALTER TABLE `tbl_vehicle`
 -- AUTO_INCREMENT for table `tbl_violation`
 --
 ALTER TABLE `tbl_violation`
-  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `violation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
