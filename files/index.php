@@ -139,7 +139,7 @@ if (isset($_POST["btnLogin"])) {
 			
 			<br>
 
-			<a href="?forget=<?php echo md5(rand(1, 9)); ?>" class="forgot-pass">Forgot Password?</a>
+			<!-- <a href="?forget=<?php echo md5(rand(1, 9)); ?>" class="forgot-pass">Forgot Password?</a> -->
 
 		</form>
 	</center>
