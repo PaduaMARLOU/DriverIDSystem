@@ -73,10 +73,10 @@
 						New Page
 					</a>
 
-					<a href="mailbox.html">
-						<i class="entypo-mail"></i>
-						Inbox
-					</a>
+					<a href="admin_approval.php" class="nav-icon">
+                    <i class="entypo-bell"></i>
+                    Info
+                </a>
 
 					<a href="extra-lockscreen.html">
 						<i class="entypo-lock"></i>
