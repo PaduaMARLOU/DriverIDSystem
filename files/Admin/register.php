@@ -66,6 +66,8 @@
                     <i>© 2024 Capstone Project of BSIS 3-A Group 4</i>
                 </footer>
             </div>
+            <!-- Footer -->
+		    <?php include "footer.php" ?>
         </div>
     </div>
 

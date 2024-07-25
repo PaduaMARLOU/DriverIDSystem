@@ -24,6 +24,6 @@ if (session_status() === PHP_SESSION_NONE) {
 		<!-- Footer -->
 		<footer class="main">
 			
-			&copy; 2015 <strong>Neon</strong> Admin Theme by <a href="http://laborator.co" target="_blank">Laborator</a>
+			&copy; 2024 <strong>Barangay Estefania Driver ID System</strong> || Capstone Project by <a href="http://laborator.co" target="_blank">BSIS-4A</a>
 		
 		</footer>

@@ -149,6 +149,8 @@ if(isset($_SESSION["username"])) {
         mysqli_close($connections);
         ?>
         <br />
+        <!-- Footer -->
+		<?php include "footer.php" ?>
         <!-- Imported styles on this page -->
         <link rel="stylesheet" href="assets/js/datatables/datatables.css">
         <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
