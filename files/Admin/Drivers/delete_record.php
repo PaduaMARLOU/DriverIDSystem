@@ -37,7 +37,7 @@ if(isset($_GET['driver_id']) && is_numeric($_GET['driver_id'])) {
     // Check if deletion was successful
     if($stmt->affected_rows > 0) {
         // Generate JavaScript alert for success
-        echo "<script>alert('Driver record deleted successfully');</script>";
+        echo "<script>alert('Driver record deleted successfully 😤');</script>";
         // Delay redirect for 3 seconds
         echo "<script>setTimeout(function(){ window.location.href = 'drivertable.php'; }, 500);</script>";
         exit();

@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 
         if ($account_type == 1) {
             $acc_type = 2;
-            $status = 'Active';
+            $status = 'Direct Approved';
         } elseif ($account_type == 2) {
             $acc_type = 3;
             $status = 'Pending...';

@@ -147,8 +147,9 @@
 
 
 		<br>
-        <!-- Add the "View Full Driver Information" button -->
+        <!-- Add the "View Full Driver Information" button 
         <a href="Drivers/drivertable.php" style="background-color: green; color: white; text-decoration: none; padding: 10px;">View Full Driver Information</a>
+		-->
 		
 
 		<!-- Footer -->

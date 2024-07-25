@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    color: #2b333a;
+}
+
+.title {
+    font-size: 35px;
+}
+
+.logo {
+    position: relative;
+    width: 100px;
+    top: 5em;
+    left: -10.5em;
+}
+
+.logo-driver {
+    position: relative;
+    margin-bottom: 3em;
+}
+
+.container {
+    position: relative;
+    top: -3em;
+    display: block;
+    margin: auto;
+    justify-content: center;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    margin-bottom: 20px; /* Add some space at the bottom */
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #353E46;
+    border-radius: 3px;
+    padding: 8px;
+    text-align: left;
+}
+.action-buttons {
+    white-space: nowrap; /* Prevent button wrapping */
+}
+.action-buttons button {
+    margin-right: 5px; /* Add some space between buttons */
+}
+
+.edit-btn, .delete-btn {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    font-size: 23px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.edit-icon:hover {
+    color: #3F9AEF;
+    transition: .2s;
+}
+
+.del-icon:hover {
+    color: #ED3232;
+    transition: .2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    font-size: 28px;
+}
+

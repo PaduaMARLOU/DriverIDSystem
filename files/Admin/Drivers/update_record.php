@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
     }
 
 // Initialize message variable
-$message = "";
+$msg = "";
 
 // Check if form is submitted with driver_id and other fields
 if(isset($_POST['driver_id'])) {
@@ -54,7 +54,7 @@ if(isset($_POST['driver_id'])) {
 
         if ($updated_record_result->num_rows > 0) {
             // Set success message
-            $message = "Record Updated Successfully! <br>You will be redirected to Driver Table after 10 seconds.";
+            $msg = "Record Updated Successfully! <br>You will be redirected to Driver Table after 10 seconds.";
             // Fetch the updated record
             $updated_record = $updated_record_result->fetch_assoc();
         } else {
@@ -127,8 +127,8 @@ if(isset($_POST['driver_id'])) {
 <body>
     <div class="container" style="text-align: center;">
         <!-- Display success message -->
-        <?php if(!empty($message)): ?>
-            <p style="color: green;"><?php echo $message; ?></p>
+        <?php if(!empty($msg)): ?>
+            <p style="color: green;"><?php echo $msg; ?></p>
         <?php endif; ?>
         
         <!-- Display updated record details -->

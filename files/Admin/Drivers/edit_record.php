@@ -47,7 +47,19 @@ if(isset($_GET['driver_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Record</title>
+
+    <link rel="icon" href="../../../img/Brgy Estefania Logo.png" alt="Brgy. Estefania Logo">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            color: #2b333a;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -62,6 +74,17 @@ if(isset($_GET['driver_id'])) {
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        .back {
+            position: relative;
+            color: #4967E7;
+            font-size: 40px;
+        }
+
+        .back:active {
+            color: #6F82D2;
+        }
+
         h2 {
             text-align: center;
         }
@@ -97,6 +120,7 @@ if(isset($_GET['driver_id'])) {
 </head>
 <body>
     <div class="container">
+        <a href="drivertable.php"><ion-icon name="arrow-back-circle" class="back"></ion-icon></a>
         <h2>Edit Record</h2>
         <form action="update_record.php" method="POST">
             <input type="hidden" name="driver_id" value="<?php echo $row['driver_id']; ?>">
@@ -113,6 +137,9 @@ if(isset($_GET['driver_id'])) {
             <input type="submit" value="Submit">
         </form>
     </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
 

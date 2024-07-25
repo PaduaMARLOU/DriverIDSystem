@@ -4,19 +4,19 @@ session_start();
 
 include("../../connections.php");
 
-if(isset($_SESSION["username"])) {
+if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
 
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
     $fetch = mysqli_fetch_assoc($authentication);
     $account_type = $fetch["account_type"];
 
-    if($account_type != 1 && $account_type != 2) {
-        header("Location: ../../Forbidden.php");
+    if ($account_type != 1) {
+        header("Location: ../../Forbidden2.php");
         exit; // Ensure script stops executing after redirection
     }
 } else {
-    header("Location: ../../Forbidden.php");
+    header("Location: ../../Forbidden2.php");
     exit; // Ensure script stops executing after redirection
 }
 
@@ -29,44 +29,169 @@ function redirectToDriver() {
           </script>";
 }
 
-// Check if confirmation parameter and formatted_id parameter are set
-if(isset($_GET['confirm']) && $_GET['confirm'] == 'true' && isset($_GET['formatted_id'])) {
-    // Sanitize the formatted_id parameter to prevent SQL injection
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Driver</title>
+    <style>
+        /* Styles for centering the message container */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .message-container {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+
+        .error-message {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button.confirm {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        button.cancel {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        .warning-gif {
+            margin-bottom: 20px;
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<?php
+// First confirmation step
+if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['formatted_id'])) {
     $formatted_id = mysqli_real_escape_string($connections, $_GET['formatted_id']);
     
-    // Prepare DELETE query
-    $query = "DELETE FROM tbl_driver WHERE formatted_id = '$formatted_id'";
-
-    // Execute the DELETE query
-    $result = mysqli_query($connections, $query);
-
-    // Check if deletion was successful
-    if ($result) {
-        // Deletion successful, display success message as HTML with CSS
-        echo "<div style='background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; padding: 10px; margin-bottom: 20px;'>Driver record deleted successfully. Redirecting...</div>";
-        // Redirect to driver.php after 3 seconds
-        redirectToDriver();
+    // Check if confirmation string is provided and matches
+    if (isset($_POST['confirmation_string']) && $_POST['confirmation_string'] === 'CONFIRM DELETION') {
+        // Proceed to the second confirmation step
+        echo "<div class='center-container'>
+                <div class='message-container error-message'>
+                    <img src='../../img/warning.gif' alt='Warning' class='warning-gif'>
+                    <p>LAST REMINDER! <hr> Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p>
+                    <p><strong>Are you sure you <i>really</i> want to delete this driver record? Type 'YES' to confirm.<strong></p>
+                    <form method='post' action='delete_driver.php?step=final_confirm&formatted_id=$formatted_id'>
+                        <label for='final_confirmation'>Enter confirmation:</label>
+                        <input type='text' id='final_confirmation' name='final_confirmation' required>
+                        <div class='button-container'>
+                            <button type='submit' class='confirm'>Confirm</button>
+                            <button type='button' class='cancel' onclick='window.location.href=\"driver.php\"'>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+              </div>";
     } else {
-        // Deletion failed, display error message
+        // Incorrect confirmation string
         echo "<script>
-                alert('Error: " . mysqli_error($connections) . "');
+                alert('Error: Incorrect confirmation string.');
                 window.location.href = 'driver.php';
             </script>";
     }
-} elseif(isset($_GET['formatted_id'])) {
-    // formatted_id parameter is set but confirmation parameter is missing
-    // Display confirmation prompt
+} elseif (isset($_GET['step']) && $_GET['step'] == 'final_confirm' && isset($_GET['formatted_id'])) {
     $formatted_id = mysqli_real_escape_string($connections, $_GET['formatted_id']);
-    echo "<script>
-            var confirmDelete = confirm('Are you sure you want to delete this driver record?');
-            if(confirmDelete) {
-                // User confirmed deletion, redirect to delete_driver.php with confirm=true
-                window.location.href = 'delete_driver.php?confirm=true&formatted_id=$formatted_id';
-            } else {
-                // User cancelled deletion, redirect back to driver.php
+    
+    // Check if final confirmation string is provided and matches
+    if (isset($_POST['final_confirmation']) && $_POST['final_confirmation'] === 'YES') {
+        
+        // Prepare DELETE queries for related records
+        $delete_violations_query = "DELETE FROM tbl_violation WHERE fk_driver_id = (SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id')";
+        $delete_vehicles_query = "DELETE FROM tbl_vehicle WHERE fk_driver_id = (SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id')";
+        $delete_driver_query = "DELETE FROM tbl_driver WHERE formatted_id = '$formatted_id'";
+
+        // Execute DELETE queries
+        $delete_violations_result = mysqli_query($connections, $delete_violations_query);
+        $delete_vehicles_result = mysqli_query($connections, $delete_vehicles_query);
+        $delete_driver_result = mysqli_query($connections, $delete_driver_query);
+
+        // Check if deletion was successful
+        if ($delete_driver_result) {
+            // Deletion successful, display success message as HTML with CSS
+            echo "<div class='center-container'>
+                    <div class='message-container success-message'>
+                        <p>Driver record and all related records deleted successfully. Redirecting...</p>
+                    </div>
+                  </div>";
+            // Redirect to driver.php after 2 seconds
+            redirectToDriver();
+        } else {
+            // Deletion failed, display error message
+            echo "<script>
+                    alert('Error: " . mysqli_error($connections) . "');
+                    window.location.href = 'driver.php';
+                </script>";
+        }
+    } else {
+        // Incorrect final confirmation string
+        echo "<script>
+                alert('Error: Incorrect final confirmation string.');
                 window.location.href = 'driver.php';
-            }
-          </script>";
+            </script>";
+    }
+} elseif (isset($_GET['formatted_id'])) {
+    // Display first confirmation prompt
+    $formatted_id = mysqli_real_escape_string($connections, $_GET['formatted_id']);
+    echo "<div class='center-container'>
+            <div class='message-container error-message'>
+                <img src='../../img/warning.gif' alt='Warning' class='warning-gif'>
+                <p>Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p>
+                <p>Are you sure you want to delete this driver record? Type 'CONFIRM DELETION' to confirm.</p>
+                <form method='post' action='delete_driver.php?step=confirm_deletion&formatted_id=$formatted_id'>
+                    <label for='confirmation_string'>Enter confirmation:</label>
+                    <input type='text' id='confirmation_string' name='confirmation_string' required>
+                    <div class='button-container'>
+                        <button type='submit' class='confirm'>Confirm</button>
+                        <button type='button' class='cancel' onclick='window.location.href=\"driver.php\"'>Cancel</button>
+                    </div>
+                </form>
+            </div>
+          </div>";
 } else {
     // If formatted_id parameter is not set, display an error message and redirect back to driver.php
     echo "<script>
@@ -78,3 +203,6 @@ if(isset($_GET['confirm']) && $_GET['confirm'] == 'true' && isset($_GET['formatt
 // Close the database connection
 mysqli_close($connections);
 ?>
+
+</body>
+</html>
