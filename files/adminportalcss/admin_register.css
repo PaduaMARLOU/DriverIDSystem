@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    color: white;
+}
+
+body {
+    background-image: url('../../img/Barangay\ Hall\ Old\ Image.jpeg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.logo {
+    filter: drop-shadow(1px 1px 8px gray);
+    position: relative;
+    top: -1em;
+    width: 250px;
+    transition: .4s ease;
+}
+
+.container {
+    position: relative;
+    top: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.hr {
+    border: 1px solid white;
+}
+
+.admin {
+    position: relative;
+    top: .3em;
+    font-size: 27px;
+    text-shadow: 1px 1px 10px black;
+}
+
+.admin-register {
+    position: relative;
+    border: 2px solid white;
+    width: 22em;
+    padding-top: 1em;
+    padding-bottom: 1.5em;
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px gray;
+    backdrop-filter: blur(20px);
+}
+
+.icon {
+    position: relative;
+    font-size: 27px;
+    text-shadow: 1px 1px 5px gray;
+}
+
+.btn-register {
+    position: relative;
+    color: white;
+    top: -.2em;
+    font-size: 20px;
+    height: 1.8em;
+    width: 12em;
+    border-radius: 4px;
+    background-color: transparent;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.btn-register:hover {
+    position: relative;
+    height: 2em;
+    width: 12.5em;
+    font-size: 20.7px;
+    box-shadow: 1px 1px 8px whitesmoke;
+    background-color: #FCCB57;
+}
+
+.t-box {
+    position: relative;
+    height: 2.2em;
+    width: 17em;
+    outline: none;
+    color: black;
+}
+
+.err {
+    position: relative;
+    right: -10px;
+    color: white;
+    text-shadow: 1px 1px 5px red;
+}

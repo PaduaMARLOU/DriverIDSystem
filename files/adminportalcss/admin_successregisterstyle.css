@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    color: white;
+}
+
+*::selection {
+    background-color: rgba(33, 236, 236, 0.99);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../img/rainbow\ abstract.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    filter: blur(8px);
+    -webkit-filter: blur(25px);
+    z-index: -1; /* Ensure it stays behind other content */
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(0px); /* No blur on the content itself */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welc {
+    position: relative;
+    font-size: 75px;
+    text-shadow: 1px 1px 8px black;
+}
+
+.succ {
+    position: relative;
+    font-size: 30px;
+    text-shadow: 1px 1px 8px black;
+}
+
+.i {
+    font-size: 20px;
+}
+
+.log-in {
+    position: relative;
+    text-decoration: none;
+    font-size: 30px;
+    border: 2px solid white;
+    padding-top: .1em;
+    padding-left: .5em;
+    padding-right: .5em;
+    padding-bottom: .1em;
+    border-radius: 4px;
+    transition: .2s;
+}
+
+.log-in:hover {
+    font-size: 33px;
+    text-shadow: 1px 1px 8px black;
+    box-shadow: 1px 1px 8px white;
+    background-color: rgb(255, 182, 72);
+}
+
+.gif-checked {
+    position: relative;
+    left: -.5em;
+}
+
+::-webkit-scrollbar {
+    width: 13px;
+    height: 10px;
+    background-color: #F5F5F5;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #9B9FA2;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #AEB3B8;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 5px;
+}
