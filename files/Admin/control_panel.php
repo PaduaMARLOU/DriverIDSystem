@@ -133,12 +133,12 @@ if(isset($_SESSION["username"])) {
                     <div class="col-md-6">
                         <div class="control-panel-box">
                             <h2>Calendar Control</h2>
-                            <a href="#" class="control-panel-btn" id="adminButton">
+                            <a href="#" class="control-panel-btn" id="calendarButton">
                                 <i class="fas fa-calendar-alt"></i> Adjust Calendar Dates
                             </a>
                             <script>
                                 // Open admin registration page in a new tab when clicking on Calendar Control button
-                                document.getElementById('adminButton').onclick = function() {
+                                document.getElementById('calendarButton').onclick = function() {
                                     window.open("control/calendar_entries.php", "_blank");
                                 };
                             </script>
@@ -147,13 +147,46 @@ if(isset($_SESSION["username"])) {
                     <div class="col-md-6">
                         <div class="control-panel-box">
                             <h2>Account Access Control</h2>
-                            <a href="#" class="control-panel-btn" id="driverButton">
+                            <a href="#" class="control-panel-btn" id="accountButton">
                                 <i class="fas fa-user-shield"></i> Manage Accounts
                             </a>
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
-                                document.getElementById('driverButton').onclick = function() {
+                                document.getElementById('accountButton').onclick = function() {
                                     window.open("control/admin_accounts.php", "_blank");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-panel-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Association Settings</h2>
+                            <a href="#" class="control-panel-btn" id="associationButton">
+                                <i class="fas fa-users"></i> Manage Association Details
+                            </a>
+                            <script>
+                                // Open admin registration page in a new tab when clicking on Calendar Control button
+                                document.getElementById('associationButton').onclick = function() {
+                                    window.open("control/association_settings.php", "_blank");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Violation Categories</h2>
+                            <a href="#" class="control-panel-btn" id="violationButton">
+                                <i class="fas fa-gavel"></i> Manage Violation Categories
+                            </a>
+                            <script>
+                                // Open driver registration page in a new tab when clicking on Account Access Control button
+                                document.getElementById('violationButton').onclick = function() {
+                                    window.open("control/violation_categories.php", "_blank");
                                 };
                             </script>
                         </div>
