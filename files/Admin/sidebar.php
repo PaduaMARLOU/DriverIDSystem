@@ -277,6 +277,12 @@ input[type="file"]::-webkit-file-upload-button {
                     <span class="title" title="Register icon">Registration</span>
                 </a>
             </li>
+            <li>
+                <a href="control_panel.php">
+                    <i class="entypo-cog"></i>
+                    <span class="title" title="Control Panel icon">Control Panel</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

@@ -2,28 +2,22 @@
 date_default_timezone_set('Asia/Manila');
 
 function build_calendar($month, $year) {
-    // Define holidays
-    $holidays = array(
-        '2024-01-01' => 'New Year\'s Day',
-        '2024-02-25' => 'EDSA People Power Revolution Anniversary',
-        '2024-04-09' => 'Araw ng Kagitingan',
-        '2024-04-18' => 'Maundy Thursday',
-        '2024-04-19' => 'Good Friday',
-        '2024-05-01' => 'Labor Day',
-        '2024-06-12' => 'Independence Day',
-        '2024-08-21' => 'Ninoy Aquino Day',
-        '2024-08-26' => 'National Heroes Day',
-        '2024-11-01' => 'All Saints\' Day',
-        '2024-11-02' => 'All Souls\' Day',
-        '2024-11-30' => 'Bonifacio Day',
-        '2024-12-08' => 'Feast of the Immaculate Conception',
-        '2024-12-25' => 'Christmas Day',
-        '2024-12-30' => 'Rizal Day'
-        // Add other holidays as needed/ ***Admin should have the capability to add in the Admin portal***
-    );
-
     // Database connection
     include "connections.php";
+
+    // Fetch holidays and custom calendar settings
+    $holidays = array();
+    $calendar_settings = array();
+    $stmt = $connections->prepare("SELECT calendar_date, calendar_description, slots, end_time, calendar_control FROM tbl_calendar");
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $holidays[$row['calendar_date']] = $row['calendar_description'];
+            $calendar_settings[$row['calendar_date']] = $row;
+        }
+        $stmt->close();
+    }
+
     // SQL query to count bookings for each day
     $stmt = $connections->prepare("SELECT DATE, COUNT(*) AS bookings_count FROM tbl_appointment WHERE MONTH(DATE) = ? AND YEAR(DATE) = ? GROUP BY DATE");
     $stmt->bind_param('ss', $month, $year);
@@ -38,11 +32,11 @@ function build_calendar($month, $year) {
         }
         $stmt->close();
     }
-    
+
     // Calendar generation code...
-    $daysOfWeek = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-    $firstDayOfMonth = mktime(0,0,0,(int)$month,1,$year);
-    $numberDays = date('t',$firstDayOfMonth);
+    $daysOfWeek = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+    $firstDayOfMonth = mktime(0, 0, 0, (int)$month, 1, $year);
+    $numberDays = date('t', $firstDayOfMonth);
     $dateComponents = getdate($firstDayOfMonth);
     $monthName = $dateComponents['month'];
     $dayOfWeek = $dateComponents['wday'];
@@ -52,65 +46,75 @@ function build_calendar($month, $year) {
 
     $calendar = "<table class='table table-bordered'>";
     $calendar .= "<center><h2>$monthName $year</h2>";
-    $calendar.= "<a class='btn btn-xs btn-success' href='?month=".date('m', mktime(0, 0, 0, (int)$month-1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, (int)$month-1, 1, $year))."'>Previous Month</a> ";
-    $calendar.= " <a class='btn btn-xs btn-danger' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a> ";
-    $calendar.= "<a class='btn btn-xs btn-primary' href='?month=".date('m', mktime(0, 0, 0, (int)$month+1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, (int)$month+1, 1, $year))."'>Next Month</a></center><br>";
-    
+    $calendar .= "<a class='btn btn-xs btn-success' href='?month=" . date('m', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "'>Previous Month</a> ";
+    $calendar .= "<a class='btn btn-xs btn-danger' href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
+    $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "'>Next Month</a></center><br>";
+
     $calendar .= "<tr>";
-    foreach($daysOfWeek as $day) {
-        if ($day == 'Saturday' || $day == 'Sunday') {
-            $calendar .= "<th class='header not-available'>$day</th>";
-        } else {
-            $calendar .= "<th class='header'>$day</th>";
-        }
-    } 
+    foreach ($daysOfWeek as $day) {
+        $headerClass = ($day == 'Saturday' || $day == 'Sunday') ? 'header not-available' : 'header';
+        $calendar .= "<th class='$headerClass'>$day</th>";
+    }
 
     $currentDay = 1;
     $calendar .= "</tr><tr>";
 
-    if ($dayOfWeek > 0) { 
-        for($k=0;$k<$dayOfWeek;$k++){
-            $calendar .= "<td class='empty'></td>"; 
+    if ($dayOfWeek > 0) {
+        for ($k = 0; $k < $dayOfWeek; $k++) {
+            $calendar .= "<td class='empty'></td>";
         }
     }
-    
+
     $month = str_pad((int)$month, 2, "0", STR_PAD_LEFT);
-  
+
     while ($currentDay <= $numberDays) {
         if ($dayOfWeek == 7) {
             $dayOfWeek = 0;
             $calendar .= "</tr><tr>";
         }
-        
+
         $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
         $date = "$year-$month-$currentDayRel";
-        
+
         $dayname = strtolower(date('l', strtotime($date)));
-        $eventNum = 0;
         $today = $date == date('Y-m-d') ? "today" : "";
 
-        if ($date < date('Y-m-d') || $dayname == 'saturday' || $dayname == 'sunday' || isset($holidays[$date]) || ($date == date('Y-m-d') && $currentTime >= '15:00')) {
-            $holidayText = isset($holidays[$date]) ? "<br>".$holidays[$date] : "";
+        $isHoliday = isset($holidays[$date]);
+        $slots = isset($calendar_settings[$date]['slots']) ? $calendar_settings[$date]['slots'] : 30;
+        $endTime = isset($calendar_settings[$date]['end_time']) ? $calendar_settings[$date]['end_time'] : '15:00';
+        $calendarControl = isset($calendar_settings[$date]['calendar_control']) ? $calendar_settings[$date]['calendar_control'] : '';
+
+        // Determine if booking should be disabled
+        $isWeekend = $dayname == 'saturday' || $dayname == 'sunday';
+        $isPastDate = $date < $datetoday;
+        $isPastCustomTime = ($date == $datetoday && $currentTime >= $endTime);
+        
+        $disableBooking = $isPastDate || $isPastCustomTime ||
+                           ($isWeekend && (empty($calendarControl) || $calendarControl == 'Disable')) ||
+                           (!$isWeekend && $calendarControl == 'Disable');
+
+        if ($disableBooking) {
+            $holidayText = $isHoliday ? "<br>".$holidays[$date] : "";
             $calendar .= "<td class='not-available'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>$holidayText";
-        } elseif (isset($bookings[$date]) && $bookings[$date] >= 30) {
+        } elseif (isset($bookings[$date]) && $bookings[$date] >= $slots) {
             $calendar .= "<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>Full</button>";
         } else {
-            $slots_left = 30 - (isset($bookings[$date]) ? $bookings[$date] : 0);
-            $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now ($slots_left slots left)</a>";
+            $slots_left = $slots - (isset($bookings[$date]) ? $bookings[$date] : 0);
+            $calendar .= "<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=" . $date . "' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now ($slots_left slots left)</a>";
         }
-            
-        $calendar .="</td>";
+
+        $calendar .= "</td>";
         $currentDay++;
         $dayOfWeek++;
     }
 
-    if ($dayOfWeek != 7) { 
+    if ($dayOfWeek != 7) {
         $remainingDays = 7 - $dayOfWeek;
-        for($l=0;$l<$remainingDays;$l++){
-            $calendar .= "<td class='empty'></td>"; 
+        for ($l = 0; $l < $remainingDays; $l++) {
+            $calendar .= "<td class='empty'></td>";
         }
     }
-     
+
     $calendar .= "</tr>";
     $calendar .= "</table>";
     echo $calendar;
@@ -140,20 +144,18 @@ function build_calendar($month, $year) {
                 </div>
             </div>
 
-                    
-                <?php
-                    $dateComponents = getdate();
-                    if(isset($_GET['month']) && isset($_GET['year'])){
-                        $month = $_GET['month'];
-                        $year = $_GET['year'];
-                    }else{
-                        $month = date('m');
-                        $year = date('Y');
-                    }
+            <?php
+                $dateComponents = getdate();
+                if(isset($_GET['month']) && isset($_GET['year'])){
+                    $month = $_GET['month'];
+                    $year = $_GET['year'];
+                }else{
+                    $month = date('m');
+                    $year = date('Y');
+                }
 
-                    build_calendar((int)$month, $year);
-                ?>
-            </div>
+                build_calendar((int)$month, $year);
+            ?>
         </div>
     </div>
 </body>
