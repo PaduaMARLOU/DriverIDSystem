@@ -153,7 +153,7 @@ if(isset($_SESSION["username"])) {
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
                                 document.getElementById('driverButton').onclick = function() {
-                                    window.open("../../registrationpage.php", "_blank");
+                                    window.open("control/admin_accounts.php", "_blank");
                                 };
                             </script>
                         </div>
