@@ -22,7 +22,7 @@ include("connections.php");
         <h3>PAGE NOT FOUND 404</h3>
         <br>
         <br>
-        <h5><a href="files/Admin/index.php" class="btn-delete">Back to Admin's Dashboard!</a></h5>
+        <h5><a href="files/Admin/index.php" class="btn-delete">I Understand</a></h5>
     </center>
 
     <script>

@@ -1,4 +1,29 @@
 <?php
+
+session_start();
+
+include("../../../connections.php");
+
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
+
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
+
+    if($account_type != 1){
+        header("Location: ../../../Forbidden3.php");
+        exit; // Ensure script stops executing after redirection
+    }
+} else {
+    header("Location: ../../../Forbidden2.php");
+    exit; // Ensure script stops executing after redirection
+}
+
+?>
+
+
+<?php
 include '../../../connections.php';
 date_default_timezone_set('Asia/Manila');
 
@@ -37,6 +62,7 @@ $years = range(date('Y') - 10, date('Y') + 10); // Last 10 years and next 10 yea
 <html>
 <head>
     <title>Calendar Entries</title>
+    <link rel="icon" href="../../../img/Brgy Estefania Logo.png" type="image/png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <style>
         html {
