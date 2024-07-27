@@ -62,23 +62,40 @@ if(isset($_SESSION["username"])) {
 <body>
     <div class="container">
         <?php
-        // Assuming you have already established a database connection
-        include "../../connections.php";
-
         // Check if a driver ID is provided
         if (isset($_GET['id'])) {
-            $driver_id = $_GET['id'];
+            $formatted_id = $_GET['id'];
 
             // Get the current date and time
             date_default_timezone_set('Asia/Manila');
             $current_datetime = date('Y-m-d H:i:s');
 
             // Update the verification_stat and renew_stat for the driver
-            $update_query = "UPDATE tbl_driver SET verification_stat = 'Registered', renew_stat = 'Active', driver_registered = '$current_datetime', fk_admin_id = '$admin_id' WHERE formatted_id = '$driver_id'";
-            $update_result = mysqli_query($connections, $update_query);
+            $update_driver_query = "UPDATE tbl_driver SET verification_stat = 'Registered', renew_stat = 'Active', driver_registered = '$current_datetime', fk_admin_id = '$admin_id' WHERE formatted_id = '$formatted_id'";
+            $update_driver_result = mysqli_query($connections, $update_driver_query);
 
-            if ($update_result) {
-                echo "<p class='message'>Verification status updated successfully for Driver ID: $driver_id.</p>";
+            if ($update_driver_result) {
+                // Retrieve the driver_id from tbl_driver using formatted_id
+                $driver_query = "SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id'";
+                $driver_result = mysqli_query($connections, $driver_query);
+
+                if ($driver_result && mysqli_num_rows($driver_result) > 0) {
+                    $driver_row = mysqli_fetch_assoc($driver_result);
+                    $driver_id = $driver_row['driver_id'];
+
+                    // Update vehicle_registered in tbl_vehicle with the same datetime using fk_driver_id
+                    $update_vehicle_query = "UPDATE tbl_vehicle SET vehicle_registered = '$current_datetime' WHERE fk_driver_id = '$driver_id'";
+                    $update_vehicle_result = mysqli_query($connections, $update_vehicle_query);
+
+                    if ($update_vehicle_result) {
+                        echo "<p class='message'>Verification status and vehicle registration updated successfully for Driver ID: $formatted_id.</p>";
+                    } else {
+                        echo "<p class='message'>Verification status updated, but error updating vehicle registration: " . mysqli_error($connections) . "</p>";
+                    }
+                } else {
+                    echo "<p class='message'>No driver found for Formatted ID: $formatted_id.</p>";
+                }
+
                 echo '<p><a href="verify.php" class="link">Go back to verification</a></p>';
             } else {
                 // If update query fails, display an error message
@@ -94,8 +111,6 @@ if(isset($_SESSION["username"])) {
         // Close the database connection
         mysqli_close($connections);
         ?>
-
-
     </div>
 </body>
 </html>

@@ -31,7 +31,7 @@ if(isset($_SESSION["username"])) {
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
     <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
-	<title>Barangay Estefania Admin - Driver ID System</title>
+    <title>Barangay Estefania Admin - Driver ID System</title>
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
@@ -59,6 +59,7 @@ if(isset($_SESSION["username"])) {
         include "../../connections.php";
         // Fetch data from the database where verification_stat is 'Pending'
         $query = "SELECT 
+                      tbl_driver.fk_sched_id,
                       tbl_driver.formatted_id, 
                       tbl_driver.first_name, 
                       tbl_driver.middle_name, 
@@ -66,7 +67,7 @@ if(isset($_SESSION["username"])) {
                       tbl_driver.driver_category, 
                       tbl_driver.verification_stat, 
                       tbl_association.association_name, 
-                      tbl_association.association_area 
+                      tbl_association.association_area
                   FROM 
                       tbl_driver 
                   INNER JOIN 
@@ -98,6 +99,7 @@ if(isset($_SESSION["username"])) {
             <table class="table table-bordered datatable" id="table-4">
                 <thead>
                     <tr>
+                        <th>Appointment ID</th>
                         <th>Driver ID</th>
                         <th>Driver Name</th>
                         <th>Vehicle Type</th>
@@ -112,6 +114,7 @@ if(isset($_SESSION["username"])) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         ?>
                         <tr>
+                            <td><?php echo $row['fk_sched_id']; ?></td>
                             <td><?php echo $row['formatted_id']; ?></td>
                             <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
                             <td><?php echo $row['driver_category']; ?></td>
@@ -130,6 +133,7 @@ if(isset($_SESSION["username"])) {
                 </tbody>
                 <tfoot>
                     <tr>
+                        <th>Appointment ID</th>
                         <th>Driver ID</th>
                         <th>Driver Name</th>
                         <th>Vehicle Type</th>
@@ -150,7 +154,7 @@ if(isset($_SESSION["username"])) {
         ?>
         <br />
         <!-- Footer -->
-		<?php include "footer.php" ?>
+        <?php include "footer.php" ?>
         <!-- Imported styles on this page -->
         <link rel="stylesheet" href="assets/js/datatables/datatables.css">
         <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">

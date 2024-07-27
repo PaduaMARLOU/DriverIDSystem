@@ -82,7 +82,7 @@ CREATE TABLE `tbl_vehicle` (
   `vehicle_color` varchar(255) NOT NULL,
   `brand` varchar(255) NOT NULL,
   `plate_num` varchar(20) DEFAULT NULL, /*Changed to NULL*/
-  `vehicle_registered` datetime NOT NULL, /*Changed Format from date to datetime*/
+  `vehicle_registered` datetime DEFAULT NULL, /*Changed Format from date to datetime*/
   `vehicle_img_front` varchar(255) NOT NULL,
   `vehicle_img_back` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
