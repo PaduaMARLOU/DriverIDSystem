@@ -95,7 +95,7 @@
 							<td class="center"><?php echo $row['verification_stat']; ?></td>
 							<td class="center"><?php echo $row['renew_stat']; ?></td>
 							<td>
-								<a href="ID_generation.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-success btn-sm btn-icon icon-left">
+								<a href="ID_generation.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-success btn-sm btn-icon icon-left" target="_blank">
 									<i class="entypo-vcard"></i>
 									Generate Driver ID
 								</a>
