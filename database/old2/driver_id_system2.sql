@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2024 at 02:55 PM
+-- Generation Time: Jul 24, 2024 at 04:56 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -43,22 +43,17 @@ CREATE TABLE `tbl_admin` (
   `logout_time` datetime NOT NULL,
   `account_type` int(1) NOT NULL,
   `date_registered` datetime NOT NULL,
-  `img` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL
+  `img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tbl_admin`
 --
 
-INSERT INTO `tbl_admin` (`admin_id`, `first_name`, `middle_name`, `last_name`, `sex`, `mobile_number`, `username`, `password`, `attempt`, `relog_time`, `login_time`, `logout_time`, `account_type`, `date_registered`, `img`, `status`) VALUES
-(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-07-27 18:57:37', '2024-07-26 20:42:40', 1, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
-(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-07-26 20:42:48', '2024-07-26 20:46:10', 2, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
-(3, 'asdada', 'asdada', 'dsadas', 'dasdasd', '09090909090', 'admin3', '123', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
-(4, 'Dino', 'Me', 'Saur', 'Male', '09090090909', 'Dino', 'dino', '0', '0000-00-00 00:00:00', '2024-07-25 21:40:09', '2024-07-25 21:40:14', 2, '2024-07-25 18:08:52', '1_Dino_Saur_43444.jpg', 'Approved'),
-(5, 'Dino', 'Me', 'Saur', 'Male', '09090090909', 'DinoMe', '123', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, '2024-07-25 18:11:26', '1_Dino_Saur_43444.jpg', 'Approved'),
-(6, 'UPLOD', '8 Ma', 'Lodi', 'Male', '09090909090', 'upload8', '123', '0', '0000-00-00 00:00:00', '2024-07-25 21:13:18', '2024-07-25 21:39:48', 2, '2024-07-25 18:39:49', 'upload8 - 2024.07.25 - 03.16.31pm.jpg', 'Approved'),
-(7, 'UPLOD 1million', '9 Ma', 'Lodi', 'Male', '09090909090', 'upload9', '123', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, '2024-07-25 18:43:58', '7_UPLOD_9 Ma_Lodi_2024-07-26_43444.jpg', 'Approved');
+INSERT INTO `tbl_admin` (`admin_id`, `first_name`, `middle_name`, `last_name`, `sex`, `mobile_number`, `username`, `password`, `attempt`, `relog_time`, `login_time`, `logout_time`, `account_type`, `date_registered`, `img`) VALUES
+(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-07-15 00:08:05', '2024-07-15 00:07:52', 1, '0000-00-00 00:00:00', ''),
+(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-07-12 00:05:53', '2024-07-12 00:07:29', 2, '0000-00-00 00:00:00', ''),
+(3, 'asdada', 'asdada', 'dsadas', 'dasdasd', '09090909090', 'admin3', '123', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -80,6 +75,9 @@ CREATE TABLE `tbl_appointment` (
 INSERT INTO `tbl_appointment` (`sched_id`, `fk_driver_id`, `DATE`, `booking_date`) VALUES
 (1, 2, '2024-07-01', '0000-00-00 00:00:00'),
 (2, 3, '2024-07-01', '0000-00-00 00:00:00'),
+(3, 4, '2024-07-01', '0000-00-00 00:00:00'),
+(4, 5, '2024-07-01', '0000-00-00 00:00:00'),
+(5, 7, '2024-07-01', '2024-06-28 12:45:37'),
 (6, 8, '2024-07-01', '2024-06-28 18:47:50'),
 (7, 9, '2024-07-01', '2024-06-28 19:09:13'),
 (8, 10, '2024-07-01', '2024-06-28 19:12:39'),
@@ -89,13 +87,7 @@ INSERT INTO `tbl_appointment` (`sched_id`, `fk_driver_id`, `DATE`, `booking_date
 (12, 16, '2024-07-01', '2024-06-30 17:47:31'),
 (13, 17, '2024-07-01', '2024-06-30 17:52:33'),
 (14, 18, '2024-07-01', '2024-06-30 17:56:41'),
-(15, 19, '2024-07-01', '2024-06-30 18:07:22'),
-(16, 20, '2024-07-29', '2024-07-26 17:34:41'),
-(17, 21, '2024-07-29', '2024-07-26 17:35:41'),
-(18, 22, '2024-07-30', '2024-07-26 17:47:14'),
-(19, 23, '2024-07-31', '2024-07-26 17:54:30'),
-(20, 24, '2024-07-31', '2024-07-27 19:56:12'),
-(21, 25, '2024-07-31', '2024-07-27 19:56:53');
+(15, 19, '2024-07-01', '2024-06-30 18:07:22');
 
 -- --------------------------------------------------------
 
@@ -117,42 +109,7 @@ CREATE TABLE `tbl_association` (
 --
 
 INSERT INTO `tbl_association` (`association_id`, `association_category`, `association_name`, `association_area`, `association_president`, `association_color`) VALUES
-(1, 'E-Bike', 'sa balay', 'dasdasdasd', 'dsadaasdasdaa', 'sadasdasdasd'),
-(6, 'E-Bike', 'Happy', 'Dinosaur', 'Siya Eh', '#ff0a0a'),
-(7, 'Tricycle', 'sadsa', 'asdas', 'asdasd', '#9eefff'),
-(8, 'Trisikad', 'Sabi', 'asdasd', 'adsad', '#bd9042');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_calendar`
---
-
-CREATE TABLE `tbl_calendar` (
-  `calendar_id` int(11) NOT NULL,
-  `calendar_date` date NOT NULL,
-  `calendar_description` varchar(255) DEFAULT NULL,
-  `slots` int(11) DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
-  `calendar_control` enum('Enable','Disable') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_calendar`
---
-
-INSERT INTO `tbl_calendar` (`calendar_id`, `calendar_date`, `calendar_description`, `slots`, `end_time`, `calendar_control`) VALUES
-(3, '2024-08-04', '', 20, '15:00:00', 'Enable'),
-(4, '2024-08-21', 'Ninoy Aqquino Day', 40, '15:00:00', 'Disable'),
-(6, '2024-07-29', '', 25, '20:28:00', 'Enable'),
-(7, '2024-07-30', 'Britdi ni Adszkieesz', 30, '15:28:00', 'Disable'),
-(8, '2024-07-31', '', 10, '00:00:00', 'Enable'),
-(10, '2024-08-19', '', 2, '15:00:00', 'Enable'),
-(11, '2024-08-14', '', 30, '15:00:00', 'Enable'),
-(12, '2024-08-11', '', 23, '15:00:00', 'Enable'),
-(13, '2024-08-19', '', 2, '15:00:00', 'Enable'),
-(15, '2024-08-13', '', 2, '15:00:00', 'Enable'),
-(17, '2024-07-13', '', 20, '15:00:00', 'Enable');
+(1, 'E-Bike', 'sa balay', 'dasdasdasd', 'dsadaasdasdaa', 'sadasdasdasd');
 
 -- --------------------------------------------------------
 
@@ -200,24 +157,21 @@ CREATE TABLE `tbl_driver` (
 --
 
 INSERT INTO `tbl_driver` (`driver_id`, `driver_category`, `formatted_id`, `first_name`, `middle_name`, `last_name`, `suffix_name`, `nickname`, `age`, `birth_date`, `birth_place`, `sex`, `address`, `mobile_number`, `civil_status`, `religion`, `citizenship`, `height`, `weight`, `pic_2x2`, `doc_proof`, `name_to_notify`, `relationship`, `num_to_notify`, `vehicle_ownership`, `verification_stat`, `fk_association_id`, `driver_registered`, `renew_stat`, `fk_sched_id`, `fk_vehicle_id`, `fk_admin_id`) VALUES
-(2, 'E-Bike', 'ETRK-0002', 'Wabafet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '../../uploads/drivers/66a4e24c0e9ff_ETRK-0002__43444.jpg', '../../uploads/documents/66a4e24c0ed2f_ETRK-0002__43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
-(3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 56, 56, '../../uploads/drivers/66a4e287bb5b0_ETRK-0003__43444.jpg', '../../uploads/documents/66a4e287bb755_ETRK-0003__43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
-(8, 'E-Bike', 'ETRK-0008', 'Aduken', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-26 03:27:41', 'Active', 6, 6, 1),
-(9, 'E-Bike', 'ETRK-0009', 'Masdad', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-27 20:09:05', 'Active', 7, 7, 1),
+(2, 'E-Bike', 'ETRK-0002', 'Wabafet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 0, 0, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Revoked due to Violations', 1, 1, NULL),
+(3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 0, 0, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
+(4, 'E-Bike', 'ETRK-0004', 'Dorder', 'Ma', 'Lodi', 'Jr', 'asdsad', 22, '2002-05-01', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-12 01:20:32', 'Active', 3, 3, 1),
+(5, 'E-Bike', 'ETRK-0005', 'malo', 'Ma', 'Lodi', 'Jr', 'asdsad', 20, '2003-08-17', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 4, 4, NULL),
+(7, 'E-Bike', 'ETRK-0007', 'malo', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-28', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 5, 5, NULL),
+(8, 'E-Bike', 'ETRK-0008', 'Aduken', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 6, 6, NULL),
+(9, 'E-Bike', 'ETRK-0009', 'Masdad', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 7, 7, NULL),
 (10, 'E-Bike', 'ETRK-0010', 'Bushzxada', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 8, 8, NULL),
 (11, 'E-Bike', 'ETRK-0011', 'SADASD', 'Ma', 'Lodi', 'Jr', 'asdsad', 6, '2018-01-07', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 1.png', 'Cost Benefit Analysis 1.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 9, 9, NULL),
-(12, 'E-Bike', 'ETRK-0012', 'asdasdas', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-04-15', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, '0000-00-00 00:00:00', '', 10, 10, 1),
+(12, 'E-Bike', 'ETRK-0012', 'asdasdas', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-04-15', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 10, 10, NULL),
 (13, 'Trisikad', 'TSKD-0013', 'Modaves', 'Ma', 'Lodi', 'Jr', 'asdsad', 8, '2015-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 11, 11, NULL),
 (16, 'E-Bike', 'ETRK-0016', 'UPLOD 2', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/668129b387e33_Cat.jpg', 'uploads/documents/668129b388155_Cat.jpg', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 12, 12, NULL),
 (17, 'E-Bike', 'ETRK-0017', 'UPLOD 3', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 13, 13, NULL),
 (18, 'E-Bike', 'ETRK-0018', 'UPLOD 4', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66812bd90d2f0_ETRK-0018_Cat.jpg', 'uploads/documents/66812bd90d6f6_ETRK-0018_Cat.jpg', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 14, 14, NULL),
-(19, 'E-Bike', 'ETRK-0019', 'UPLOD 7', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66812e5ad1a53_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/documents/66812e5ad1c7f_ETRK-0019_Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', '', 'Registered', 1, '2024-07-27 20:24:27', 'Active', 15, 15, 1),
-(20, 'Trisikad', 'TSKD-0020', 'Happy', 'Happy', 'Happy', 'Happy', 'Happy', 0, '2024-06-30', 'Happy', 'Male', 'Happy', '23121231231', 'Single', 'Happy', 'Happy', 0, 0, '', '', '', '', '21321321321', 'Owned', 'Registered', 1, '2024-07-27 20:02:13', 'Active', 16, 16, 1),
-(21, 'E-Bike', 'ETRK-0021', 'Happy', 'Happy', 'Happy', 'Happy', 'Happy', 0, '2024-06-30', 'Happy', 'Male', 'Happy', '12312321321', 'Single', 'Happy', 'Happy', 0, 0, 'uploads/drivers/66a36ded84eb4_ETRK-0021_43444.jpg', 'uploads/documents/66a36ded8513f_ETRK-0021_43444.jpg', 'Happy', 'Happy', '12312321323', 'Owned', 'Registered', 1, '2024-07-27 20:18:19', 'Active', 17, 17, 1),
-(22, 'E-Bike', 'ETRK-0022', 'UPLOD 11', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a370a2d6a40_ETRK-0022_43444.jpg', 'uploads/documents/66a370a2d6d5a_ETRK-0022_43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-27 20:14:32', 'Active', 18, 18, 1),
-(23, 'E-Bike', 'ETRK-0023', 'Ha', 'Ha', 'Ha', 'Ha', 'Ha', 0, '2024-06-30', 'Ha', 'Male', 'Ha', '13123123131', 'Married', 'Ha', 'Ha', 0, 0, 'uploads/drivers/66a372564399d_ETRK-0023_43444.jpg', 'uploads/documents/66a3725643c33_ETRK-0023_43444.jpg', 'Ha', 'Ha', '12312312312', 'Owned', 'Registered', 1, '2024-07-27 19:07:58', 'Active', 19, 19, 1),
-(24, 'Trisikad', 'TSKD-0024', 'UPLOD 19', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', 'Female', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 6, '2024-07-27 20:11:42', 'Active', 20, 20, 1),
-(25, 'Trisikad', 'TSKD-0025', 'UPLOD 19', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-07-04', 'sadsad', 'Female', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a4e08592867_TSKD-0025_43444.jpg', 'uploads/documents/66a4e08592a08_TSKD-0025_43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 6, '2024-07-27 20:09:51', 'Active', 21, 21, 1);
+(19, 'E-Bike', 'ETRK-0019', 'UPLOD 7', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66812e5ad1a53_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/documents/66812e5ad1c7f_ETRK-0019_Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 15, 15, NULL);
 
 -- --------------------------------------------------------
 
@@ -245,8 +199,11 @@ CREATE TABLE `tbl_vehicle` (
 --
 
 INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `name_of_owner`, `addr_of_owner`, `owner_phone_num`, `vehicle_color`, `brand`, `plate_num`, `vehicle_registered`, `vehicle_img_front`, `vehicle_img_back`) VALUES
-(1, 2, 'E-Bike', 'Wabafet Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a4e24c0f040_ETRK-0002_front_43444.jpg', '../../uploads/vehicles/66a4e24c0f264_ETRK-0002_back_43444.jpg'),
-(2, 3, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a4e287bb8dc_ETRK-0003_front_43444.jpg', '../../uploads/vehicles/66a4e287bba90_ETRK-0003_back_43444.jpg'),
+(1, 2, 'E-Bike', 'Wabafet Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
+(2, 3, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
+(3, 4, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
+(4, 5, 'E-Bike', 'malo Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
+(5, 7, 'E-Bike', 'malo Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (6, 8, 'E-Bike', 'Aduken Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (7, 9, 'E-Bike', 'Masdad Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (8, 10, 'E-Bike', 'Bushzxada Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png'),
@@ -256,13 +213,7 @@ INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `na
 (12, 16, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/668129b3883d4_Cat.jpg', 'uploads/vehicles/668129b388652_Cat.jpg'),
 (13, 17, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66812ae159a55_ETRK-0017_Cat.jpg', 'uploads/vehicles/66812ae159d05_ETRK-0017_Cat.jpg'),
 (14, 18, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66812bd90da17_ETRK-0018_Cat.jpg', 'uploads/vehicles/66812bd90dc1f_ETRK-0018_Cat.jpg'),
-(15, 19, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '2024-07-27 20:24:27', 'uploads/vehicles/66812e5ad1ec6_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/vehicles/66812e5ad216d_ETRK-0019_Cost Benefit Analysis 2.png'),
-(16, 20, 'Trisikad', 'Happy Happy Happy', 'Happy', '23121231231', 'Happy', 'Happy', 'Happy', '0000-00-00 00:00:00', '', ''),
-(17, 21, 'E-Bike', 'Happy Happy Happy', 'Happy', '12312321321', 'Happy', 'Happy', 'Happy', '0000-00-00 00:00:00', 'uploads/vehicles/66a36ded8538b_ETRK-0021_43444.jpg', 'uploads/vehicles/66a36ded8566d_ETRK-0021_43444.jpg'),
-(18, 22, 'E-Bike', 'UPLOD 11 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a370a2d7159_ETRK-0022_43444.jpg', 'uploads/vehicles/66a370a2d7527_ETRK-0022_43444.jpg'),
-(19, 23, 'E-Bike', 'Ha Ha Ha', 'Ha', '13123123131', 'Ha', 'Ha', 'Ha', '0000-00-00 00:00:00', 'uploads/vehicles/66a3725643f2b_ETRK-0023_43444.jpg', 'uploads/vehicles/66a372564429c_ETRK-0023_43444.jpg'),
-(20, 24, 'Trisikad', 'UPLOD 19 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
-(21, 25, 'Trisikad', 'UPLOD 19 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a4e08592ba7_TSKD-0025_43444.jpg', 'uploads/vehicles/66a4e08592d43_TSKD-0025_43444.jpg');
+(15, 19, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66812e5ad1ec6_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/vehicles/66812e5ad216d_ETRK-0019_Cost Benefit Analysis 2.png');
 
 -- --------------------------------------------------------
 
@@ -296,7 +247,10 @@ INSERT INTO `tbl_violation` (`violation_id`, `fk_driver_id`, `fk_admin_id`, `vio
 (9, 3, 1, 'Parking Violations', 'asdasdasd', '2024-06-30 02:28:00', '2024-07-11 20:42:00'),
 (10, 2, 1, 'Violence or Theft', 'asdasdasd', '2024-06-30 02:29:00', '2024-07-11 20:42:13'),
 (11, 3, 1, 'Illegal Parking of Tricycles', 'fafdasdas', '2024-06-30 02:30:00', '2024-07-11 20:42:00'),
+(12, 4, 1, 'Illegal Parking of Tricycles', 'sadasdasd', '2024-06-30 02:30:00', '2024-07-11 20:35:36'),
+(13, 4, 1, 'Parking Violations', 'asdasdasd', '2024-06-30 02:32:00', '2024-07-11 20:35:36'),
 (14, 3, 1, 'Improper Garbage Disposal', 'sadasdasd', '2024-06-30 02:33:00', '2024-07-11 20:42:00'),
+(15, 4, 1, 'Driving Under the Influence (DUI)', 'asdasdas', '2024-06-30 02:34:00', '2024-07-11 20:35:36'),
 (16, 2, 1, 'Violence or Theft', 'oijp;kl', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
 (17, 2, 1, 'Reckless Driving', 'sadasdas', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
 (18, 2, 1, 'Reckless Driving', 'asdasdas', '2024-06-30 02:47:00', '2024-07-11 21:01:45'),
@@ -315,9 +269,9 @@ INSERT INTO `tbl_violation` (`violation_id`, `fk_driver_id`, `fk_admin_id`, `vio
 (33, 2, 1, 'Parking Violations', '12213123', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
 (34, 2, 1, 'Driving Under the Influence (DUI)', '21312312', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
 (35, 2, 1, 'Parking Violations', '12312312', '2024-06-30 02:10:00', '2024-07-15 02:10:50'),
-(36, 2, 1, 'Parking Violations', '123123', '2024-06-30 02:10:00', '2024-07-26 14:56:12'),
-(37, 2, 1, 'Reckless Driving', '21321321', '2024-06-30 02:11:00', '2024-07-26 14:56:12'),
-(38, 2, 1, 'Reckless Driving', '213123', '2024-06-30 02:11:00', '2024-07-26 14:56:12');
+(36, 2, 1, 'Parking Violations', '123123', '2024-06-30 02:10:00', NULL),
+(37, 2, 1, 'Reckless Driving', '21321321', '2024-06-30 02:11:00', NULL),
+(38, 2, 1, 'Reckless Driving', '213123', '2024-06-30 02:11:00', NULL);
 
 --
 -- Indexes for dumped tables
@@ -341,12 +295,6 @@ ALTER TABLE `tbl_appointment`
 --
 ALTER TABLE `tbl_association`
   ADD PRIMARY KEY (`association_id`);
-
---
--- Indexes for table `tbl_calendar`
---
-ALTER TABLE `tbl_calendar`
-  ADD PRIMARY KEY (`calendar_id`);
 
 --
 -- Indexes for table `tbl_driver`
@@ -381,37 +329,31 @@ ALTER TABLE `tbl_violation`
 -- AUTO_INCREMENT for table `tbl_admin`
 --
 ALTER TABLE `tbl_admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_appointment`
 --
 ALTER TABLE `tbl_appointment`
-  MODIFY `sched_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `sched_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_association`
 --
 ALTER TABLE `tbl_association`
-  MODIFY `association_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `tbl_calendar`
---
-ALTER TABLE `tbl_calendar`
-  MODIFY `calendar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `association_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_driver`
 --
 ALTER TABLE `tbl_driver`
-  MODIFY `driver_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `driver_id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_vehicle`
 --
 ALTER TABLE `tbl_vehicle`
-  MODIFY `vehicle_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `vehicle_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_violation`
@@ -427,7 +369,7 @@ ALTER TABLE `tbl_violation`
 -- Constraints for table `tbl_appointment`
 --
 ALTER TABLE `tbl_appointment`
-  ADD CONSTRAINT `fk_driver_id_appointment` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_driver_id_appointment` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`);
 
 --
 -- Constraints for table `tbl_driver`
@@ -435,21 +377,21 @@ ALTER TABLE `tbl_appointment`
 ALTER TABLE `tbl_driver`
   ADD CONSTRAINT `fk_admin_id_driver` FOREIGN KEY (`fk_admin_id`) REFERENCES `tbl_admin` (`admin_id`),
   ADD CONSTRAINT `fk_association_id_driver` FOREIGN KEY (`fk_association_id`) REFERENCES `tbl_association` (`association_id`),
-  ADD CONSTRAINT `fk_sched_id_driver` FOREIGN KEY (`fk_sched_id`) REFERENCES `tbl_appointment` (`sched_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_vehicle_id_driver` FOREIGN KEY (`fk_vehicle_id`) REFERENCES `tbl_vehicle` (`vehicle_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_sched_id_driver` FOREIGN KEY (`fk_sched_id`) REFERENCES `tbl_appointment` (`sched_id`),
+  ADD CONSTRAINT `fk_vehicle_id_driver` FOREIGN KEY (`fk_vehicle_id`) REFERENCES `tbl_vehicle` (`vehicle_id`);
 
 --
 -- Constraints for table `tbl_vehicle`
 --
 ALTER TABLE `tbl_vehicle`
-  ADD CONSTRAINT `fk_driver_id_vehicle` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_driver_id_vehicle` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`);
 
 --
 -- Constraints for table `tbl_violation`
 --
 ALTER TABLE `tbl_violation`
   ADD CONSTRAINT `fk_admin_id_violation` FOREIGN KEY (`fk_admin_id`) REFERENCES `tbl_admin` (`admin_id`),
-  ADD CONSTRAINT `fk_driver_id_violation` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_driver_id_violation` FOREIGN KEY (`fk_driver_id`) REFERENCES `tbl_driver` (`driver_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
