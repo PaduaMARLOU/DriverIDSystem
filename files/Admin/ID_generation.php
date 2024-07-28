@@ -58,9 +58,9 @@ if(isset($_GET['id'])) {
             $vehicle_img_back = $row['vehicle_img_back'];
 
             // Path to the images
-            $pic_2x2_path = "../../" . $pic_2x2;
-            $vehicle_img_front_path = "../../" . $vehicle_img_front;
-            $vehicle_img_back_path = "../../" . $vehicle_img_back;
+            $pic_2x2_path = "" . $pic_2x2;
+            $vehicle_img_front_path = "" . $vehicle_img_front;
+            $vehicle_img_back_path = "" . $vehicle_img_back;
 
             // Generate driver data string for QR code
             $driver_data = "Driver ID: $driver_id\nDriver Name: $driver_name\nNickname: $nickname\nAddress: $address\nMobile Number: $mobile_number\nVehicle Type: $vehicle_type\nAssociation: $association";

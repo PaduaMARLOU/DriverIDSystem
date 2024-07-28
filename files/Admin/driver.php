@@ -115,6 +115,10 @@
 									<i class="entypo-cancel"></i>
 									Delete
 								</a>
+								<a href="driver_profile.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-info btn-sm btn-icon icon-left" target="_blank">
+									<i class="entypo-user"></i>
+									View Driver Profile
+								</a>
 							</td>
 						</tr>
 					<?php
