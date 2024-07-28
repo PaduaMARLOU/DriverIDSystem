@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2024 at 03:20 PM
+-- Generation Time: Jul 27, 2024 at 02:55 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -200,7 +200,7 @@ CREATE TABLE `tbl_driver` (
 --
 
 INSERT INTO `tbl_driver` (`driver_id`, `driver_category`, `formatted_id`, `first_name`, `middle_name`, `last_name`, `suffix_name`, `nickname`, `age`, `birth_date`, `birth_place`, `sex`, `address`, `mobile_number`, `civil_status`, `religion`, `citizenship`, `height`, `weight`, `pic_2x2`, `doc_proof`, `name_to_notify`, `relationship`, `num_to_notify`, `vehicle_ownership`, `verification_stat`, `fk_association_id`, `driver_registered`, `renew_stat`, `fk_sched_id`, `fk_vehicle_id`, `fk_admin_id`) VALUES
-(2, 'Tricycle', 'TRCL-0002', 'Wabafeeet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '../../uploads/drivers/66a642ed72808_TRCL-0002_.jpg', '../../uploads/documents/66a642ed72e8a_TRCL-0002_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
+(2, 'E-Bike', 'ETRK-0002', 'Wabafet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '../../uploads/drivers/66a4e24c0e9ff_ETRK-0002__43444.jpg', '../../uploads/documents/66a4e24c0ed2f_ETRK-0002__43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
 (3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 56, 56, '../../uploads/drivers/66a4e287bb5b0_ETRK-0003__43444.jpg', '../../uploads/documents/66a4e287bb755_ETRK-0003__43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
 (8, 'E-Bike', 'ETRK-0008', 'Aduken', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-26 03:27:41', 'Active', 6, 6, 1),
 (9, 'E-Bike', 'ETRK-0009', 'Masdad', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-27 20:09:05', 'Active', 7, 7, 1),
@@ -209,15 +209,15 @@ INSERT INTO `tbl_driver` (`driver_id`, `driver_category`, `formatted_id`, `first
 (12, 'E-Bike', 'ETRK-0012', 'asdasdas', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-04-15', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, '0000-00-00 00:00:00', '', 10, 10, 1),
 (13, 'Trisikad', 'TSKD-0013', 'Modaves', 'Ma', 'Lodi', 'Jr', 'asdsad', 8, '2015-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Pending', 1, NULL, NULL, 11, 11, NULL),
 (16, 'E-Bike', 'ETRK-0016', 'UPLOD 2', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/668129b387e33_Cat.jpg', 'uploads/documents/668129b388155_Cat.jpg', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 12, 12, NULL),
-(17, 'E-Bike', 'ETRK-0017', 'UPLOD 3', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', '', 'Registered', 1, '2024-07-28 18:00:15', 'Active', 13, 13, 1),
+(17, 'E-Bike', 'ETRK-0017', 'UPLOD 3', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 13, 13, NULL),
 (18, 'E-Bike', 'ETRK-0018', 'UPLOD 4', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66812bd90d2f0_ETRK-0018_Cat.jpg', 'uploads/documents/66812bd90d6f6_ETRK-0018_Cat.jpg', 'sadasd', 'sadas', '09909099900', '', 'Pending', 1, NULL, NULL, 14, 14, NULL),
 (19, 'E-Bike', 'ETRK-0019', 'UPLOD 7', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', '', 'asdasd', '09090909090', '', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66812e5ad1a53_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/documents/66812e5ad1c7f_ETRK-0019_Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', '', 'Registered', 1, '2024-07-27 20:24:27', 'Active', 15, 15, 1),
 (20, 'Trisikad', 'TSKD-0020', 'Happy', 'Happy', 'Happy', 'Happy', 'Happy', 0, '2024-06-30', 'Happy', 'Male', 'Happy', '23121231231', 'Single', 'Happy', 'Happy', 0, 0, '', '', '', '', '21321321321', 'Owned', 'Registered', 1, '2024-07-27 20:02:13', 'Active', 16, 16, 1),
 (21, 'E-Bike', 'ETRK-0021', 'Happy', 'Happy', 'Happy', 'Happy', 'Happy', 0, '2024-06-30', 'Happy', 'Male', 'Happy', '12312321321', 'Single', 'Happy', 'Happy', 0, 0, 'uploads/drivers/66a36ded84eb4_ETRK-0021_43444.jpg', 'uploads/documents/66a36ded8513f_ETRK-0021_43444.jpg', 'Happy', 'Happy', '12312321323', 'Owned', 'Registered', 1, '2024-07-27 20:18:19', 'Active', 17, 17, 1),
-(22, 'E-Bike', 'ETRK-0022', 'UPLOD 11', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a370a2d6a40_ETRK-0022_43444.jpg', 'uploads/documents/66a370a2d6d5a_ETRK-0022_43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 6, '2024-07-27 20:14:32', 'Active', 18, 18, 1),
+(22, 'E-Bike', 'ETRK-0022', 'UPLOD 11', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a370a2d6a40_ETRK-0022_43444.jpg', 'uploads/documents/66a370a2d6d5a_ETRK-0022_43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-27 20:14:32', 'Active', 18, 18, 1),
 (23, 'E-Bike', 'ETRK-0023', 'Ha', 'Ha', 'Ha', 'Ha', 'Ha', 0, '2024-06-30', 'Ha', 'Male', 'Ha', '13123123131', 'Married', 'Ha', 'Ha', 0, 0, 'uploads/drivers/66a372564399d_ETRK-0023_43444.jpg', 'uploads/documents/66a3725643c33_ETRK-0023_43444.jpg', 'Ha', 'Ha', '12312312312', 'Owned', 'Registered', 1, '2024-07-27 19:07:58', 'Active', 19, 19, 1),
 (24, 'Trisikad', 'TSKD-0024', 'UPLOD 19', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-06-30', 'sadsad', 'Female', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 6, '2024-07-27 20:11:42', 'Active', 20, 20, 1),
-(25, 'E-Bike', 'ETRK-0025', 'UPLOD 19', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-07-04', 'sadsad', 'Female', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '../../uploads/drivers/66a6165e7828e_ETRK-0025_.jpg', '../../uploads/documents/66a6165e79e8e_ETRK-0025_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 8, '2024-07-27 20:09:51', 'Active', 21, 21, 1);
+(25, 'Trisikad', 'TSKD-0025', 'UPLOD 19', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-07-04', 'sadsad', 'Female', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a4e08592867_TSKD-0025_43444.jpg', 'uploads/documents/66a4e08592a08_TSKD-0025_43444.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 6, '2024-07-27 20:09:51', 'Active', 21, 21, 1);
 
 -- --------------------------------------------------------
 
@@ -245,7 +245,7 @@ CREATE TABLE `tbl_vehicle` (
 --
 
 INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `name_of_owner`, `addr_of_owner`, `owner_phone_num`, `vehicle_color`, `brand`, `plate_num`, `vehicle_registered`, `vehicle_img_front`, `vehicle_img_back`) VALUES
-(1, 2, 'Tricycle', 'Wabafet Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a642ed73453_TRCL-0002_front.jpg', '../../uploads/vehicles/66a642ed73afb_TRCL-0002_back.jpg'),
+(1, 2, 'E-Bike', 'Wabafet Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a4e24c0f040_ETRK-0002_front_43444.jpg', '../../uploads/vehicles/66a4e24c0f264_ETRK-0002_back_43444.jpg'),
 (2, 3, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a4e287bb8dc_ETRK-0003_front_43444.jpg', '../../uploads/vehicles/66a4e287bba90_ETRK-0003_back_43444.jpg'),
 (6, 8, 'E-Bike', 'Aduken Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (7, 9, 'E-Bike', 'Masdad Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
@@ -254,7 +254,7 @@ INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `na
 (10, 12, 'E-Bike', 'asdasdas Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png'),
 (11, 13, 'Trisikad', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png'),
 (12, 16, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/668129b3883d4_Cat.jpg', 'uploads/vehicles/668129b388652_Cat.jpg'),
-(13, 17, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '2024-07-28 18:00:15', 'uploads/vehicles/66812ae159a55_ETRK-0017_Cat.jpg', 'uploads/vehicles/66812ae159d05_ETRK-0017_Cat.jpg'),
+(13, 17, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66812ae159a55_ETRK-0017_Cat.jpg', 'uploads/vehicles/66812ae159d05_ETRK-0017_Cat.jpg'),
 (14, 18, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66812bd90da17_ETRK-0018_Cat.jpg', 'uploads/vehicles/66812bd90dc1f_ETRK-0018_Cat.jpg'),
 (15, 19, 'E-Bike', 'Modaves Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '2024-07-27 20:24:27', 'uploads/vehicles/66812e5ad1ec6_ETRK-0019_Cost Benefit Analysis 2.png', 'uploads/vehicles/66812e5ad216d_ETRK-0019_Cost Benefit Analysis 2.png'),
 (16, 20, 'Trisikad', 'Happy Happy Happy', 'Happy', '23121231231', 'Happy', 'Happy', 'Happy', '0000-00-00 00:00:00', '', ''),
@@ -262,7 +262,7 @@ INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `na
 (18, 22, 'E-Bike', 'UPLOD 11 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a370a2d7159_ETRK-0022_43444.jpg', 'uploads/vehicles/66a370a2d7527_ETRK-0022_43444.jpg'),
 (19, 23, 'E-Bike', 'Ha Ha Ha', 'Ha', '13123123131', 'Ha', 'Ha', 'Ha', '0000-00-00 00:00:00', 'uploads/vehicles/66a3725643f2b_ETRK-0023_43444.jpg', 'uploads/vehicles/66a372564429c_ETRK-0023_43444.jpg'),
 (20, 24, 'Trisikad', 'UPLOD 19 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
-(21, 25, 'E-Bike', 'UPLOD 19 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '../../uploads/vehicles/66a6165e7cc4d_ETRK-0025_front.jpg', '../../uploads/vehicles/66a6165e7e954_ETRK-0025_back.jpg');
+(21, 25, 'Trisikad', 'UPLOD 19 Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a4e08592ba7_TSKD-0025_43444.jpg', 'uploads/vehicles/66a4e08592d43_TSKD-0025_43444.jpg');
 
 -- --------------------------------------------------------
 
