@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function handleFileUpload($file, $targetDir, $formatted_id, $suffix = '') {
         if ($file['size'] > 0) {
             $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $fileName = uniqid() . '_' . $formatted_id . '_' . $suffix . '_' . $file['name'];
+            $fileName = uniqid() . '_' . $formatted_id . '_' . $suffix . '.' . $fileExtension;
             $targetPath = $targetDir . $fileName;
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
                 return $targetPath;
@@ -89,63 +89,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mkdir($vehiclesDir, 0755, true);
     }
 
+    // Retrieve current file paths from database
+    $current_pic_2x2_path = $current_doc_proof_path = $current_vehicle_img_front_path = $current_vehicle_img_back_path = "";
+
+    $select_paths_sql = "SELECT pic_2x2, doc_proof, 
+                                (SELECT vehicle_img_front FROM tbl_vehicle WHERE fk_driver_id = tbl_driver.driver_id) AS vehicle_img_front, 
+                                (SELECT vehicle_img_back FROM tbl_vehicle WHERE fk_driver_id = tbl_driver.driver_id) AS vehicle_img_back 
+                         FROM tbl_driver 
+                         WHERE formatted_id = ?";
+    $select_paths_stmt = $connections->prepare($select_paths_sql);
+    if ($select_paths_stmt === false) {
+        die('Error preparing select statement: ' . $connections->error);
+    }
+    $select_paths_stmt->bind_param("s", $formatted_id);
+    $select_paths_stmt->execute();
+    $select_paths_stmt->bind_result($current_pic_2x2_path, $current_doc_proof_path, $current_vehicle_img_front_path, $current_vehicle_img_back_path);
+    $select_paths_stmt->fetch();
+    $select_paths_stmt->close();
+
     // Handle file uploads with checks
-    $pic_2x2_path = handleFileUpload($_FILES['pic_2x2'], $driversDir, $formatted_id);
-    $doc_proof_path = handleFileUpload($_FILES['doc_proof'], $documentsDir, $formatted_id);
-    $vehicle_img_front_path = handleFileUpload($_FILES['vehicle_img_front'], $vehiclesDir, $formatted_id, 'front');
-    $vehicle_img_back_path = handleFileUpload($_FILES['vehicle_img_back'], $vehiclesDir, $formatted_id, 'back');
+    $pic_2x2_path = handleFileUpload($_FILES['pic_2x2'], $driversDir, $formatted_id) ?: $current_pic_2x2_path;
+    $doc_proof_path = handleFileUpload($_FILES['doc_proof'], $documentsDir, $formatted_id) ?: $current_doc_proof_path;
+    $vehicle_img_front_path = handleFileUpload($_FILES['vehicle_img_front'], $vehiclesDir, $formatted_id, 'front') ?: $current_vehicle_img_front_path;
+    $vehicle_img_back_path = handleFileUpload($_FILES['vehicle_img_back'], $vehiclesDir, $formatted_id, 'back') ?: $current_vehicle_img_back_path;
 
-    // Retrieve current file paths from database if no new files uploaded
-    if ($pic_2x2_path === null) {
-        $select_pic_sql = "SELECT pic_2x2 FROM tbl_driver WHERE formatted_id = ?";
-        $select_pic_stmt = $connections->prepare($select_pic_sql);
-        if ($select_pic_stmt === false) {
-            die('Error preparing select statement: ' . $connections->error);
-        }
-        $select_pic_stmt->bind_param("s", $formatted_id);
-        $select_pic_stmt->execute();
-        $select_pic_stmt->bind_result($pic_2x2_path);
-        $select_pic_stmt->fetch();
-        $select_pic_stmt->close();
+    // Update the vehicle category based on the driver category
+    $vehicle_category = "";
+    $formatted_category = "";
+
+    switch ($driver_category) {
+        case 'E-Bike':
+            $vehicle_category = 'E-Bike';
+            $formatted_category = 'ETRK';
+            break;
+        case 'Tricycle':
+            $vehicle_category = 'Tricycle';
+            $formatted_category = 'TRCL';
+            break;
+        case 'Trisikad':
+            $vehicle_category = 'Trisikad';
+            $formatted_category = 'TSKD';
+            break;
+        default:
+            $vehicle_category = $driver_category;
+            $formatted_category = strtoupper(substr($driver_category, 0, 4));
+            break;
     }
 
-    if ($doc_proof_path === null) {
-        $select_doc_sql = "SELECT doc_proof FROM tbl_driver WHERE formatted_id = ?";
-        $select_doc_stmt = $connections->prepare($select_doc_sql);
-        if ($select_doc_stmt === false) {
-            die('Error preparing select statement: ' . $connections->error);
-        }
-        $select_doc_stmt->bind_param("s", $formatted_id);
-        $select_doc_stmt->execute();
-        $select_doc_stmt->bind_result($doc_proof_path);
-        $select_doc_stmt->fetch();
-        $select_doc_stmt->close();
+    // Modify formatted_id based on the new category
+    if (strpos($formatted_id, '-') !== false) {
+        $formatted_id_parts = explode('-', $formatted_id);
+        $new_formatted_id = $formatted_category . '-' . $formatted_id_parts[1];
+    } else {
+        $new_formatted_id = $formatted_id;
     }
 
-    if ($vehicle_img_front_path === null) {
-        $select_front_sql = "SELECT vehicle_img_front FROM tbl_vehicle WHERE fk_driver_id IN (SELECT driver_id FROM tbl_driver WHERE formatted_id = ?)";
-        $select_front_stmt = $connections->prepare($select_front_sql);
-        if ($select_front_stmt === false) {
-            die('Error preparing select statement: ' . $connections->error);
+    // Rename files if formatted_id changes
+    if ($formatted_id !== $new_formatted_id) {
+        function renameFile($oldPath, $newDir, $newFormattedId, $suffix = '') {
+            if ($oldPath && file_exists($oldPath)) {
+                $fileExtension = pathinfo($oldPath, PATHINFO_EXTENSION);
+                $newFileName = uniqid() . '_' . $newFormattedId . '_' . $suffix . '.' . $fileExtension;
+                $newPath = $newDir . $newFileName;
+                if (rename($oldPath, $newPath)) {
+                    return $newPath;
+                } else {
+                    return $oldPath; // Keep the old path if renaming fails
+                }
+            }
+            return $oldPath;
         }
-        $select_front_stmt->bind_param("s", $formatted_id);
-        $select_front_stmt->execute();
-        $select_front_stmt->bind_result($vehicle_img_front_path);
-        $select_front_stmt->fetch();
-        $select_front_stmt->close();
-    }
 
-    if ($vehicle_img_back_path === null) {
-        $select_back_sql = "SELECT vehicle_img_back FROM tbl_vehicle WHERE fk_driver_id IN (SELECT driver_id FROM tbl_driver WHERE formatted_id = ?)";
-        $select_back_stmt = $connections->prepare($select_back_sql);
-        if ($select_back_stmt === false) {
-            die('Error preparing select statement: ' . $connections->error);
-        }
-        $select_back_stmt->bind_param("s", $formatted_id);
-        $select_back_stmt->execute();
-        $select_back_stmt->bind_result($vehicle_img_back_path);
-        $select_back_stmt->fetch();
-        $select_back_stmt->close();
+        $pic_2x2_path = renameFile($pic_2x2_path, $driversDir, $new_formatted_id);
+        $doc_proof_path = renameFile($doc_proof_path, $documentsDir, $new_formatted_id);
+        $vehicle_img_front_path = renameFile($vehicle_img_front_path, $vehiclesDir, $new_formatted_id, 'front');
+        $vehicle_img_back_path = renameFile($vehicle_img_back_path, $vehiclesDir, $new_formatted_id, 'back');
     }
 
     // Prepare SQL statements
@@ -170,13 +188,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         name_to_notify = ?, 
         relationship = ?, 
         num_to_notify = ?,
-        vehicle_ownership =?, 
+        vehicle_ownership = ?, 
         fk_association_id = ?, 
         pic_2x2 = ?, 
-        doc_proof = ? 
+        doc_proof = ?,
+        formatted_id = ? 
         WHERE formatted_id = ?";
 
     $vehicle_update_sql = "UPDATE tbl_vehicle SET 
+        vehicle_category = ?, 
         name_of_owner = ?, 
         addr_of_owner = ?, 
         owner_phone_num = ?, 
@@ -187,26 +207,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         vehicle_img_back = ? 
         WHERE fk_driver_id IN (SELECT driver_id FROM tbl_driver WHERE formatted_id = ?)";
 
-    // Prepare and bind parameters for driver update
+    // Update driver information
     $driver_stmt = $connections->prepare($driver_update_sql);
     if ($driver_stmt === false) {
         die('Error preparing driver update statement: ' . $connections->error);
     }
-    $driver_stmt->bind_param("ssssssissssssssssssssssss", 
-    $driver_category, $first_name, $middle_name, $last_name, $suffix_name, 
-    $nickname, $age, $birth_date, $birth_place, $sex, $address, 
-    $mobile_number, $civil_status, $religion, $citizenship, 
-    $height, $weight, $name_to_notify, $relationship, 
-    $num_to_notify, $vehicle_ownership, $association, $pic_2x2_path, $doc_proof_path, $formatted_id);
-
-    // Prepare and bind parameters for vehicle update
+    $driver_stmt->bind_param("ssssssssssssssssssssssssss", 
+        $driver_category, 
+        $first_name, 
+        $middle_name, 
+        $last_name, 
+        $suffix_name, 
+        $nickname, 
+        $age, 
+        $birth_date, 
+        $birth_place, 
+        $sex, 
+        $address, 
+        $mobile_number, 
+        $civil_status, 
+        $religion, 
+        $citizenship, 
+        $height, 
+        $weight, 
+        $name_to_notify, 
+        $relationship, 
+        $num_to_notify, 
+        $vehicle_ownership, 
+        $association, 
+        $pic_2x2_path, 
+        $doc_proof_path, 
+        $new_formatted_id, 
+        $formatted_id);
+    
+    // Update vehicle information
     $vehicle_stmt = $connections->prepare($vehicle_update_sql);
     if ($vehicle_stmt === false) {
         die('Error preparing vehicle update statement: ' . $connections->error);
     }
-    $vehicle_stmt->bind_param("sssssssss", 
-    $name_of_owner, $addr_of_owner, $owner_phone_num, 
-    $vehicle_color, $brand, $plate_num, $vehicle_img_front_path, $vehicle_img_back_path, $formatted_id);
+    $vehicle_stmt->bind_param("ssssssssss", 
+        $vehicle_category, 
+        $name_of_owner, 
+        $addr_of_owner, 
+        $owner_phone_num, 
+        $vehicle_color, 
+        $brand, 
+        $plate_num, 
+        $vehicle_img_front_path, 
+        $vehicle_img_back_path, 
+        $new_formatted_id);
 
     // Execute SQL queries
     $driver_update_result = $driver_stmt->execute();
@@ -235,6 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             padding: 20px;
                             border-radius: 5px;
                             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                            text-align: center;
                         }
                         .btn {
                             display: inline-block;
@@ -281,27 +331,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </style>
                 </head>
                 <body>
-                    <div class='container' style='text-align: center;'>
+                    <div class='container'>
                         <div class='success-box'>
                             Records updated successfully!<br>
                         </div>";
 
-        // Retrieve updated data
-        $select_sql = "SELECT * FROM tbl_driver WHERE formatted_id = ?";
-        $select_stmt = $connections->prepare($select_sql);
-        if ($select_stmt === false) {
+        // Retrieve updated data from tbl_driver
+        $select_driver_sql = "SELECT * FROM tbl_driver WHERE formatted_id = ?";
+        $select_driver_stmt = $connections->prepare($select_driver_sql);
+        if ($select_driver_stmt === false) {
             die('Error preparing select statement: ' . $connections->error);
         }
-        $select_stmt->bind_param("s", $formatted_id);
-        $select_stmt->execute();
-        $result = $select_stmt->get_result();
-        $row = $result->fetch_assoc();
+        $select_driver_stmt->bind_param("s", $new_formatted_id);
+        $select_driver_stmt->execute();
+        $driver_result = $select_driver_stmt->get_result();
+        $driver_row = $driver_result->fetch_assoc();
+
+        // Retrieve updated data from tbl_vehicle
+        $select_vehicle_sql = "SELECT * FROM tbl_vehicle WHERE fk_driver_id = (SELECT driver_id FROM tbl_driver WHERE formatted_id = ?)";
+        $select_vehicle_stmt = $connections->prepare($select_vehicle_sql);
+        if ($select_vehicle_stmt === false) {
+            die('Error preparing select statement: ' . $connections->error);
+        }
+        $select_vehicle_stmt->bind_param("s", $new_formatted_id);
+        $select_vehicle_stmt->execute();
+        $vehicle_result = $select_vehicle_stmt->get_result();
+        $vehicle_row = $vehicle_result->fetch_assoc();
 
         // Display all fields
         echo "<div class='updated-details'>
-                <h2>Updated Record Details:</h2>
+                <h2>Updated Driver Record Details:</h2>
                 <ul>";
-        foreach ($row as $key => $value) {
+        foreach ($driver_row as $key => $value) {
+            echo "<li><strong>" . ucfirst(str_replace("_", " ", $key)) . ":</strong> " . $value . "</li>";
+        }
+        echo "</ul>
+            <h2>Updated Vehicle Record Details:</h2>
+            <ul>";
+        foreach ($vehicle_row as $key => $value) {
             echo "<li><strong>" . ucfirst(str_replace("_", " ", $key)) . ":</strong> " . $value . "</li>";
         }
         echo "</ul>
@@ -319,7 +386,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </body>
         </html>";
-
     } else {
         echo "Error updating records: " . $connections->error;
     }

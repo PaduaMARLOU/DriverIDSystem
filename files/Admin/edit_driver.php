@@ -34,6 +34,25 @@ if(isset($_SESSION["username"])) {
     <style>
         /* Your custom CSS styles here */
     </style>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#driver_category').change(function() {
+                if ($(this).val()) {
+                    $('#pic_2x2').attr('required', 'required');
+                    $('#doc_proof').attr('required', 'required');
+                    $('#vehicle_img_front').attr('required', 'required');
+                    $('#vehicle_img_back').attr('required', 'required');
+                } else {
+                    $('#pic_2x2').removeAttr('required');
+                    $('#doc_proof').removeAttr('required');
+                    $('#vehicle_img_front').removeAttr('required');
+                    $('#vehicle_img_back').removeAttr('required');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -67,7 +86,7 @@ if(isset($_SESSION["username"])) {
                     ?>
                     <input type="hidden" name="formatted_id" value="<?php echo $driver_row['formatted_id']; ?>">
                     <div class="form-group">
-                        <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad):</label>
+                        <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad): <br><i>Notice: Changing this may require you to upload new files for 2x2 Picture, Proof of Document, and Front and Back Vehicle Image.</i></label>
                         <select class="form-control" name="driver_category" id="driver_category" required>
                             <option value="">Select Driver Category</option>
                             <option value="E-Bike" <?php if($driver_row['driver_category'] === 'E-Bike') echo 'selected'; ?>>E-Bike</option>
@@ -293,5 +312,3 @@ if(isset($_SESSION["username"])) {
     </div>
 </body>
 </html>
-
-
