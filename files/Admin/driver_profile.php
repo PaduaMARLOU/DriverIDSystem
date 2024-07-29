@@ -38,7 +38,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
         .profile-container {
             max-width: 100%;
             margin: auto;
-            margin-top: -30px;
+            margin-top: -80px;
             padding: 20px;
             border-radius: 10px;
             border: 0.5in solid transparent; /* Border for letter size paper */
@@ -46,7 +46,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
         }
         .profile-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: -10px;
         }
         .profile-img {
             width: 150px;
@@ -93,18 +93,63 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
         }
+        .logo-container {
+            display: none; /* Hide by default */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Space between buttons */
+            padding-top: 10px;
+            margin-bottom: 20px; /* Adjust as needed for spacing */
+        }
+
+        .btn {
+            min-width: 150px; /* Ensure buttons have the same minimum width */
+            height: 40px; /* Ensure buttons have the same height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-generate-id {
+            background-color: green; /* Green color for the button */
+            border-color: green; /* Ensure border matches the button color */
+        }
+
+        .btn-generate-id:hover {
+            background-color: darkgreen; /* Darker green on hover */
+            border-color: darkgreen; /* Ensure border matches the button color on hover */
+        }
+
         @media print {
-            .btn-print {
+            .btn-print, .btn-generate-id {
                 display: none;
             }
+        }
+
+
+        @media print {
+            .btn-print, .btn-generate-id {
+                display: none;
+            }
+        }
+
             @page {
                 size: letter; /* Set to letter size */
                 margin: 0.5in; /* Border for letter size paper */
             }
+
             body {
                 position: relative;
                 margin: 0;
             }
+
+            .logo-container {
+                display: block; /* Show only when printing */
+            }
+
             .logo {
                 position: fixed;
                 top: 50%;
@@ -115,12 +160,15 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 height: auto;
                 opacity: 0.1; /* Lower opacity */
             }
+
             .profile-container {
                 page-break-after: always;
             }
+
             .profile-container:last-child {
                 page-break-after: auto;
             }
+
             .profile-section {
                 page-break-inside: avoid;
             }
@@ -128,13 +176,23 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
     </style>
 </head>
 <body>
-    <img src="<?php echo $logo_path; ?>" alt="Logo" class="logo">
+    <div class="logo-container">
+        <img src="<?php echo $logo_path; ?>" alt="Logo" class="logo">
+    </div>
+
+    <div class="button-container text-center">
+        <button class="btn btn-primary btn-print" onclick="window.print()">Print Profile</button>
+        <a href="ID_generation.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-success btn-generate-id btn-sm btn-icon icon-left" target="_blank">
+            <i class="entypo-vcard"></i>
+            Generate Driver ID
+        </a>
+    </div>
+
 
     <div class="profile-container">
         <div class="profile-header">
             <h2>Driver Profile</h2>
             <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo" class="profile-img" data-toggle="modal" data-target="#imageModal" data-image="<?php echo $pic_2x2_path; ?>">
-            <button class="btn btn-primary btn-print" onclick="window.print()">Print Profile</button>
         </div>
 
         <!-- Personal Information -->
