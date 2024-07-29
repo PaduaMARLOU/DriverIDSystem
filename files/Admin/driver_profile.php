@@ -182,7 +182,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
 
     <div class="button-container text-center">
         <button class="btn btn-primary btn-print" onclick="window.print()">Print Profile</button>
-        <a href="ID_generation.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-success btn-generate-id btn-sm btn-icon icon-left" target="_blank">
+        <a href="ID_generation.php?id=<?php echo $driver['formatted_id']; ?>" class="btn btn-success btn-generate-id btn-sm btn-icon icon-left" target="_blank">
             <i class="entypo-vcard"></i>
             Generate Driver ID
         </a>
