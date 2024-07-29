@@ -281,7 +281,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 </div>
                 <div>
                     <p><span class="info-label">Association Name:</span> <?php echo $association['association_name']; ?></p>
-                    <p><span class="info-label">Association Color:</span> <?php echo $association['association_color']; ?></p>
+                    <p><span class="info-label">Association Color:</span> <?php echo $association['association_color_name']; ?></p>
                 </div>
             </div>
             <div class="row-one=column">
