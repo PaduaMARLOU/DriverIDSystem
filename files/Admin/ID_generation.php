@@ -73,65 +73,185 @@ if(isset($_GET['id'])) {
 
             // Generate printable IDs with QR code
             $printable_id = "
-                <div id='printable' style='display: flex;'>
-                    <!-- Front of the ID -->
-                    <div style='border: 1px solid black; padding: 10px; width: 4.5in; height: 6.5in; margin-right: 0; box-sizing: border-box;'>
-                        <h1 style='font-size: 2.5em; margin: 0;'>$driver_id</h1>
-                        <p>Driver Name: $driver_name</p>
-                        <p>Nickname: $nickname</p>
-                        <p>Address: $address</p>
-                        <p>Mobile Number: $mobile_number</p>
-                        <p>Vehicle Type: $vehicle_type</p>
-                        <p>Association: $association</p>
-                        <img src='$pic_2x2_path' alt='2x2 Picture' style='width: 100px; height: 100px;'>
-                        <br><br>
-                        <img src='$qrCodeUrl' alt='QR Code' style='max-width: 100%;'>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Print IDs</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    #printable {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                    .page {
+                        break-inside: avoid; /* Prevent breaking inside this element */
+                    }
+                    .card-container {
+                        display: flex;
+                    }
+                    .id-card {
+                        border: 1px solid black;
+                        box-sizing: border-box;
+                        margin: 0;
+                        padding: 20px; /* Add padding inside the border */
+                    }
+                    .id-card.front, .id-card.back {
+                        width: 4.5in;
+                        height: 6.5in;
+                    }
+                    .id-card.large-front, .id-card.large-back {
+                        width: 10.5in;
+                        height: 7in;
+                        position: relative;
+                    }
+                    .id-card img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                    .id-card img.small {
+                        width: 100px;
+                        height: 100px;
+                    }
+                    .id-card img.large {
+                        width: 200px;
+                        height: 200px;
+                    }
+                    .id-card.large-front .qr {
+                        position: absolute; /* Position QR code absolutely within the container */
+                        bottom: 10px; /* Distance from the bottom edge */
+                        right: 10px; /* Distance from the right edge */
+                        width: 100px; /* Set the width for the QR code */
+                        height: 100px; /* Set the height for the QR code */
+                    }
+                    h1, h2, h3 {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .print-button {
+                        display: block;
+                        margin: 20px;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        color: white;
+                        background-color: #007bff;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        text-align: center;
+                    }
+                </style>
+            </head>
+            <body>
+                <button class='print-button' onclick='printDiv()'>Print IDs</button>
+                <div id='printable'>
+                    <!-- Page 1 -->
+                    <div class='page'>
+                        <div class='card-container'>
+                            <!-- Original Front of the ID -->
+                            <div class='id-card front'>
+                                <h1>$driver_id</h1>
+                                <p>Driver Name: $driver_name</p>
+                                <p>Nickname: $nickname</p>
+                                <p>Address: $address</p>
+                                <p>Mobile Number: $mobile_number</p>
+                                <p>Vehicle Type: $vehicle_type</p>
+                                <p>Association: $association</p>
+                                <img src='$pic_2x2_path' alt='2x2 Picture' class='small'>
+                                <br><br>
+                                <img src='$qrCodeUrl' alt='QR Code' class='small'>
+                            </div>
+                            <!-- Original Back of the ID -->
+                            <div class='id-card back'>
+                                <h2>$driver_id</h2>
+                                <h3>Notification Details</h3>
+                                <p><strong>Name to Notify:</strong> $name_to_notify</p>
+                                <p><strong>Number to Notify:</strong> $num_to_notify</p>
+                                <p><strong>Vehicle Ownership:</strong> $vehicle_ownership</p>
+                                <h3>Vehicle Images</h3>
+                                <img src='$vehicle_img_front_path' alt='Vehicle Front' class='small'>
+                                <img src='$vehicle_img_back_path' alt='Vehicle Back' class='small'>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Back of the ID -->
-                    <div style='border: 1px solid black; padding: 10px; width: 4.5in; height: 6.5in; margin-left: 0; box-sizing: border-box;'>
-                        <h2 style='font-size: 2.5em; margin: 0;'>$driver_id</h2>
-                        <h3>Notification Details</h3>
-                        <p><strong>Name to Notify:</strong> $name_to_notify</p>
-                        <p><strong>Number to Notify:</strong> $num_to_notify</p>
-                        <p><strong>Vehicle Ownership:</strong> $vehicle_ownership</p>
-                        <h3>Vehicle Images</h3>
-                        <img src='$vehicle_img_front_path' alt='Vehicle Front' style='width: 100px; height: 100px;'>
-                        <img src='$vehicle_img_back_path' alt='Vehicle Back' style='width: 100px; height: 100px;'>
+                    <!-- Page Break -->
+                    <div class='page'></div>
+                    <!-- Page 2 -->
+                    <div class='page'>
+                        <!-- New Front of the ID with larger dimensions -->
+                        <div class='id-card large-front'>
+                            <h1>$driver_id</h1>
+                            <p>Driver Name: $driver_name</p>
+                            <p>Nickname: $nickname</p>
+                            <p>Address: $address</p>
+                            <p>Mobile Number: $mobile_number</p>
+                            <p>Vehicle Type: $vehicle_type</p>
+                            <p>Association: $association</p>
+                            <img src='$pic_2x2_path' alt='2x2 Picture' class='large'>
+                            <br><br>
+                            <img src='$qrCodeUrl' alt='QR Code' class='qr'>
+                        </div>
+                    </div>
+                    <!-- Page Break -->
+                    <div class='page'></div>
+                    <!-- Page 3 -->
+                    <div class='page'>
+                        <!-- New Back of the ID with larger dimensions -->
+                        <div class='id-card large-back'>
+                            <h2>$driver_id</h2>
+                            <h3>Notification Details</h3>
+                            <p><strong>Name to Notify:</strong> $name_to_notify</p>
+                            <p><strong>Number to Notify:</strong> $num_to_notify</p>
+                            <p><strong>Vehicle Ownership:</strong> $vehicle_ownership</p>
+                            <h3>Vehicle Images</h3>
+                            <img src='$vehicle_img_front_path' alt='Vehicle Front' class='large'>
+                            <img src='$vehicle_img_back_path' alt='Vehicle Back' class='large'>
+                        </div>
                     </div>
                 </div>
-                <button onclick='printDiv()'>Print</button>
-            ";
+                <script>
+                    function printDiv() {
+                        var printWindow = window.open('', '', 'height=800,width=1200');
+                        printWindow.document.write('<html><head><title>Print</title>');
+                        printWindow.document.write('<style>body{font-family: Arial, sans-serif; margin: 0; padding: 0;}');
+                        printWindow.document.write('.page{break-inside: avoid;}'); // Updated to avoid breaking inside elements
+                        printWindow.document.write('.card-container{display: flex;}');
+                        printWindow.document.write('.id-card{border: 1px solid black; box-sizing: border-box; margin: 0; padding: 20px;}');
+                        printWindow.document.write('.id-card.front, .id-card.back{width: 4.5in; height: 6.5in;}');
+                        printWindow.document.write('.id-card.large-front, .id-card.large-back{width: 10.5in; height: 7in;}');
+                        printWindow.document.write('.id-card img{max-width: 100%; height: auto;}');
+                        printWindow.document.write('.id-card img.small{width: 100px; height: 100px;}');
+                        printWindow.document.write('.id-card img.large{width: 200px; height: 200px;}');
+                        printWindow.document.write('.id-card.large-front{width: 10.5in; height: 7in; position: relative;}');
+                        printWindow.document.write('.id-card.large-front .qr{position: absolute; bottom: 10px; right: 10px; width: 100px; height: 100px;}');
+                        printWindow.document.write('h1, h2, h3{margin: 0; padding: 0;}');
+                        printWindow.document.write('</style></head><body >');
+                        printWindow.document.write(document.getElementById('printable').innerHTML);
+                        printWindow.document.write('</body></html>');
+                        printWindow.document.close();
+                        printWindow.focus();
+                        printWindow.print();
+                    }
+                </script>
 
-            // Output printable IDs
+            </body>
+            </html>
+        ";
+
+            // Output the printable ID content
             echo $printable_id;
         } else {
-            echo "Driver not found in the database.";
+            echo "Driver not found.";
         }
     } else {
-        // Query failed
-        echo "Error: " . mysqli_error($connections);
+        echo "Error executing query: " . mysqli_error($connections);
     }
-
-    // Close the database connection
-    mysqli_close($connections);
 } else {
-    echo "Driver ID not provided.";
+    echo "No driver ID provided.";
 }
-?>
 
-<script>
-function printDiv() {
-    var printWindow = window.open('', '', 'height=800,width=1200');
-    printWindow.document.write('<html><head><title>Print</title>');
-    printWindow.document.write('<style>body{font-family: Arial, sans-serif; margin: 0; padding: 0;}');
-    printWindow.document.write('#printable{display: flex;}');
-    printWindow.document.write('#printable > div{border: 1px solid black; padding: 10px; width: 4.5in; height: 6.5in; margin: 0; box-sizing: border-box;}');
-    printWindow.document.write('#printable h1, #printable h2{font-size: 2.5em; margin: 0;}');
-    printWindow.document.write('</style></head><body >');
-    printWindow.document.write(document.getElementById('printable').outerHTML);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-}
-</script>
+mysqli_close($connections);
+?>
