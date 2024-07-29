@@ -19,8 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addAssociation'])) {
     $area = $_POST['association_area'];
     $president = $_POST['association_president'];
     $color = $_POST['association_color'];
+    $colorName = $_POST['association_color_name'];
 
-    $insertQuery = "INSERT INTO tbl_association (association_category, association_name, association_area, association_president, association_color) VALUES ('$category', '$name', '$area', '$president', '$color')";
+    $insertQuery = "INSERT INTO tbl_association (association_category, association_name, association_area, association_president, association_color, association_color_name) VALUES ('$category', '$name', '$area', '$president', '$color', '$colorName')";
     mysqli_query($connections, $insertQuery);
     header('Location: association_settings.php');
 }
@@ -33,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editAssociation'])) {
     $area = $_POST['association_area'];
     $president = $_POST['association_president'];
     $color = $_POST['association_color'];
+    $colorName = $_POST['association_color_name'];
 
-    $updateQuery = "UPDATE tbl_association SET association_category='$category', association_name='$name', association_area='$area', association_president='$president', association_color='$color' WHERE association_id='$id'";
+    $updateQuery = "UPDATE tbl_association SET association_category='$category', association_name='$name', association_area='$area', association_president='$president', association_color='$color', association_color_name='$colorName' WHERE association_id='$id'";
     mysqli_query($connections, $updateQuery);
     header('Location: association_settings.php');
 }
@@ -65,6 +67,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
             border: none;
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorInput = document.querySelectorAll('.color-picker');
+            colorInput.forEach(input => {
+                input.addEventListener('change', function() {
+                    const colorValue = this.value;
+                    const colorNameInput = this.closest('.form-group').nextElementSibling.querySelector('input[name="association_color_name"]');
+
+                    fetch(`https://www.thecolorapi.com/id?hex=${colorValue.substring(1)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            colorNameInput.value = data.name.value;
+                        })
+                        .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="container mt-5">
@@ -79,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
             <th>Area</th>
             <th>President</th>
             <th>Color</th>
+            <th>Color Name</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -91,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                 <td><?php echo $row['association_area']; ?></td>
                 <td><?php echo $row['association_president']; ?></td>
                 <td style="background-color: <?php echo $row['association_color']; ?>"><?php echo $row['association_color']; ?></td>
+                <td><?php echo $row['association_color_name']; ?></td>
                 <td>
                     <button class="btn btn-warning" data-toggle="modal" data-target="#editAssociationModal<?php echo $row['association_id']; ?>">Edit</button>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAssociationModal<?php echo $row['association_id']; ?>">Delete</button>
@@ -132,8 +154,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                                 <div class="form-group">
                                     <label>Color</label>
                                     <input type="text" name="association_color" class="form-control color-picker" value="<?php echo $row['association_color']; ?>" data-jscolor="{format:'hex'}" required>
-                                    <a href="https://www.colorhexa.com/" target="_blank" class="btn btn-link mt-2">Search Color in ColorHexa</a>
                                 </div>
+                                <div class="form-group">
+                                    <label>Color Name</label>
+                                    <input type="text" name="association_color_name" class="form-control" value="<?php echo $row['association_color_name']; ?>" readonly required>
+                                </div>
+                                <a href="https://www.colorhexa.com/" target="_blank" class="btn btn-link mt-2">Search Color in ColorHexa</a>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -206,9 +232,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                     </div>
                     <div class="form-group">
                         <label>Color</label>
-                        <input type="text" name="association_color" class="form-control color-picker" value="#ffffff" data-jscolor="{format:'hex'}" required>
-                        <a href="https://www.colorhexa.com/" target="_blank" class="btn btn-link mt-2">Search Color in ColorHexa</a>
+                        <input type="text" name="association_color" class="form-control color-picker" data-jscolor="{format:'hex'}" required>
                     </div>
+                    <div class="form-group">
+                        <label>Color Name</label>
+                        <input type="text" name="association_color_name" class="form-control" readonly required>
+                    </div>
+                    <a href="https://www.colorhexa.com/" target="_blank" class="btn btn-link mt-2">Search Color in ColorHexa</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -219,9 +249,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const colorInputs = document.querySelectorAll('.color-picker');
+        colorInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const colorValue = this.value;
+                const colorNameInput = this.closest('.form-group').nextElementSibling.querySelector('input[name="association_color_name"]');
+
+                fetch(`https://www.thecolorapi.com/id?hex=${colorValue.substring(1)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        colorNameInput.value = data.name.value;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>
 </body>
 </html>
-

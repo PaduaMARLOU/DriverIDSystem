@@ -32,7 +32,8 @@ CREATE TABLE `tbl_association` (
   `association_name` varchar(255) NOT NULL,
   `association_area` varchar(255) NOT NULL,
   `association_president` varchar(255) NOT NULL,
-  `association_color` varchar(255) NOT NULL
+  `association_color` varchar(255) NOT NULL,
+  `association_color_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
