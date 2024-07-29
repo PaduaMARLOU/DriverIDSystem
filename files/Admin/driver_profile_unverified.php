@@ -113,15 +113,37 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             align-items: center;
         }
 
-        .btn-generate-id {
-            background-color: green; /* Green color for the button */
+        .btn-default {
+            background-color: #6c757d; /* Gray color for default button */
+            border-color: #6c757d; /* Ensure border matches the button color */
+            color: white; /* Text color */
+        }
+
+        .btn-default:hover {
+            background-color: #5a6268; /* Darker gray on hover */
+            border-color: #545b62; /* Ensure border matches the button color on hover */
+        }
+
+        .btn-verify {
+            background-color: green; /* Green color for verify button */
             border-color: green; /* Ensure border matches the button color */
         }
 
-        .btn-generate-id:hover {
+        .btn-verify:hover {
             background-color: darkgreen; /* Darker green on hover */
             border-color: darkgreen; /* Ensure border matches the button color on hover */
         }
+
+        .btn-deny {
+            background-color: red; /* Red color for deny button */
+            border-color: red; /* Ensure border matches the button color */
+        }
+
+        .btn-deny:hover {
+            background-color: darkred; /* Darker red on hover */
+            border-color: darkred; /* Ensure border matches the button color on hover */
+        }
+
 
         @media print {
             .btn-print, .btn-generate-id {
@@ -173,12 +195,21 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
     </div>
 
     <div class="button-container text-center">
-        <button class="btn btn-primary btn-print" onclick="window.print()">Print Profile</button>
-        <a href="ID_generation.php?id=<?php echo $driver['formatted_id']; ?>" class="btn btn-success btn-generate-id btn-sm btn-icon icon-left" target="_blank">
-            <i class="entypo-vcard"></i>
-            Generate Driver ID
+        <a href="edit_driver.php?formatted_id=<?php echo $driver['formatted_id']; ?>" class="btn btn-default btn-sm btn-icon icon-left edit-btn">
+            <i class="entypo-pencil"></i>
+            Edit Details
         </a>
+        <button class="btn btn-success btn-verify btn-sm btn-icon icon-left" onclick="verifyDriver('<?php echo $driver['formatted_id']; ?>')">
+            <i class="fas fa-check"></i>
+            Verify Driver
+        </button>
+        <button class="btn btn-danger btn-deny btn-sm btn-icon icon-left" onclick="denyDriver('<?php echo $driver['formatted_id']; ?>')">
+            <i class="fas fa-times"></i>
+            Deny Driver
+        </button>
     </div>
+
+
 
 
     <div class="profile-container">
@@ -316,6 +347,20 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             var modal = $(this)
             modal.find('#modalImage').attr('src', imageSrc)
         })
+        
+        function verifyDriver(driverId) {
+            if (confirm("Are you sure you want to verify this driver?")) {
+                // Correct the URL to include 'id' parameter
+                window.location.href = "successverify.php?id=" + driverId;
+            }
+        }
+
+        function denyDriver(driverId) {
+            if (confirm("Are you sure you want to deny this driver?")) {
+                window.location.href = "denied_driver.php?id=" + driverId;
+            }
+        }
+
     </script>
 </body>
 </html>

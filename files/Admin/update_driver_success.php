@@ -113,6 +113,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $vehicle_img_front_path = handleFileUpload($_FILES['vehicle_img_front'], $vehiclesDir, $formatted_id, 'front') ?: $current_vehicle_img_front_path;
     $vehicle_img_back_path = handleFileUpload($_FILES['vehicle_img_back'], $vehiclesDir, $formatted_id, 'back') ?: $current_vehicle_img_back_path;
 
+    // Adjust paths for database storage
+    $pic_2x2_path_db = str_replace('../../', '', $pic_2x2_path);
+    $doc_proof_path_db = str_replace('../../', '', $doc_proof_path);
+    $vehicle_img_front_path_db = str_replace('../../', '', $vehicle_img_front_path);
+    $vehicle_img_back_path_db = str_replace('../../', '', $vehicle_img_back_path);
+
     // Update the vehicle category based on the driver category
     $vehicle_category = "";
     $formatted_category = "";
@@ -160,10 +166,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             return $oldPath;
         }
 
-        $pic_2x2_path = renameFile($pic_2x2_path, $driversDir, $new_formatted_id);
-        $doc_proof_path = renameFile($doc_proof_path, $documentsDir, $new_formatted_id);
-        $vehicle_img_front_path = renameFile($vehicle_img_front_path, $vehiclesDir, $new_formatted_id, 'front');
-        $vehicle_img_back_path = renameFile($vehicle_img_back_path, $vehiclesDir, $new_formatted_id, 'back');
+        $pic_2x2_path_db = renameFile($pic_2x2_path_db, $driversDir, $new_formatted_id);
+        $doc_proof_path_db = renameFile($doc_proof_path_db, $documentsDir, $new_formatted_id);
+        $vehicle_img_front_path_db = renameFile($vehicle_img_front_path_db, $vehiclesDir, $new_formatted_id, 'front');
+        $vehicle_img_back_path_db = renameFile($vehicle_img_back_path_db, $vehiclesDir, $new_formatted_id, 'back');
     }
 
     // Prepare SQL statements
@@ -235,8 +241,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $num_to_notify, 
         $vehicle_ownership, 
         $association, 
-        $pic_2x2_path, 
-        $doc_proof_path, 
+        $pic_2x2_path_db, 
+        $doc_proof_path_db, 
         $new_formatted_id, 
         $formatted_id);
     
@@ -253,8 +259,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $vehicle_color, 
         $brand, 
         $plate_num, 
-        $vehicle_img_front_path, 
-        $vehicle_img_back_path, 
+        $vehicle_img_front_path_db, 
+        $vehicle_img_back_path_db, 
         $new_formatted_id);
 
     // Execute SQL queries
@@ -376,6 +382,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Button to redirect to driver.php
         echo "<br><a href='driver.php' class='btn'>Go to Driver Table</a>";
+        echo "<br><br><hr> or <hr>";
+        echo "<br><a href='verify.php' class='btn'>Go to Verification Table</a>";
 
         // Redirect after displaying the success message and updated record details
         echo "<script>

@@ -123,7 +123,7 @@ if(isset($_SESSION["username"])) {
                             <td>
                                 <a href="#" class="btn btn-success btn-sm btn-icon icon-left" onclick="confirmVerify('<?php echo $row['formatted_id']; ?>')">
                                     <i class="entypo-check"></i>
-                                    Verify
+                                    Check for Verification
                                 </a>
                             </td>
                         </tr>
@@ -177,9 +177,9 @@ if(isset($_SESSION["username"])) {
         <!-- Success Verification -->
         <script type="text/javascript">
             function confirmVerify(driverId) {
-                if (confirm("Are you sure you want to verify this driver?")) {
-                    // Redirect to verify.php with the driver ID
-                    window.location.href = "successverify.php?id=" + driverId;
+                if (confirm("Let's review the Driver's Profile first?")) {
+                    // Open in a new tab
+                    window.open("driver_profile_unverified.php?id=" + driverId, '_blank');
                 }
             }
         </script>

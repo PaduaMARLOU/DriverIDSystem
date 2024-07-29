@@ -29,7 +29,7 @@ if(isset($_SESSION["username"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verification Success</title>
+    <title>Denial Success</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,13 +58,6 @@ if(isset($_SESSION["username"])) {
             text-decoration: underline;
         }
     </style>
-    <script>
-        function redirectToProfile(formattedId) {
-            setTimeout(function() {
-                window.location.href = 'driver_profile.php?id=' + formattedId;
-            }, 3000); // 3 seconds delay
-        }
-    </script>
 </head>
 <body>
     <div class="container">
@@ -73,12 +66,8 @@ if(isset($_SESSION["username"])) {
         if (isset($_GET['id'])) {
             $formatted_id = $_GET['id'];
 
-            // Get the current date and time
-            date_default_timezone_set('Asia/Manila');
-            $current_datetime = date('Y-m-d H:i:s');
-
-            // Update the verification_stat and renew_stat for the driver
-            $update_driver_query = "UPDATE tbl_driver SET verification_stat = 'Registered', renew_stat = 'Active', driver_registered = '$current_datetime', fk_admin_id = '$admin_id' WHERE formatted_id = '$formatted_id'";
+            // Update the verification_stat, renew_stat, driver_registered, and vehicle_registered for the driver
+            $update_driver_query = "UPDATE tbl_driver SET verification_stat = 'Denied', renew_stat = NULL, driver_registered = NULL, fk_admin_id = '$admin_id' WHERE formatted_id = '$formatted_id'";
             $update_driver_result = mysqli_query($connections, $update_driver_query);
 
             if ($update_driver_result) {
@@ -90,22 +79,18 @@ if(isset($_SESSION["username"])) {
                     $driver_row = mysqli_fetch_assoc($driver_result);
                     $driver_id = $driver_row['driver_id'];
 
-                    // Update vehicle_registered in tbl_vehicle with the same datetime using fk_driver_id
-                    $update_vehicle_query = "UPDATE tbl_vehicle SET vehicle_registered = '$current_datetime' WHERE fk_driver_id = '$driver_id'";
+                    // Update vehicle_registered in tbl_vehicle to NULL using fk_driver_id
+                    $update_vehicle_query = "UPDATE tbl_vehicle SET vehicle_registered = NULL WHERE fk_driver_id = '$driver_id'";
                     $update_vehicle_result = mysqli_query($connections, $update_vehicle_query);
 
                     if ($update_vehicle_result) {
-                        echo "<p class='message'>Verification status and vehicle registration updated successfully for Driver ID: $formatted_id.</p>";
-                        echo "<p class='message'><i>Now redirecting to $formatted_id's Profile within 3 seconds.</i></p>";
+                        echo "<p class='message'>Verification 'Denied' for Driver ID: $formatted_id.</p>";
                         echo '<p><a href="verify.php" class="link">Go back to verification</a></p>';
-                        echo "<script>redirectToProfile('$formatted_id');</script>";
                     } else {
                         echo "<p class='message'>Verification status updated, but error updating vehicle registration: " . mysqli_error($connections) . "</p>";
-                        echo '<p><a href="verify.php" class="link">Go back to verification</a></p>';
                     }
                 } else {
                     echo "<p class='message'>No driver found for Formatted ID: $formatted_id.</p>";
-                    echo '<p><a href="verify.php" class="link">Go back to verification</a></p>';
                 }
             } else {
                 // If update query fails, display an error message
