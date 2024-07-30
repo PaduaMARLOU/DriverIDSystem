@@ -30,6 +30,27 @@ $edges_path = "../../img/Edges.png"; // Path to the edges image for QR code back
 function generateQRCodeURL($data) {
     return 'https://api.qrserver.com/v1/create-qr-code/?data=' . urlencode($data) . '&size=150x150';
 }
+
+// Determine if the color is light or dark
+function isDarkColor($hex) {
+    // Convert hex to RGB
+    $hex = ltrim($hex, '#');
+    $r = hexdec(substr($hex, 0, 2));
+    $g = hexdec(substr($hex, 2, 2));
+    $b = hexdec(substr($hex, 4, 2));
+
+    // Calculate brightness
+    $brightness = ($r * 299 + $g * 587 + $b * 114) / 1000;
+    
+    // Return true if the color is dark
+    return $brightness < 128;
+}
+
+// Get the association color
+$association_color = $association['association_color'];
+$text_color = isDarkColor($association_color) ? 'white' : 'black';
+
+$full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_name']} {$driver['suffix_name']}";
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +59,7 @@ function generateQRCodeURL($data) {
     <meta charset="UTF-8">
     <title>ID Generation</title>
     <style>
-        /* Default styles for screen */
+        /* General styles for screen and print */
         .logo {
             width: 100px;
             height: auto;
@@ -66,8 +87,8 @@ function generateQRCodeURL($data) {
 
         .qr-code-container {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
         }
 
         .qr-code-background {
@@ -86,11 +107,11 @@ function generateQRCodeURL($data) {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             background: white;
             border-radius: 10px;
-            padding: 10px;
+            padding: 5px;
             box-sizing: border-box;
             display: flex;
             align-items: center;
@@ -131,6 +152,7 @@ function generateQRCodeURL($data) {
 
         .center {
             text-align: center;
+            margin-top: 20px;
         }
 
         .column {
@@ -150,11 +172,14 @@ function generateQRCodeURL($data) {
 
         .formatted-id-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-left: -40px;
+            margin-right: -40px;
+            margin-bottom: -10px;
         }
 
         .formatted-id-container h1 {
-            font-size: 4em;
+            font-size: 55pt;
             margin: 0;
         }
 
@@ -164,32 +189,61 @@ function generateQRCodeURL($data) {
             justify-content: space-between;
         }
 
-        /* Styles specific to print */
-        @page {
-            margin: 0.5in;
-            size: A4 landscape;
+        /* Print button styles */
+        .btn-print {
+            display: block; /* Visible on screen */
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
+
+        .btn-print:hover {
+            background-color: #0056b3;
+        }
+
+        /* Screen-specific styles */
+        @media screen {
+            .id-container, .id-front, .id-back, .vehicle-id-front, .vehicle-id-back {
+                border-bottom: 5px solid black; /* Add a thick border for screen view */
+                position: relative;
+            }
+
+            .id-front::after, .id-back::after, .vehicle-id-front::after, .vehicle-id-back::after {
+                content: "";
+                display: block;
+                border-bottom: 5px solid black; /* Add a thick line after the border */
+                margin: 10px 0;
+                width: 100%;
+            }
+        }
+
 
         @media print {
             .btn-print {
-                display: none;
-            }
-
-            .header {
-                margin-bottom: 10px;
-                margin-top: -40px;
+                display: none; /* Keep the button visible on screen */
             }
 
             .page {
-                page-break-after: always;
                 box-sizing: border-box;
-                margin: 0;
                 padding: 0.5in;
                 position: relative;
             }
 
-            .page:last-child {
-                page-break-after: auto;
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: 10px;
+                margin-top: -30px;
+                margin-right: -40px;
+                margin-left: -40px;
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                font-weight: bold;
             }
 
             .id-container {
@@ -199,6 +253,7 @@ function generateQRCodeURL($data) {
                 width: 100%;
                 height: 6.5in;
                 box-sizing: border-box;
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
             }
 
             .id-front, .id-back {
@@ -208,6 +263,9 @@ function generateQRCodeURL($data) {
                 border: 1px solid black;
                 box-sizing: border-box;
                 page-break-inside: avoid;
+                background-color: <?php echo $association_color; ?>; /* Background color for printing */
+                color: <?php echo $text_color; ?>; /* Text color based on background */
+                position: relative; /* Create positioning context */
             }
 
             .vehicle-id-front, .vehicle-id-back {
@@ -216,24 +274,20 @@ function generateQRCodeURL($data) {
                 padding: 0.5in;
                 border: 1px solid black;
                 box-sizing: border-box;
+                background-color: <?php echo $association_color; ?>; /* Background color for printing */
+                color: <?php echo $text_color; ?>; /* Text color based on background */
             }
 
             .id-front img, .id-back img, .vehicle-id-front img, .vehicle-id-back img {
-                max-width: 100%;
-                max-height: 100%;
-                height: auto;
+                object-fit: cover;
             }
 
-            .id-front, .id-back {
-                page-break-after: always;
-            }
-
-            .vehicle-id-front, .vehicle-id-back {
+            .id-front, .id-back, .vehicle-id-front, .vehicle-id-back {
                 page-break-after: always;
             }
 
             .thin-line {
-                border-top: 1px solid black;
+                border: 2px solid <?php echo $text_color; ?>;
                 margin: 0;
                 width: calc(100% + 1in);
                 margin-left: -0.5in;
@@ -242,34 +296,87 @@ function generateQRCodeURL($data) {
             }
 
             .thick-line {
-                border-top: 2px solid black;
+                border: 4px solid <?php echo $text_color; ?>;
                 margin: 0;
-                width: calc(100% + 1in);
-                margin-left: -0.5in;
-                margin-right: -0.5in;
+                position: absolute; /* Position absolutely within the parent */
+                bottom: 0.32in; /* Move it slightly above the bottom */
+                left: -0.5in; /* Offset from the left */
+                width: calc(100% + 1in); /* Full width of the parent plus margins */
                 box-sizing: border-box;
             }
+
+
             .qr-code-container {
                 width: 150px;
                 height: 150px;
-                margin-top: -30px;
+                margin-top: 20px;
                 margin-bottom: 40px;
+                margin-left: 30px;
             }
 
             .qr-code {
-                width: 140px;
-                height: 140px;
+                width: 130px;
+                height: 130px;
                 padding: 5px;
             }
 
             .qr-code-background {
                 background-size: contain;
             }
+
+            .signature-line {
+                border: 1px solid <?php echo $text_color; ?>;
+                margin: 5px 0;
+                width: 100%;
+                margin-top: -5px;
+                margin-left: 35px;
+            }
+
+            .signature-text {
+                margin: 0;
+                padding-top: 2px;
+                margin-left: 35px;
+            }
+
+            .driver-info-front {
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                font-weight: bold; /* Make text bold */
+                font-size: 18pt; /* Maximum font size */
+                color: <?php echo $text_color; ?>; /* Set text color */
+                margin: 20px auto 10px auto; /* Center the element and set top/bottom margins */
+                padding: 0; /* Remove default padding */
+                text-align: center; /* Center text content */
+                overflow: hidden; /* Hide overflow */
+                box-sizing: border-box; /* Include padding and border in element's total width and height */
+                width: 350px;
+                /* width: 100%; Ensure element uses full width available */
+                /* max-width: calc(100% - 40px); Set a maximum width, adjust as needed */
+                /* white-space: nowrap; Prevent text from wrapping to the next line */
+                /* text-overflow: ellipsis; /* Show an ellipsis if the text overflows */
+            }
+
+
+            .footer-driver {
+                font-weight: bold; /* Make text bold */
+                font-size: 15pt;   /* Set the font size */
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                margin: 0; /* Remove default margin */
+                position: absolute; /* Position absolutely within the parent */
+                bottom: 0.05in; /* Move it slightly above the bottom */
+                left: 0;
+                width: 100%; /* Full width of the parent */
+                text-align: center; /* Center text */
+            }
+
         }
+
+
     </style>
 
 </head>
 <body>
+     <!-- Button for printing -->
+    <button class="btn-print" onclick="window.print()">Print ID</button>
     <div class="page">
         <!-- Page 1: Driver ID Front and Back -->
         <div class="id-container">
@@ -288,10 +395,7 @@ function generateQRCodeURL($data) {
                 </div>
                 <div class="content-container">
                     <div class="column">
-                        <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo">
-                        <p><?php echo "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_name']} {$driver['suffix_name']}"; ?></p>
-                        <p>Nickname: <?php echo $driver['nickname']; ?></p>
-                        <p>Mobile Number: <?php echo $driver['mobile_number']; ?></p>
+                        <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo" style="width: 2in; height: 2in; object-fit: cover;">
                     </div>
                     <div class="column">
                         <div class="qr-code-container">
@@ -300,16 +404,21 @@ function generateQRCodeURL($data) {
                                 <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
                             </div>
                         </div>
-
                         <hr class="signature-line">
                         <p class="signature-text">Signature</p>
                     </div>
-
-
                 </div>
+                <p class="driver-info-front">
+                    <?php 
+                        // Format the name with middle initial
+                        $middle_initial = !empty($driver['middle_name']) ? substr($driver['middle_name'], 0, 1) . '.' : ''; 
+                        echo "{$driver['last_name']}, {$driver['first_name']} {$middle_initial} {$driver['suffix_name']}";
+                    ?>
+                    <br>
+                    <?php echo "\"<i>{$driver['nickname']}</i>\" <br> {$driver['mobile_number']}"; ?>
+                </p>
                 <hr class="thick-line">
-                <p>Official Driver</p>
-                <p>Valid Until: <?php echo date('Y', strtotime($driver['driver_registered'])); ?></p>
+                <p class="footer-driver">Official Driver - <i>Valid for Year: <?php echo date('Y', strtotime($driver['driver_registered'])); ?></i></p>
             </div>
 
             <div class="id-back">
@@ -350,11 +459,15 @@ function generateQRCodeURL($data) {
                 <p>The owner whose picture and signature appear among each of the associations at this barangay. This Vehicle's ID must always be affixed all the time.</p>
                 <p><?php echo $association['association_name']; ?></p>
                 <div class="column">
-                    <div class="qr-code">
-                        <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
+                    <div class="qr-code-container">
+                        <div class="qr-code-background"></div> <!-- Background image -->
+                        <div class="qr-code">
+                            <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
+                        </div>
                     </div>
+
                     <hr class="signature-line">
-                        <p>Signature</p>
+                    <p class="signature-text">Signature</p>
                 </div>
                 <div class="column">
                     <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo">
@@ -379,10 +492,41 @@ function generateQRCodeURL($data) {
             </div>
         </div>
     </div>
+    <script>
+        function adjustFontSizeForPrint() {
+            console.log('Adjusting font size for print...');
+            const infoFront = document.querySelector('.driver-info-front');
+            let currentFontSize = 18; // Start with maximum font size
+            const minFontSize = 6; // Minimum font size to prevent text from being too small
 
-    <!-- Button for printing -->
-    <div class="print-container">
-        <button class="btn-print" onclick="window.print()">Print ID</button>
-    </div>
+            infoFront.style.fontSize = `${currentFontSize}pt`;
+
+            // Force reflow
+            infoFront.offsetHeight;
+
+            console.log('Initial fontSize:', currentFontSize);
+            console.log('Initial scrollWidth:', infoFront.scrollWidth);
+            console.log('Initial clientWidth:', infoFront.clientWidth);
+
+            while (infoFront.scrollWidth > infoFront.clientWidth && currentFontSize > minFontSize) {
+                currentFontSize--;
+                infoFront.style.fontSize = `${currentFontSize}pt`;
+
+                // Force reflow
+                infoFront.offsetHeight;
+
+                console.log('Adjusted fontSize:', currentFontSize);
+                console.log('scrollWidth:', infoFront.scrollWidth);
+                console.log('clientWidth:', infoFront.clientWidth);
+            }
+        }
+
+        window.addEventListener('beforeprint', function() {
+            console.log('Before print event triggered.');
+            adjustFontSizeForPrint();
+        });
+
+    </script>
+
 </body>
 </html>
