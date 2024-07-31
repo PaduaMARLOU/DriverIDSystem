@@ -49,6 +49,7 @@ function isDarkColor($hex) {
 // Get the association color
 $association_color = $association['association_color'];
 $text_color = isDarkColor($association_color) ? 'white' : 'black';
+$shadow_color = $text_color === 'white' ? 'black' : 'white';
 
 $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_name']} {$driver['suffix_name']}";
 ?>
@@ -266,6 +267,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 background-color: <?php echo $association_color; ?>; /* Background color for printing */
                 color: <?php echo $text_color; ?>; /* Text color based on background */
                 position: relative; /* Create positioning context */
+                text-shadow: 2px 3px 4px <?php echo $shadow_color; ?>; /* Conditional text shadow color */
             }
 
             .vehicle-id-front, .vehicle-id-back {
@@ -276,6 +278,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 box-sizing: border-box;
                 background-color: <?php echo $association_color; ?>; /* Background color for printing */
                 color: <?php echo $text_color; ?>; /* Text color based on background */
+                text-shadow: 2px 3px 4px <?php echo $shadow_color; ?>; /* Conditional text shadow color */
             }
 
             .id-front img, .id-back img, .vehicle-id-front img, .vehicle-id-back img {
@@ -287,7 +290,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
             }
 
             .thin-line {
-                border: 2px solid <?php echo $text_color; ?>;
+                border: 2px solid black;
                 margin: 0;
                 width: calc(100% + 1in);
                 margin-left: -0.5in;
@@ -296,11 +299,11 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
             }
 
             .thick-line {
-                border: 4px solid <?php echo $text_color; ?>;
+                border: 4px solid black;
                 margin: 0;
                 position: absolute; /* Position absolutely within the parent */
                 bottom: 0.32in; /* Move it slightly above the bottom */
-                left: -0.5in; /* Offset from the left */
+                left: 0in; /* Offset from the left */
                 width: calc(100% + 1in); /* Full width of the parent plus margins */
                 box-sizing: border-box;
             }
@@ -325,7 +328,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
             }
 
             .signature-line {
-                border: 1px solid <?php echo $text_color; ?>;
+                border: 1px solid black;
                 margin: 5px 0;
                 width: 100%;
                 margin-top: -5px;
@@ -368,8 +371,126 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 text-align: center; /* Center text */
             }
 
-        }
+            .back-contact {
+                text-align: center; /* Center align text, can be adjusted */
+                color: <?php echo $text_color; ?>;
+                text-shadow: 
+                    -1px -1px 0 #000,  
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000; /* Creates the stroke effect */
+            }
 
+            .header-back {
+                display: flex;
+                flex-direction: column; /* Stack items vertically */
+                align-items: center; /* Center items horizontally */
+                justify-content: flex-start; /* Align items to the top */
+                margin: 0; /* Remove any margins */
+                padding: 10px; /* Add some padding if needed */
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                font-weight: bold;
+                position: relative; /* Allows for positioning adjustments */
+                top: -50px; /* Anchor to the top */
+            }
+
+            .header-back-text {
+                display: flex;
+                align-items: center; /* Align items vertically center */
+                gap: 20px; /* Adjust this value to control the spacing between the image and heading */
+                justify-content: center; /* Center the content horizontally */
+                text-align: center; /* Center text alignment */
+                margin: 0 auto; /* Center the div itself if needed */
+            }
+
+            .header-back-text img {
+                width: 1.5in;
+                height: 1.5in;
+                object-fit: fill;
+            }
+
+            .header-back-text h1 {
+                margin: 0; /* Remove default margin */
+                font-size: 40px; /* Adjust font size as needed */
+            }
+
+            .header-back-text h3 {
+                margin: 10px 0 0 0; /* Add space above the h3 element to create the gap */
+                font-size: 20px; /* Adjust font size as needed */
+            }
+
+
+            .owner-whose {
+                margin-top: 10px; /* Space above the description */
+                padding: 0 10px; /* Horizontal padding for spacing */
+                text-align: justify; /* Justify text alignment */
+                font-size: 14px; /* Adjust font size as needed */
+                line-height: 1.5; /* Line height for readability */
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            .emergency-details {
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                padding: 10px; /* Add padding inside the container */
+                text-align: center; /* Center align the text within the container */
+                position: relative; /* Ensure the container is positioned relative to its normal flow */
+                top: -70px; /* Move the container up */
+            }
+
+            .emergency-details p {
+                margin: 5px 0; /* Space above and below each paragraph */
+            }
+
+            .emergency-details p:not(.back-contact) {
+                font-size: 22px; /* Adjust the font size as needed */
+                font-weight: bold;
+            }
+
+            .emergency-details p > strong {
+                font-size: 30px; /* Adjust the font size as needed for the name */
+                font-weight: bold; /* Ensure the name is bold */
+            }
+
+            .emergency-details .back-contact {
+                font-weight: bold; /* Make the text bold for section headers */
+                margin-bottom: 10px; /* Space below the section headers */
+                margin-left: -40px;
+                margin-right: -40px;
+            }
+
+            .column-back {
+                display: flex; /* Use flexbox for column layout */
+                font-weight: bold; /* Make text bold */
+                font-size: 15pt;   /* Set the font size for the container */
+                font-family: 'Helvetica', Arial, sans-serif; /* Apply Helvetica font */
+                position: absolute; /* Position absolutely within the parent */
+                bottom: 0.05in; /* Move it slightly above the bottom */
+                left: 0;
+                width: 100%; /* Full width for the container */
+                box-sizing: border-box; /* Include padding and border in element's total width and height */
+                padding: 0 10px; /* Optional padding for spacing */
+                justify-content: space-between; /* Space out columns */
+            }
+
+            .column-back > div {
+                width: 50%; /* Half width for each column */
+                text-align: center; /* Center text in columns */
+            }
+
+            .column-back p {
+                font-size: 12pt; /* Adjust font size as needed for smaller text */
+            }
+
+            .signature-line-back {
+                border: none; /* Remove default border */
+                border: 1.5px solid black; /* Add a top border */
+                width: 80%; /* Adjust width as needed */
+                margin: 0 auto; /* Center the line */
+                margin-bottom: 10px; /* Space below the line */
+            }
+
+        }
 
     </style>
 
@@ -424,24 +545,40 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
             <div class="id-back">
                 <!-- Back side of Driver ID -->
                 <div class="center">
-                    <img src="<?php echo $vehicle_img_front_path; ?>" alt="Vehicle Image" style="width: 50%; float: left; max-height: 100%;">
-                    <p style="width: 50%; float: left; text-align: left; padding-left: 10px;"><?php echo $association['association_name']; ?></p>
-                    <div style="clear: both;"></div>
-                    <p>The owner whose picture and signature appear among each of the associations at this barangay. This driver's ID must always be worn all the time.</p>
-                    <p>In case of emergency, please contact:</p>
-                    <p><?php echo $driver['name_to_notify']; ?></p>
-                    <p><?php echo $driver['num_to_notify']; ?></p>
-                    <p>If found, kindly please return the driver's ID to:</p>
-                    <p>Barangay Estefania Treasurer's Office</p>
-                    <p>(034) 492-2495</p>
-                    <div class="column">
-                        <hr class="signature-line">
-                        <p>Kagawad Eduardo Sayson</p>
+                    <div class="header-back">
+                        <div class="header-back-text">
+                            <img src="<?php echo $vehicle_img_front_path; ?>" alt="Vehicle Image">
+                            <div>
+                                <h1><?php echo $driver['formatted_id']; ?></h1>
+                                <h3>Association:<br> <?php echo $association['association_name']; ?></h3>
+                            </div>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div class="owner-whose">
+                            <p style="text-align: justify;">The owner whose picture and signature appear among each of the associations at this barangay. This driver's ID must always be worn all the time.</p>
+                        </div>
                     </div>
-                    <div class="column">
-                        <hr class="signature-line">
-                        <p>Punong Barangay</p>
+
+                    <div class="emergency-details">
+                        <p class="back-contact">In case of emergency, please contact:</p>
+                        <p><strong><?php echo $driver['name_to_notify']; ?></strong></p>
+                        <p><?php echo $driver['num_to_notify']; ?></p>
+                        <p class="back-contact">If found, kindly please return the driver's ID to:</p>
+                        <p>Barangay Estefania Treasurer's Office</p>
+                        <p>(034) 492-2495</p>
                     </div>
+
+                    <div class="column-back">
+                        <div>
+                            <hr class="signature-line-back">
+                            <p style="font-size: 10pt;">Kagawad Eduardo Sayson</p>
+                        </div>
+                        <div>
+                            <hr class="signature-line-back">
+                            <p>Punong Barangay</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
