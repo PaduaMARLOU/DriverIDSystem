@@ -17,7 +17,7 @@ include("connections.php");
         <br>
         <h1>You don't have permission to access that page!</h1>
         <br>
-        <h2 id="countdown" style="color: red">You will vanish within 3 seconds!</h2>
+        <!-- <h2 id="countdown" style="color: red">You will vanish within 3 seconds!</h2> -->
         <br>
         <h3>PAGE NOT FOUND 404</h3>
         <br>
