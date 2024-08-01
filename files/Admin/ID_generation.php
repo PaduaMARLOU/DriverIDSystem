@@ -27,10 +27,41 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
 $edges_path = "../../img/Edges.png"; // Path to the edges image for QR code background
 $vehicle_side_path = "../../img/vehicle side design.png";
 
-// Function to generate QR code URL
-function generateQRCodeURL($data) {
-    return 'https://api.qrserver.com/v1/create-qr-code/?data=' . urlencode($data) . '&size=150x150';
+// Function to generate QR code URL with specified size
+function generateQRCodeURL($data, $size = '150x150') {
+    return 'https://api.qrserver.com/v1/create-qr-code/?data=' . urlencode($data) . '&size=' . $size;
 }
+
+// Concatenate details for the QR code
+$qr_code_data = "Driver ID: {$driver['formatted_id']}\n";
+$qr_code_data .= "Name: {$driver['first_name']} {$driver['middle_name']} {$driver['last_name']} {$driver['suffix_name']}\n";
+//$qr_code_data .= "Birth Date: {$driver['birth_date']}\n";
+$qr_code_data .= "Nickname: {$driver['nickname']}\n";
+//$qr_code_data .= "Birth Place: {$driver['birth_place']}\n";
+$qr_code_data .= "Mobile Number: {$driver['mobile_number']}\n";
+$qr_code_data .= "Sex: {$driver['sex']}\n";
+//$qr_code_data .= "Age: {$driver['age']}\n";
+//$qr_code_data .= "Address: {$driver['address']}\n";
+$qr_code_data .= "Emergency Contact - Name: {$driver['name_to_notify']}\n";
+//$qr_code_data .= "Emergency Contact - Relationship: {$driver['relationship']}\n";
+$qr_code_data .= "Emergency Contact - Number: {$driver['num_to_notify']}\n";
+$qr_code_data .= "Vehicle Ownership: {$driver['vehicle_ownership']}\n";
+$qr_code_data .= "Vehicle Category: {$vehicle['vehicle_category']}\n";
+//$qr_code_data .= "Vehicle Registered: {$vehicle['vehicle_registered']}\n";
+//$qr_code_data .= "Brand: {$vehicle['brand']}\n";
+//$qr_code_data .= "Plate Number: {$vehicle['plate_num']}\n";
+//$qr_code_data .= "Vehicle Color: {$vehicle['vehicle_color']}\n";
+//$qr_code_data .= "Name of Owner: {$vehicle['name_of_owner']}\n";
+//$qr_code_data .= "Owner Phone Number: {$vehicle['owner_phone_num']}\n";
+//$qr_code_data .= "Address of Owner: {$vehicle['addr_of_owner']}\n";
+//$qr_code_data .= "Association Category: {$association['association_category']}\n";
+//$qr_code_data .= "Association President: {$association['association_president']}\n";
+$qr_code_data .= "Association Name: {$association['association_name']}\n";
+//$qr_code_data .= "Association Color: {$association['association_color_name']}\n";
+$qr_code_data .= "Association Area: {$association['association_area']}\n";
+
+// Generate the QR code URL
+$qr_code_url = generateQRCodeURL($qr_code_data, '300x300');
 
 // Determine if the color is light or dark
 function isDarkColor($hex) {
@@ -653,7 +684,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 top: 50%; /* Center vertically */
                 left: 50%; /* Center horizontally */
                 transform: translate(-50%, -50%); /* Center it perfectly */
-                font-size: 16em; /* Increase size for a more prominent display */
+                font-size: 15em; /* Increase size for a more prominent display */
                 color: rgba(255, 255, 255, 1); /* Solid white text */
                 font-family: 'Helvetica', Arial, sans-serif;
                 font-weight: bold; /* Bold font */
@@ -703,7 +734,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                         <div class="qr-code-container">
                             <div class="qr-code-background"></div> <!-- Background image -->
                             <div class="qr-code">
-                                <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
+                                <img src="<?php echo $qr_code_url; ?>" alt="QR Code">
                             </div>
                         </div>
                         <hr class="signature-line">
@@ -791,7 +822,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                             <div class="qr-code-container">
                                 <div class="qr-code-background"></div> <!-- Background image -->
                                 <div class="qr-code">
-                                    <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
+                                    <img src="<?php echo $qr_code_url; ?>" alt="QR Code">
                                 </div>
                             </div>
                             <hr class="signature-line-vehicle">
