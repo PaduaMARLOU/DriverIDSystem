@@ -218,87 +218,99 @@
 
 
 
-			<div class="row">
-				<div class="col-sm-13">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<div class="panel-title">Violations</div>
-							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
-								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+				<div class="row">
+					<div class="col-sm-13">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="panel-title">Violations</div>
+								<div class="panel-options">
+									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+								</div>
 							</div>
-						</div>
-						<div class="panel-body">
-							<style>
-								.bar-graph {
-									display: flex;
-									flex-direction: column; /* Stacked vertically */
-									width: 100%;
-									margin-top: 20px; /* Add some margin at the top */
-								}
+							<div class="panel-body">
+								<style>
+									.bar-graph {
+										display: flex;
+										flex-direction: column; /* Stacked vertically */
+										width: 100%;
+										margin-top: 20px; /* Add some margin at the top */
+									}
 
-								.bar {
-									display: flex;
-									margin-bottom: 10px; /* Add some margin between bars */
-								}
+									.bar {
+										display: flex;
+										margin-bottom: 10px; /* Add some margin between bars */
+									}
 
-								.bar-label {
-									width: 100px; /* Fixed width for the label */
-									text-align: right; /* Align text to the right */
-									margin-right: 10px; /* Add some margin between label and bar */
-								}
+									.bar-label {
+										width: 100px; /* Fixed width for the label */
+										text-align: right; /* Align text to the right */
+										margin-right: 10px; /* Add some margin between label and bar */
+									}
 
-								.bar-fill {
-									height: 30px; /* Height of the bar */
-									background-color: #337ab7; /* Default color for the bar */
-									position: relative; /* Position relative for number */
-								}
+									.bar-fill {
+										height: 30px; /* Height of the bar */
+										background-color: #337ab7; /* Default color for the bar */
+										position: relative; /* Position relative for number */
+									}
 
-								.bar-number {
-									position: absolute; /* Position absolute for number */
-									left: 5px; /* Adjust number position */
-									color: white; /* Set number color */
-								}
+									.bar-number {
+										position: absolute; /* Position absolute for number */
+										left: 5px; /* Adjust number position */
+										color: white; /* Set number color */
+									}
 
-								.bar-percentage {
-									position: absolute; /* Position absolute for percentage */
-									right: 5px; /* Adjust percentage position */
-									color: white; /* Set percentage color */
-								}
-							</style>
+									.bar-percentage {
+										position: absolute; /* Position absolute for percentage */
+										right: 5px; /* Adjust percentage position */
+										color: white; /* Set percentage color */
+									}
 
-							<div class="bar-graph">
-								<?php
-								// Calculate the total number of violations
-								$totalCount = array_sum($totalViolations);
-								// Calculate the maximum count for scaling the bars
-								$maxCount = max($totalViolations);
+									.no-violations {
+										font-size: 18px;
+										color: #333;
+										margin-top: 20px;
+									}
+								</style>
 
-								// Generate bars for each violation category
-								foreach ($totalViolations as $category => $count) {
-									// Generate a unique color for each bar
-									$color = "#" . substr(md5($category), 0, 6);
-									// Calculate the width of the bar based on the count
-									$barWidth = ($count / $maxCount) * 100;
-									// Calculate the percentage of this category
-									$percentage = ($count / $totalCount) * 100;
+								<div class="bar-graph">
+									<?php
+									// Check if there are any violations
+									if (empty($totalViolations) || array_sum($totalViolations) == 0) {
+										echo "<div class='no-violations'>No Violations Found</div>";
+									} else {
+										// Calculate the total number of violations
+										$totalCount = array_sum($totalViolations);
+										// Calculate the maximum count for scaling the bars
+										$maxCount = max($totalViolations);
 
-									echo "<div class='bar'>
-											<div class='bar-label'>$category</div>
-											<div class='bar-fill' style='background-color: $color; width: {$barWidth}%;'>
-												<div class='bar-number'>$count</div>
-												<div class='bar-percentage'>" . number_format($percentage, 2) . "%</div>
-											</div>
-										</div>";
-								}
-								?>
+										// Generate bars for each violation category
+										foreach ($totalViolations as $category => $count) {
+											// Generate a unique color for each bar
+											$color = "#" . substr(md5($category), 0, 6);
+											// Calculate the width of the bar based on the count
+											$barWidth = ($count / $maxCount) * 100;
+											// Calculate the percentage of this category
+											$percentage = ($count / $totalCount) * 100;
+
+											echo "<div class='bar'>
+													<div class='bar-label'>$category</div>
+													<div class='bar-fill' style='background-color: $color; width: {$barWidth}%;'>
+														<div class='bar-number'>$count</div>
+														<div class='bar-percentage'>" . number_format($percentage, 2) . "%</div>
+													</div>
+												</div>";
+										}
+									}
+									?>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+
 
 
 
