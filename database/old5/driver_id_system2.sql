@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 01, 2024 at 11:21 PM
+-- Generation Time: Jul 29, 2024 at 04:49 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -52,8 +52,8 @@ CREATE TABLE `tbl_admin` (
 --
 
 INSERT INTO `tbl_admin` (`admin_id`, `first_name`, `middle_name`, `last_name`, `sex`, `mobile_number`, `username`, `password`, `attempt`, `relog_time`, `login_time`, `logout_time`, `account_type`, `date_registered`, `img`, `status`) VALUES
-(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-08-02 05:13:20', '2024-08-02 05:15:04', 1, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
-(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-08-02 05:15:11', '2024-08-02 05:15:28', 2, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
+(1, 'Wakamole', 'Medav', 'Plamor', 'Male', '09090909090', 'admin', '123', '0', '0000-00-00 00:00:00', '2024-07-29 13:58:15', '2024-07-26 20:42:40', 1, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
+(2, 'asdsad', 'adasda', 'asdasdas', 'asdsad', '09090909090', 'admin2', '123', '0', '0000-00-00 00:00:00', '2024-07-26 20:42:48', '2024-07-26 20:46:10', 2, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
 (3, 'asdada', 'asdada', 'dsadas', 'dasdasd', '09090909090', 'admin3', '123', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, '0000-00-00 00:00:00', '7_UPLOD_9 Ma_Lodi_2024-07-25_18-43-58_43444.jpg', ''),
 (4, 'Dino', 'Me', 'Saur', 'Male', '09090090909', 'Dino', 'dino', '0', '0000-00-00 00:00:00', '2024-07-25 21:40:09', '2024-07-25 21:40:14', 2, '2024-07-25 18:08:52', '1_Dino_Saur_43444.jpg', 'Approved'),
 (5, 'Dino', 'Me', 'Saur', 'Male', '09090090909', 'DinoMe', '123', '0', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, '2024-07-25 18:11:26', '1_Dino_Saur_43444.jpg', 'Approved'),
@@ -155,27 +155,7 @@ INSERT INTO `tbl_calendar` (`calendar_id`, `calendar_date`, `calendar_descriptio
 (12, '2024-08-11', '', 23, '15:00:00', 'Enable'),
 (13, '2024-08-19', '', 2, '15:00:00', 'Enable'),
 (15, '2024-08-13', '', 2, '15:00:00', 'Enable'),
-(17, '2024-07-13', '', 20, '15:00:00', 'Enable'),
-(18, '2024-08-08', 'Example Only Shopee 8-8 Sale', NULL, NULL, 'Disable'),
-(19, '2024-01-01', 'New Year\'s Day - Regular Holiday', NULL, NULL, 'Disable'),
-(20, '2024-03-28', 'Maundy Thursday - Regular Holiday', NULL, NULL, 'Disable'),
-(21, '2024-03-29', 'Good Friday - Regular Holiday', NULL, NULL, 'Disable'),
-(22, '2024-04-09', 'Araw ng Kagitingan - Regular Holiday', NULL, NULL, 'Disable'),
-(23, '2024-05-01', 'Labor Day - Regular Holiday', NULL, NULL, 'Disable'),
-(24, '2024-06-12', 'Independence Day - Regular Holiday', NULL, NULL, 'Disable'),
-(25, '2024-08-26', 'National Heroes Day - Regular Holiday', NULL, NULL, 'Disable'),
-(26, '2024-11-30', 'Bonifacio Day - Regular Holiday', NULL, NULL, 'Disable'),
-(27, '2024-12-25', 'Christmas Day - Regular Holiday', NULL, NULL, 'Disable'),
-(28, '2024-12-30', 'Rizal Day - Regular Holiday', NULL, NULL, 'Disable'),
-(29, '2024-02-10', 'Chinese New Year - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(30, '2024-02-25', 'EDSA People Power Revolution Anniversary - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(31, '2024-03-30', 'Black Saturday - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(32, '2024-08-21', 'Ninoy Aquino Day - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(33, '2024-11-01', 'All Saints\' Day - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(34, '2024-11-02', 'All Souls\' Day - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(35, '2024-12-08', 'Feast of the Immaculate Conception of the Blessed Virgin Mary - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(36, '2024-12-24', 'Christmas Eve - Special (Non-Working) Day', NULL, NULL, 'Disable'),
-(37, '2024-12-31', 'New Year\'s Eve - Special (Non-Working) Day', NULL, NULL, 'Disable');
+(17, '2024-07-13', '', 20, '15:00:00', 'Enable');
 
 -- --------------------------------------------------------
 
@@ -223,8 +203,8 @@ CREATE TABLE `tbl_driver` (
 --
 
 INSERT INTO `tbl_driver` (`driver_id`, `driver_category`, `formatted_id`, `first_name`, `middle_name`, `last_name`, `suffix_name`, `nickname`, `age`, `birth_date`, `birth_place`, `sex`, `address`, `mobile_number`, `civil_status`, `religion`, `citizenship`, `height`, `weight`, `pic_2x2`, `doc_proof`, `name_to_notify`, `relationship`, `num_to_notify`, `vehicle_ownership`, `verification_stat`, `fk_association_id`, `driver_registered`, `renew_stat`, `fk_sched_id`, `fk_vehicle_id`, `fk_admin_id`) VALUES
-(2, 'E-Bike', 'ETRK-0002', 'Rafaela Tigreal', 'Dyrroth', 'Delacruz', '', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a745a94c923_ETRK-0002_.jpg', 'uploads/documents/66a745a94ced5_ETRK-0002_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
-(3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 56, 56, 'uploads/drivers/66a7ca03681d4_ETRK-0003_.jpg', 'uploads/documents/66a7ca036831d_ETRK-0003_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
+(2, 'E-Bike', 'ETRK-0002', 'Wabafeeet', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a745a94c923_ETRK-0002_.jpg', 'uploads/documents/66a745a94ced5_ETRK-0002_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 00:00:00', 'Active', 1, 1, NULL),
+(3, 'E-Bike', 'ETRK-0003', 'Dabaret', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-26', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 56, 56, 'uploads/drivers/66a73f7e54e70_ETRK-0003_.jpg', 'uploads/documents/66a73f7e550c5_ETRK-0003_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-03 18:52:30', 'Active', 2, 2, 1),
 (8, 'E-Bike', 'ETRK-0008', 'Aduken', 'Ma', 'Lodi', 'Jr', 'asdsad', 0, '2024-05-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, '', '', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-26 03:27:41', 'Active', 6, 6, 1),
 (9, 'E-Bike', 'ETRK-0009', 'Masdad', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'Cost Benefit Analysis 2.png', 'Cost Benefit Analysis 2.png', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-27 20:09:05', 'Active', 7, 7, 1),
 (10, 'E-Bike', 'ETRK-0010', 'Bushzxada', 'Ma', 'Lodi', 'Jr', 'asdsad', 3, '2020-12-27', 'sadsad', 'Male', 'asdasd', '09090909090', 'Single', 'sadsad', 'sadasd', 12, 12, 'uploads/drivers/66a74c626fcb1_ETRK-0010_.jpg', 'uploads/documents/66a74c6270235_ETRK-0010_.jpg', 'sadasd', 'sadas', '09909099900', 'Owned', 'Registered', 1, '2024-07-29 16:31:11', 'Active', 8, 8, 1),
@@ -270,7 +250,7 @@ CREATE TABLE `tbl_vehicle` (
 
 INSERT INTO `tbl_vehicle` (`vehicle_id`, `fk_driver_id`, `vehicle_category`, `name_of_owner`, `addr_of_owner`, `owner_phone_num`, `vehicle_color`, `brand`, `plate_num`, `vehicle_registered`, `vehicle_img_front`, `vehicle_img_back`) VALUES
 (1, 2, 'E-Bike', 'Wabafet Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a745a94d39a_ETRK-0002_front.jpg', 'uploads/vehicles/66a745a94d8fc_ETRK-0002_back.jpg'),
-(2, 3, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a7ca03683ec_ETRK-0003_front.jpg', 'uploads/vehicles/66a7ca03684bc_ETRK-0003_back.jpg'),
+(2, 3, 'E-Bike', 'Dabaret Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', 'uploads/vehicles/66a73f7e552b0_ETRK-0003_front.jpg', 'uploads/vehicles/66a73f7e55532_ETRK-0003_back.jpg'),
 (6, 8, 'E-Bike', 'Aduken Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (7, 9, 'E-Bike', 'Masdad Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '0000-00-00 00:00:00', '', ''),
 (8, 10, 'E-Bike', 'Bushzxada Ma Lodi', 'asdasd', '09090909090', 'sdasad', 'asdsad', 'asdsa', '2024-07-29 16:31:11', 'uploads/vehicles/66a74c62707c9_ETRK-0010_front.jpg', 'uploads/vehicles/66a74c6270cf5_ETRK-0010_back.jpg'),
@@ -424,7 +404,7 @@ ALTER TABLE `tbl_association`
 -- AUTO_INCREMENT for table `tbl_calendar`
 --
 ALTER TABLE `tbl_calendar`
-  MODIFY `calendar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `calendar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_driver`
