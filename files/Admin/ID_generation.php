@@ -531,6 +531,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 margin: 10px; /* Optional: Margin around the container */
                 margin-top: 80px;
                 font-family: 'Helvetica', Arial, sans-serif;
+                font-weight: bold;
             }
 
             .info-column {
@@ -547,17 +548,18 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
             .info-column h1 {
                 font-size: 75pt; /* Adjust font size as needed */
                 font-weight: bold;
-                margin-bottom: 5px;
+                margin-bottom: -30px;
+                margin-top: 30px;
             }
 
             .info-column h3 {
                 font-size: 30pt; /* Adjust font size as needed */
                 font-weight: normal;
-                margin-bottom: 15px;
+                margin-bottom: 1px;
             }
 
             .info-column p {
-                font-size: 17pt; /* Adjust font size as needed */
+                font-size: 16pt; /* Adjust font size as needed */
                 line-height: 1.5;
                 text-align: justify; /* Justifies the text within the <p> element */
             }
@@ -569,7 +571,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 align-items: center;
                 justify-content: center;
                 width: 45%;
-                margin: 0 2%;
+                margin: 0 5%;
                 text-align: center;
                 margin-right: 10px;
                 margin-top: 100px;
@@ -589,6 +591,84 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 width: 80%;
                 margin-top: -5px;
                 margin-left: 35px;
+            }
+            
+            .column-vehicle-right-bottom {
+                position: absolute;
+                bottom: 125px; /* Adjust the distance from the bottom as needed */
+                right: 100px;  /* Adjust the distance from the right as needed */
+                width: 300px; /* Adjust the width as needed */
+                text-align: center; /* Align text to the right */
+                font-size: 20pt; /* Adjust font size as needed */
+                font-family: 'Helvetica', Arial, sans-serif;
+                font-weight: bold;
+            }
+
+            .status-vehicle {
+                background-image: url('../../img/vehicle side design.png'); /* Path to the background image */
+                background-size: contain; /* Ensure the entire image is visible */
+                background-repeat: no-repeat; /* Prevent repeating the background image */
+                background-position: center; /* Center the background image */
+                padding: 20px; /* Adjust padding as needed */
+                color: white; /* Adjust text color for better readability */
+                text-align: center; /* Center the text */
+                font-size: 25pt; /* Adjust font size as needed */
+                font-weight: bold; /* Make the text bold */
+                border-radius: 10px; /* Optional: rounded corners */
+                width: 8in; /* Adjust width to 4 inches */
+                height: 4in; /* Adjust height to 2 inches */
+                position: absolute; /* Use absolute positioning */
+                left: 46px; /* Position it 10 pixels from the left edge */
+                bottom: -88px; /* Position it 10 pixels from the bottom edge */
+                font-family: 'Helvetica', Arial, sans-serif;
+            }
+
+            .status-vehicle p {
+                margin-top: 220px; /* Add space above the text if needed */
+                margin-left: -260px;
+            }
+
+            .vehicle-id-back .center {
+                position: relative; /* For positioning the h1 text */
+                width: 100%;
+                height: 100%;
+                display: flex;
+                overflow: hidden; /* Ensures content stays within the border */
+                box-sizing: border-box; /* Includes padding in the element's total width and height */
+            }
+
+            .vehicle-id-back img {
+                width: 50%; /* Each image takes up exactly half of the container width */
+                height: 100%; /* Takes up the full height of the container */
+                object-fit: fill; /* Stretches the image to fill the container */
+                margin: 0; /* Remove default margin */
+                padding: 0; /* Remove default padding */
+                box-sizing: border-box; /* Includes padding in the element's total width and height */
+                position: relative; /* To allow for positional adjustments */
+                top: -35px;
+            }
+
+            .vehicle-id-back h1 {
+                position: absolute; /* Position it over the images */
+                top: 50%; /* Center vertically */
+                left: 50%; /* Center horizontally */
+                transform: translate(-50%, -50%); /* Center it perfectly */
+                font-size: 16em; /* Increase size for a more prominent display */
+                color: rgba(255, 255, 255, 1); /* Solid white text */
+                font-family: 'Helvetica', Arial, sans-serif;
+                font-weight: bold; /* Bold font */
+                text-align: center; /* Center align the text */
+                text-shadow: 
+                    -5px -5px 0 rgba(0, 0, 0, 0.9),  
+                    5px -5px 0 rgba(0, 0, 0, 0.9),
+                    -5px  5px 0 rgba(0, 0, 0, 0.9),
+                    5px  5px 0 rgba(0, 0, 0, 0.9); /* Thicker black stroke effect */
+                width: 100%; /* Full width for proper centering */
+                margin: 0; /* Remove default margin */
+                padding: 0; /* Remove default padding */
+                box-sizing: border-box; /* Includes padding in the element's total width and height */
+                opacity: 0.75; /* Adjust text opacity */
+                margin-top: -10px;
             }
 
         }
@@ -702,7 +782,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 <div class="main-vehicle-container">
                     <div class="info-column">
                         <h1><?php echo $driver['formatted_id']; ?></h1>
-                        <h3>Association: <?php echo $association['association_name']; ?></h3>
+                        <h3>Association:<br> <?php echo $association['association_name']; ?></h3>
                         <p>The owner whose picture and signature appear among each of the associations at this barangay. This Vehicle's ID must always be affixed all the time.</p>
                     </div>
 
@@ -723,9 +803,22 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                     </div>
                 </div>
 
+                <div class="column-vehicle-right-bottom">
+                    <?php 
+                        // Format the name with middle initial
+                        $middle_initial = !empty($driver['middle_name']) ? substr($driver['middle_name'], 0, 1) . '.' : ''; 
+                        echo "{$driver['last_name']}, {$driver['first_name']} {$middle_initial} {$driver['suffix_name']}";
+                    ?>
+                    <br>
+                    <?php echo "\"<i>{$driver['nickname']}</i>\" <br> {$driver['mobile_number']}"; ?>
+                </div>
 
-                <p>Official Driver</p>
-                <p>Valid Until: <?php echo date('Y', strtotime($driver['driver_registered'])); ?></p>
+
+
+                <div class="status-vehicle">
+                    <p>Valid Until: <?php echo date('Y', strtotime($driver['driver_registered'])); ?> as Official Driver</p>
+                </div>
+
             </div>
         </div>
     </div>
