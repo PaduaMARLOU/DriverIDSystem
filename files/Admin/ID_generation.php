@@ -25,6 +25,7 @@ $vehicle_img_front_path = "../../" . $vehicle['vehicle_img_front'];
 $vehicle_img_back_path = "../../" . $vehicle['vehicle_img_back'];
 $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to your logo image
 $edges_path = "../../img/Edges.png"; // Path to the edges image for QR code background
+$vehicle_side_path = "../../img/vehicle side design.png";
 
 // Function to generate QR code URL
 function generateQRCodeURL($data) {
@@ -490,6 +491,106 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 margin-bottom: 10px; /* Space below the line */
             }
 
+            .vehicle-front-header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: 70px;
+                left: 80px;
+                width: calc(100% - 120px);
+                font-family: 'Helvetica', Arial, sans-serif;
+                font-weight: bold;
+            }
+
+            .vehicle-front-header .logo {
+                width: 150px;
+                margin-right: 15px;
+            }
+
+            .vehicle-front-header .header-front-text {
+                display: flex;
+                flex-direction: row; /* Display text in a row */
+                align-items: center; /* Align items vertically in the center */
+            }
+
+            .vehicle-front-header h1 {
+                margin: 0;
+                font-size: 2.2em; /* Increase font size for h1 */
+                margin-right: 10px; /* Space between h1 and p */
+            }
+
+            .vehicle-front-header p {
+                margin: 0;
+                font-size: 1.5em; /* Font size for p */
+            }
+
+            .main-vehicle-container {
+                display: flex;
+                justify-content: space-between; /* Adjusts spacing between columns */
+                align-items: flex-start; /* Aligns columns at the top of the container */
+                margin: 10px; /* Optional: Margin around the container */
+                margin-top: 80px;
+                font-family: 'Helvetica', Arial, sans-serif;
+            }
+
+            .info-column {
+                display: flex;
+                flex-direction: column;
+                margin: 10px;
+                padding: 15px;
+                width: 1000px; /* Adjust width as needed */
+                margin-left: -40px;
+                margin-right: -25px;
+            }
+
+
+            .info-column h1 {
+                font-size: 75pt; /* Adjust font size as needed */
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .info-column h3 {
+                font-size: 30pt; /* Adjust font size as needed */
+                font-weight: normal;
+                margin-bottom: 15px;
+            }
+
+            .info-column p {
+                font-size: 17pt; /* Adjust font size as needed */
+                line-height: 1.5;
+                text-align: justify; /* Justifies the text within the <p> element */
+            }
+
+
+            .column-vehicle-right {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 45%;
+                margin: 0 2%;
+                text-align: center;
+                margin-right: 10px;
+                margin-top: 100px;
+            }
+
+            .qr-code-container-vehicle {
+                width: 150px;
+                height: 150px;
+                margin-top: 20px;
+                margin-bottom: 40px;
+                margin-left: 30px;
+            }
+
+            .signature-line-vehicle {
+                border: 1px solid black;
+                margin: 5px 0;
+                width: 80%;
+                margin-top: -5px;
+                margin-left: 35px;
+            }
+
         }
 
     </style>
@@ -589,29 +690,40 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
         <!-- Page 2: Vehicle ID Front -->
         <div class="vehicle-id-front">
             <div class="center">
-                <img src="<?php echo $logo_path; ?>" alt="Logo" style="width: 100px;">
-                <h2>BARANGAY ESTEFANIA</h2>
-                <p>Bacolod CITY, Fortune Towne</p>
-                <h1><?php echo $driver['formatted_id']; ?></h1>
-                <p>The owner whose picture and signature appear among each of the associations at this barangay. This Vehicle's ID must always be affixed all the time.</p>
-                <p><?php echo $association['association_name']; ?></p>
-                <div class="column">
-                    <div class="qr-code-container">
-                        <div class="qr-code-background"></div> <!-- Background image -->
-                        <div class="qr-code">
-                            <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
-                        </div>
+                <div class="vehicle-front-header">
+                    <img src="<?php echo $logo_path; ?>" alt="Logo" class="logo">
+                    <div class="header-front-text">
+                        <h1>BARANGAY ESTEFANIA</h1>
+                        <p>Bacolod CITY, Fortune Towne</p>
+                    </div>
+                </div>
+                
+                
+                <div class="main-vehicle-container">
+                    <div class="info-column">
+                        <h1><?php echo $driver['formatted_id']; ?></h1>
+                        <h3>Association: <?php echo $association['association_name']; ?></h3>
+                        <p>The owner whose picture and signature appear among each of the associations at this barangay. This Vehicle's ID must always be affixed all the time.</p>
                     </div>
 
-                    <hr class="signature-line">
-                    <p class="signature-text">Signature</p>
+                    <div class="content-container">
+                        <div class="column-vehicle-right">
+                            <div class="qr-code-container">
+                                <div class="qr-code-background"></div> <!-- Background image -->
+                                <div class="qr-code">
+                                    <img src="<?php echo generateQRCodeURL($driver['formatted_id']); ?>" alt="QR Code">
+                                </div>
+                            </div>
+                            <hr class="signature-line-vehicle">
+                            <p class="signature-text">Signature</p>
+                        </div>
+                        <div class="column-vehicle-right">
+                            <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo" style="width: 2in; height: 2in; object-fit: cover;">
+                        </div>
+                    </div>
                 </div>
-                <div class="column">
-                    <img src="<?php echo $pic_2x2_path; ?>" alt="Driver Photo">
-                    <p><?php echo "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_name']} {$driver['suffix_name']}"; ?></p>
-                    <p>Nickname: <?php echo $driver['nickname']; ?></p>
-                    <p>Mobile Number: <?php echo $driver['mobile_number']; ?></p>
-                </div>
+
+
                 <p>Official Driver</p>
                 <p>Valid Until: <?php echo date('Y', strtotime($driver['driver_registered'])); ?></p>
             </div>
