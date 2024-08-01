@@ -51,14 +51,33 @@
     }
 ?>
 
+				<style>
+					.time {
+						position: absolute;
+						top: 12px;
+						left: 440px;
+						transition: .3s;
+						cursor: cell;
+					}
+				</style>
+				<script src="https://cdn.lordicon.com/lordicon.js"></script>
+
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="well">
 							<h1>
 								<?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?>
 								<span id="time"></span>
+								<lord-icon
+									src="https://cdn.lordicon.com/lzgqzxrq.json"
+									trigger="hover"
+									colors="primary:#3a3347,secondary:#ebe6ef,tertiary:#4bb3fd,quaternary:#000000"
+									style="width:70px;height:70px"
+									class="time"
+									title="Time Navigation">
+								</lord-icon>
 							</h1>
-							<h3>Welcome to the Drivers ID System <strong>Admin <?php echo $first_name; ?></strong></h3>
+							<h3>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h3>
 						</div>
 					</div>
 				</div>
