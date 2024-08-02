@@ -80,7 +80,23 @@ function isDarkColor($hex) {
 
 // Get the association color
 $association_color = $association['association_color'];
-$text_color = isDarkColor($association_color) ? 'white' : 'black';
+
+// Color based on vehicle
+$vehicle_category = $vehicle['vehicle_category']; // Example of fetching vehicle category
+
+// Set the vehicle color based on the vehicle category
+if ($vehicle_category == 'E-Bike') {
+    $vehicle_color = '#f56854';
+} elseif ($vehicle_category == 'Tricycle') {
+    $vehicle_color = '#00a65a';
+} elseif ($vehicle_category == 'Trisikad') {
+    $vehicle_color = '#ffa812';
+} else {
+    $vehicle_color = '#defaultColor'; // Set a default color if needed
+}
+
+
+$text_color = isDarkColor($vehicle_color) ? 'white' : 'white'; //change to black the last part if association
 $shadow_color = $text_color === 'white' ? 'black' : 'white';
 
 $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_name']} {$driver['suffix_name']}";
@@ -368,7 +384,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 border: 1px solid black;
                 box-sizing: border-box;
                 page-break-inside: avoid;
-                background-color: <?php echo $association_color; ?>; /* Background color for printing */
+                background-color: <?php echo $vehicle_color; ?>; /* Background color for printing */
                 color: <?php echo $text_color; ?>; /* Text color based on background */
                 position: relative; /* Create positioning context */
                 text-shadow: 2px 3px 4px <?php echo $shadow_color; ?>; /* Conditional text shadow color */
@@ -380,7 +396,7 @@ $full_name = "{$driver['last_name']}, {$driver['first_name']} {$driver['middle_n
                 padding: 0.5in;
                 border: 1px solid black;
                 box-sizing: border-box;
-                background-color: <?php echo $association_color; ?>; /* Background color for printing */
+                background-color: <?php echo $vehicle_color; ?>; /* Background color for printing */
                 color: <?php echo $text_color; ?>; /* Text color based on background */
                 text-shadow: 2px 3px 4px <?php echo $shadow_color; ?>; /* Conditional text shadow color */
             }
