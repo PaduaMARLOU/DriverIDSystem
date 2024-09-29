@@ -22,11 +22,22 @@ if (session_status() === PHP_SESSION_NONE) {
     }
 ?>
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+</style>
+
 <div class="row">
     <!-- Profile Info and Notifications -->
     <div class="col-md-6 col-sm-8 clearfix">
         <ul class="user-info pull-left pull-none-xsm" style="margin-top: 10px;">
-            <li style="font-weight: bold; font-size: 30px; color: #333; text-shadow: 2px 2px 2px #888;">Barangay Estefania Driver ID System</li>
+            <li style="font-weight: bold; font-size: 30px; color: #333;">Barangay Estefania Driver ID System</li>
         </ul>
     </div>
 

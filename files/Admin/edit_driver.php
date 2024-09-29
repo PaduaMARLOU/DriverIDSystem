@@ -4,14 +4,14 @@ session_start();
 
 include("../../connections.php");
 
-if(isset($_SESSION["username"])) {
+if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
 
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
     $fetch = mysqli_fetch_assoc($authentication);
     $account_type = $fetch["account_type"];
 
-    if($account_type != 1 && $account_type != 2) {
+    if ($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
@@ -24,15 +24,61 @@ if(isset($_SESSION["username"])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Record</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Custom CSS -->
+    <link rel="icon" href="../../img/writting-pencil-design.png" type="image/png">
     <style>
-        /* Your custom CSS styles here */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            outline: none;
+        }
+
+        .container {
+            position: relative;
+            margin-right: 445px;
+            width: 29%;
+            border: 1.5px solid #707274;
+            padding-left: 2em;
+            padding-right: 2em;
+            padding-bottom: 2em;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #AAADB5;
+        }
+
+        ion-icon {
+            position: absolute;
+            font-size: 40px;
+            top: 20px;
+            left: 20px;
+            color: #2CAEE2;
+            transition: .2s;
+        }
+
+        ion-icon:hover {
+            color: #31A0CC;
+        }
+
+        ion-icon:active {
+            transform: scale(.9);
+        }
+
+        button {
+            transition: .2s;
+        }
+        
+        button:active {
+            transform: scale(.9);
+        }
+
     </style>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -54,16 +100,21 @@ if(isset($_SESSION["username"])) {
         });
     </script>
 </head>
+
 <body>
+    <br>
     <div class="container">
-        <h2>Edit Record</h2>
+        <a href="driver.php"><ion-icon name="arrow-back-circle"></ion-icon></a>
+        <center>
+            <h2>Edit Record</h2><br>
+        </center>
         <form action="update_driver_success.php" method="POST" enctype="multipart/form-data">
             <?php
             // Include database connection
             include("../../connections.php");
 
             // Check if formatted_id is provided in the URL
-            if(isset($_GET['formatted_id'])) {
+            if (isset($_GET['formatted_id'])) {
                 // Retrieve the formatted_id from the URL
                 $formatted_id = $_GET['formatted_id'];
 
@@ -76,22 +127,22 @@ if(isset($_SESSION["username"])) {
                 $vehicle_result = $connections->query($vehicle_sql);
 
                 // Check if the driver record exists
-                if($driver_result->num_rows > 0 && $vehicle_result->num_rows > 0) {
+                if ($driver_result->num_rows > 0 && $vehicle_result->num_rows > 0) {
                     // Fetch the driver record as an associative array
                     $driver_row = $driver_result->fetch_assoc();
                     // Fetch the vehicle record as an associative array
                     $vehicle_row = $vehicle_result->fetch_assoc();
 
                     // Populate driver fields
-                    ?>
+            ?>
                     <input type="hidden" name="formatted_id" value="<?php echo $driver_row['formatted_id']; ?>">
                     <div class="form-group">
-                        <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad): <br><i>Notice: Changing this may require you to upload new files for 2x2 Picture, Proof of Document, and Front and Back Vehicle Image.</i></label>
+                        <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad):</label>
                         <select class="form-control" name="driver_category" id="driver_category" required>
                             <option value="">Select Driver Category</option>
-                            <option value="E-Bike" <?php if($driver_row['driver_category'] === 'E-Bike') echo 'selected'; ?>>E-Bike</option>
-                            <option value="Tricycle" <?php if($driver_row['driver_category'] === 'Tricycle') echo 'selected'; ?>>Tricycle</option>
-                            <option value="Trisikad" <?php if($driver_row['driver_category'] === 'Trisikad') echo 'selected'; ?>>Trisikad</option>
+                            <option value="E-Bike" <?php if ($driver_row['driver_category'] === 'E-Bike') echo 'selected'; ?>>E-Bike</option>
+                            <option value="Tricycle" <?php if ($driver_row['driver_category'] === 'Tricycle') echo 'selected'; ?>>Tricycle</option>
+                            <option value="Trisikad" <?php if ($driver_row['driver_category'] === 'Trisikad') echo 'selected'; ?>>Trisikad</option>
                         </select>
                     </div>
 
@@ -112,7 +163,7 @@ if(isset($_SESSION["username"])) {
 
                     <div class="form-group">
                         <label for="suffix_name">Suffix Name:</label>
-                        <input type="text" class="form-control" name="suffix_name" id="suffix_name" placeholder="Suffix Name" required value="<?php echo $driver_row['suffix_name']; ?>">
+                        <input type="text" class="form-control" name="suffix_name" id="suffix_name" placeholder="Suffix Name" value="<?php echo $driver_row['suffix_name']; ?>">
                     </div>
 
                     <div class="form-group">
@@ -132,11 +183,11 @@ if(isset($_SESSION["username"])) {
                     </div>
 
                     <div class="form-group">
-                        <label for="                    sex">Sex (Male or Female):</label>
+                        <label for="sex">Gender:</label>
                         <select class="form-control" name="sex" id="sex" required>
-                            <option value="">Select Sex</option>
-                            <option value="Male" <?php if($driver_row['sex'] === 'Male') echo 'selected'; ?>>Male</option>
-                            <option value="Female" <?php if($driver_row['sex'] === 'Female') echo 'selected'; ?>>Female</option>
+                            <option value="">Select Gender</option>
+                            <option value="Male" <?php if ($driver_row['sex'] === 'Male') echo 'selected'; ?>>Male</option>
+                            <option value="Female" <?php if ($driver_row['sex'] === 'Female') echo 'selected'; ?>>Female</option>
                         </select>
                     </div>
 
@@ -155,12 +206,12 @@ if(isset($_SESSION["username"])) {
                         <label for="civil_status">Civil Status (e.g., Single, Married, etc.):</label>
                         <select class="form-control" name="civil_status" id="civil_status" required>
                             <option value="">Select Civil Status</option>
-                            <option value="Single" <?php if($driver_row['civil_status'] === 'Single') echo 'selected'; ?>>Single</option>
-                            <option value="Married" <?php if($driver_row['civil_status'] === 'Married') echo 'selected'; ?>>Married</option>
-                            <option value="Live-In" <?php if($driver_row['civil_status'] === 'Live-In') echo 'selected'; ?>>Live-In</option>
-                            <option value="Widowed" <?php if($driver_row['civil_status'] === 'Widowed') echo 'selected'; ?>>Widowed</option>
-                            <option value="Separated" <?php if($driver_row['civil_status'] === 'Separated') echo 'selected'; ?>>Separated</option>
-                            <option value="Divorced" <?php if($driver_row['civil_status'] === 'Divorced') echo 'selected'; ?>>Divorced</option>
+                            <option value="Single" <?php if ($driver_row['civil_status'] === 'Single') echo 'selected'; ?>>Single</option>
+                            <option value="Married" <?php if ($driver_row['civil_status'] === 'Married') echo 'selected'; ?>>Married</option>
+                            <option value="Live-In" <?php if ($driver_row['civil_status'] === 'Live-In') echo 'selected'; ?>>Live-In</option>
+                            <option value="Widowed" <?php if ($driver_row['civil_status'] === 'Widowed') echo 'selected'; ?>>Widowed</option>
+                            <option value="Separated" <?php if ($driver_row['civil_status'] === 'Separated') echo 'selected'; ?>>Separated</option>
+                            <option value="Divorced" <?php if ($driver_row['civil_status'] === 'Divorced') echo 'selected'; ?>>Divorced</option>
                         </select>
                     </div>
 
@@ -188,7 +239,7 @@ if(isset($_SESSION["username"])) {
                     <div class="form-group">
                         <label for="pic_2x2">Upload 2x2 Picture:</label>
                         <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*">
-                        <?php if (!empty($driver_row['pic_2x2'])): ?>
+                        <?php if (!empty($driver_row['pic_2x2'])) : ?>
                             <p>Current File: <?php echo $driver_row['pic_2x2']; ?></p>
                             <input type="hidden" name="current_pic_2x2" value="<?php echo $driver_row['pic_2x2']; ?>">
                         <?php endif; ?>
@@ -197,7 +248,7 @@ if(isset($_SESSION["username"])) {
                     <div class="form-group">
                         <label for="doc_proof">Upload Proof of Document:</label>
                         <input type="file" class="form-control" name="doc_proof" id="doc_proof">
-                        <?php if (!empty($driver_row['doc_proof'])): ?>
+                        <?php if (!empty($driver_row['doc_proof'])) : ?>
                             <p>Current File: <?php echo $driver_row['doc_proof']; ?></p>
                             <input type="hidden" name="current_doc_proof" value="<?php echo $driver_row['doc_proof']; ?>">
                         <?php endif; ?>
@@ -223,8 +274,8 @@ if(isset($_SESSION["username"])) {
                         <label for="vehicle_ownership">Vehicle Ownership (Owned or Rented):</label>
                         <select class="form-control" name="vehicle_ownership" id="vehicle_ownership" required>
                             <option value="">Select Vehicle Ownership</option>
-                            <option value="Owned" <?php if($driver_row['vehicle_ownership'] === 'Owned') echo 'selected'; ?>>Owned</option>
-                            <option value="Rented" <?php if($driver_row['vehicle_ownership'] === 'Rented') echo 'selected'; ?>>Rented</option>
+                            <option value="Owned" <?php if ($driver_row['vehicle_ownership'] === 'Owned') echo 'selected'; ?>>Owned</option>
+                            <option value="Rented" <?php if ($driver_row['vehicle_ownership'] === 'Rented') echo 'selected'; ?>>Rented</option>
                         </select>
                     </div>
 
@@ -256,7 +307,7 @@ if(isset($_SESSION["username"])) {
                     <div class="form-group">
                         <label for="vehicle_img_front">Front Image of Vehicle:</label>
                         <input type="file" class="form-control" name="vehicle_img_front" id="vehicle_img_front" accept="image/*">
-                        <?php if (!empty($vehicle_row['vehicle_img_front'])): ?>
+                        <?php if (!empty($vehicle_row['vehicle_img_front'])) : ?>
                             <p>Current File: <?php echo $vehicle_row['vehicle_img_front']; ?></p>
                             <input type="hidden" name="current_vehicle_img_front" value="<?php echo $vehicle_row['vehicle_img_front']; ?>">
                         <?php endif; ?>
@@ -265,7 +316,7 @@ if(isset($_SESSION["username"])) {
                     <div class="form-group">
                         <label for="vehicle_img_back">Back Image of Vehicle:</label>
                         <input type="file" class="form-control" name="vehicle_img_back" id="vehicle_img_back" accept="image/*">
-                        <?php if (!empty($vehicle_row['vehicle_img_back'])): ?>
+                        <?php if (!empty($vehicle_row['vehicle_img_back'])) : ?>
                             <p>Current File: <?php echo $vehicle_row['vehicle_img_back']; ?></p>
                             <input type="hidden" name="current_vehicle_img_back" value="<?php echo $vehicle_row['vehicle_img_back']; ?>">
                         <?php endif; ?>
@@ -275,7 +326,7 @@ if(isset($_SESSION["username"])) {
                     <div class="form-group">
                         <label for="association">Select Association:</label>
                         <select class="form-control" name="association" id="association" required>
-                            <option value="">Select Association</option>
+                            
                             <?php
                             $query = "SELECT association_id, association_name, association_area FROM tbl_association";
                             $result = $connections->query($query);
@@ -292,12 +343,10 @@ if(isset($_SESSION["username"])) {
                         </select>
                     </div>
 
-
-                    <button type="submit" name="submit" class="btn btn-success">Submit</button>
-                    <a href="driver.php" class="btn btn-success">Back</a>
-                    <hr>
                     <br>
-                    <?php
+                    <center><button type="submit" name="submit" class="btn btn-success" style="width: 100%; font-size: 18px;">Submit</button></center>
+
+            <?php
                 } else {
                     echo "Driver record not found.";
                 }
@@ -310,5 +359,11 @@ if(isset($_SESSION["username"])) {
             ?>
         </form>
     </div>
+    <hr>
+    <i style="position: relative; right: -170px; padding-bottom: 20px; font-size: 15px;">Notice: Changing this may require you to upload new files for 2x2 Picture, Proof of Document, and Front and Back Vehicle Image.</i></label>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

@@ -16,6 +16,10 @@
     color: white;
 }
 
+*::selection {
+    background-color: var(--comfort-red);
+}
+
 .all {
     position: relative;
     bottom: -6em;
@@ -89,4 +93,13 @@
     box-shadow: 1px 1px 10px rgb(240, 229, 229);
     background-color: var(--comfort-blue);
     font-size: 33px;
+}
+
+#yes:active {
+    transform: scale(.9);
+}
+
+#no:active {
+    display: inline-block;
+    transform: scale(.9);
 }

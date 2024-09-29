@@ -1,16 +1,26 @@
-*::selection {
-    background-color: #B158EE;
-    text-shadow: 1px 1px 10px gray;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
-    background-image: url('../../img/Barangay\ Estefania\ Hall.jpeg');
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('../img/Barangay Estefania Hall.jpeg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    text-align: center;
-    overflow-x: hidden;
+    background-attachment: fixed; /* Add this line */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    animation: fadeIn 1s ease forwards;
 }
 
 .mains {
@@ -69,13 +79,11 @@ body {
     position: relative;
     color: white;
     top: -0.6em;
-    text-shadow: 1px 1px 10px black, 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 25px #000, 0 0 30px #000;
     animation: enlarge 300s infinite;
     font-size: 2.3em; /* Adjust font size for better visibility */
     font-weight: bold; /* Optional: make text bold for better visibility */
     margin-bottom: 10px;
 }
-
 
 .log-in-form {
     position: relative;
@@ -140,7 +148,7 @@ body {
     background-color: transparent;
     border: 2px solid white;
     cursor: pointer;
-    transition: .3s ease;
+    transition: .2s ease;
 }
 
 .btn-log-in:hover {
@@ -153,17 +161,8 @@ body {
 }
 
 .btn-log-in:active {
-    background-color: #EB54F4;
-}
-
-.forgot-pass {
-    color: #21E4FE;
-    transition: .4s ease;
-}
-
-.forgot-pass:hover {
-    font-size: 18px;
-    color: #F121FE;
+    background-color: #ad56ffc1;
+    transform: scale(.9);
 }
 
 ::-webkit-scrollbar {

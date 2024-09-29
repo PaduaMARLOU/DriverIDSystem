@@ -33,7 +33,18 @@
 
 
 </head>
+
 <body class="page-body" data-url="http://neon.dev">
+
+<style>
+	table {
+		color: #48484C;
+	}
+
+	th {
+		font-size: 1em;
+	}
+</style>
 
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 	
@@ -70,7 +81,7 @@
 
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
-					var $table4 = jQuery("#table-4");
+					let $table4 = jQuery("#table-4");
 
 					$table4.DataTable({
 						dom: 'Bfrtip',
@@ -87,12 +98,12 @@
 			<table class="table table-bordered datatable" id="table-4">
 				<thead>
 					<tr>
-						<th>Driver ID</th>
-						<th>Driver Name</th>
-						<th>Vehicle Type</th>
-						<th>Association</th>
-						<th>Driver Status</th>
-						<th>Actions</th>
+						<th style="color: #48484C;">Driver ID</th>
+						<th style="color: #48484C;">Driver Name</th>
+						<th style="color: #48484C;">Vehicle Type</th>
+						<th style="color: #48484C;">Association</th>
+						<th style="color: #48484C;">Driver Status</th>
+						<th style="color: #48484C;" width="28%">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -115,9 +126,9 @@
 									<i class="entypo-cancel"></i>
 									Delete
 								</a>
-								<a href="driver_profile.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-info btn-sm btn-icon icon-left" target="_blank">
+								<a href="driver_profile.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-info btn-sm btn-icon icon-left">
 									<i class="entypo-user"></i>
-									View Driver Profile
+									View 
 								</a>
 							</td>
 						</tr>
@@ -127,12 +138,12 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<th>Driver ID</th>
-						<th>Driver Name</th>
-						<th>Vehicle Type</th>
-						<th>Association</th>
-						<th>Driver Status</th>
-						<th>Actions</th>
+						<th style="color: #48484C;">Driver ID</th>
+						<th style="color: #48484C;">Driver Name</th>
+						<th style="color: #48484C;">Vehicle Type</th>
+						<th style="color: #48484C;">Association</th>
+						<th style="color: #48484C;">Driver Status</th>
+						<th style="color: #48484C;">Actions</th>
 					</tr>
 				</tfoot>
 			</table>

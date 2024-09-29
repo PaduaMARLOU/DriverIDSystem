@@ -85,10 +85,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            outline: none;
+        }
+
         .color-picker {
             width: 100%;
             padding: 0;
             border: none;
+        }
+
+        dotlottie-player {
+            position: absolute;
+            top: -.1rem;
+            right: 43rem;
+        }
+
+        .back {
+            background-color: #007BFF;
+            border: 1.5px solid #007BFF;
+            border-radius: 3px;
+            font-size: 20px;
+            color: white;
+            padding-left: .5rem;
+            padding-right: .5rem;
+            transition: .2s;
+        }
+
+        .back:hover {
+            color: white;
+            background-color: #0A74E7;
+            text-decoration: none;
+        }
+
+        .back:active {
+            display: inline-block;
+            transform: scale(.9);
         }
     </style>
     <script>
@@ -112,19 +151,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">Association Settings</h2>
+    <h2 class="mb-4">Association Settings</h2><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+    <dotlottie-player src="https://lottie.host/a9bf801c-30b0-41a8-9efb-085c36577b9b/SQIdQVvlCa.json" background="transparent" speed="1" style="width: 180px; height: 180px;" loop autoplay></dotlottie-player>
     <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAssociationModal">Add New Association</button>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Category</th>
-            <th>Name</th>
-            <th>Area</th>
-            <th>President</th>
-            <th>Color</th>
-            <th>Color Name</th>
-            <th>Actions</th>
+            <th><center>ID</center></th>
+            <th><center>Category</center></th>
+            <th><center>Name</center></th>
+            <th><center>Area</center></th>
+            <th><center>President</center></th>
+            <th><center>Color</center></th>
+            <th><center>Color Name</center></th>
+            <th><center>Actions</center></th>
         </tr>
         </thead>
         <tbody>
@@ -138,8 +178,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                 <td style="background-color: <?php echo $row['association_color']; ?>"><?php echo $row['association_color']; ?></td>
                 <td><?php echo $row['association_color_name']; ?></td>
                 <td>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#editAssociationModal<?php echo $row['association_id']; ?>">Edit</button>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAssociationModal<?php echo $row['association_id']; ?>">Delete</button>
+                    <center><button class="btn btn-warning" data-toggle="modal" data-target="#editAssociationModal<?php echo $row['association_id']; ?>">Edit</button>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAssociationModal<?php echo $row['association_id']; ?>">Delete</button></center>
                 </td>
             </tr>
             <!-- Edit Association Modal -->
@@ -220,6 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
         <?php endwhile; ?>
         </tbody>
     </table>
+    <a href="../control_panel.php" class="back">Back</a>
 </div>
 
 <!-- Add Association Modal -->

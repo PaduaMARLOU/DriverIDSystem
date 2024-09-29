@@ -83,12 +83,26 @@ if(isset($_GET['driver_id'])) {
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../adminportalcss/adminadd_violation.css">
     <title>Add Violation</title>
-
+    <link rel="icon" href="../../img/stop.png" type="image/png">
 </head>
 <body>
+    <style>
+        <?php include("admin styles/violation.css"); ?>
+    </style>
+
+    <br><br>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <center><lord-icon
+        src="https://cdn.lordicon.com/akqsdstj.json"
+        trigger="hover"
+        colors="primary:#e83a30,secondary:#ffffff"
+        style="width:200px;height:200px">
+    </lord-icon></center>
     <div class="container">
         <?php if ($driver_row): ?>
-            <h2>Add Violation to <?php echo $driver_row['formatted_id']; ?> - <?php echo $driver_row['last_name'] . ', ' . $driver_row['first_name'] . ' ' . $driver_row['middle_name']; ?></h2>
+            <center><h1>Add Violation</h1></center><br>
+            <hr width="555px"><br>
+            <h2>to <?php echo $driver_row['formatted_id']; ?> - <?php echo $driver_row['last_name'] . ', ' . $driver_row['first_name'] . ' ' . $driver_row['middle_name']; ?></h2><br>
             <?php if($success_message): ?>
                 <div style="color: green;"><?php echo $success_message; ?></div>
             <?php endif; ?>
@@ -96,7 +110,7 @@ if(isset($_GET['driver_id'])) {
                 <div class="error-message"><?php echo $error_message; ?></div>
             <?php endif; ?>
             <form method="post" action="">
-                <label for="violation_category">Violation Category:</label><br>
+                <label for="violation_category">Violation Category:</label>
                 <select id="violation_category" name="violation_category">
                 <?php
                     // Fetch enum values from tbl_violation
@@ -112,7 +126,7 @@ if(isset($_GET['driver_id'])) {
                         echo "<option value='$value'>$value</option>";
                     }
                 ?>
-                </select><br>
+                </select><br><br>
 
                 
                 <label for="violation_description">Violation Description:</label><br>
@@ -127,6 +141,7 @@ if(isset($_GET['driver_id'])) {
             <a href="violation.php">Back to Violation Page</a>
         <?php endif; ?>
     </div>
+    <br><br>
 </body>
 </html>
 

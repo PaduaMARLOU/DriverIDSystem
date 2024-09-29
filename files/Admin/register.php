@@ -40,6 +40,30 @@
     <![endif]-->
 </head>
 <body class="page-body" data-url="http://neon.dev">
+    <style>
+        .customregister-btn-admin {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .customregister-btn-admin:hover {
+            background-color: #cc0000;
+        }
+
+        .customregister-btn-driver {
+            background-color: #4BE120;
+            color: white;
+        }
+
+        .customregister-btn-driver:hover {
+            background-color: #00cc00;
+        }
+
+        a:active {
+            display: inline;
+            transform: scale(.9);
+        }
+    </style>
     <div class="page-container">
         <!-- Sidebar -->
         <?php include "sidebar.php"; ?>
@@ -74,11 +98,11 @@
     <script>
         // Open admin registration page in a new tab when clicking on Driver button
         document.getElementById('adminButton').onclick = function() {
-            window.open("admin_register.php", "_blank");
+            window.open("admin_register.php", "_self");
         };
         // Open driver registration page in a new tab when clicking on Driver button
         document.getElementById('driverButton').onclick = function() {
-            window.open("../../registrationpage.php", "_blank");
+            window.open("../../registrationpage.php", "_self");
         };
     </script>
 </body>

@@ -130,10 +130,22 @@ function build_calendar($month, $year) {
     <title>Barangay Estefania Online Appointment for ID Registration</title>
 </head>
 <body>
+    <style>
+        ion-icon {
+            font-size: 32px;
+            transition: .1s;
+        }
+
+        ion-icon:active {
+            transform: scale(.9);
+        }
+    </style>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-danger" style="background:#2ecc71; border:none; color:#fff; text-align:center; display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative;">
+                <a href="files/Admin/register.php" style="color: white;"><ion-icon name="arrow-back-outline" style="position: absolute; top: 0; left: 0;"></ion-icon></a>
                     <a href="index.php" style="left: 10px; top: 10px; text-decoration: none; background: #fff; color: #2ecc71; padding: 5px 10px; border-radius: 5px; margin-bottom: 10px;">Back to Driver's Portal</a>
                     <div style="display: flex; align-items: center;">
                         <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" style="height: 75px; margin-right: 10px;">
@@ -158,5 +170,8 @@ function build_calendar($month, $year) {
             ?>
         </div>
     </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
