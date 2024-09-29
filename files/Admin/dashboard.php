@@ -68,14 +68,14 @@
 							<h1>
 								<?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?>
 								<span id="time"></span>
-								<lord-icon
+								<!-- <lord-icon
 									src="https://cdn.lordicon.com/lzgqzxrq.json"
 									trigger="hover"
 									colors="primary:#3a3347,secondary:#ebe6ef,tertiary:#4bb3fd,quaternary:#000000"
 									style="width:70px;height:70px"
 									class="time"
 									title="Time Navigation">
-								</lord-icon>
+								</lord-icon> -->
 							</h1>
 							<h3>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h3>
 						</div>
