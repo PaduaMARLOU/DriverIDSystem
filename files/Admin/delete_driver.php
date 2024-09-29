@@ -36,8 +36,28 @@ function redirectToDriver() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/wrong.png" type="image/png">
     <title>Delete Driver</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            outline: none;
+        }
+
+        *::selection {
+            background-color: #F36363;
+            color: white;
+        }
+
+        h1 {
+            color: #404346;
+        }
+
         /* Styles for centering the message container */
         .center-container {
             display: flex;
@@ -70,7 +90,7 @@ function redirectToDriver() {
         }
 
         .button-container {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         button {
@@ -79,6 +99,11 @@ function redirectToDriver() {
             border: none;
             border-radius: 3px;
             cursor: pointer;
+            transition: .2s;
+        }
+
+        button:hover {
+            font-size: 15px;
         }
 
         button.confirm {
@@ -86,20 +111,36 @@ function redirectToDriver() {
             color: white;
         }
 
+        button.confirm:active {
+            background-color: #5CB6D0;
+            transform: scale(.9);
+        }
+
         button.cancel {
             background-color: #d9534f;
             color: white;
         }
 
+        button.cancel:active {
+            background-color: #CE5450;
+            transform: scale(.9);
+        }
+
         form {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .warning-gif {
-            margin-bottom: 20px;
-            width: 100px; /* Adjust size as needed */
-            height: auto;
+            border: 2px solid white;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px gray;
         }
+
+        hr {
+            border: 1px solid white;
+            box-shadow: 1px 1px 5px gray;
+        }
+        
     </style>
 </head>
 <body>
@@ -115,7 +156,7 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
         echo "<div class='center-container'>
                 <div class='message-container error-message'>
                     <img src='../../img/warning.gif' alt='Warning' class='warning-gif'>
-                    <p>LAST REMINDER! <hr> Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p>
+                    <p style='font-size: 25px;'>LAST REMINDER! <hr><br> Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p><br>
                     <p><strong>Are you sure you <i>really</i> want to delete this driver record? Type 'YES' to confirm.<strong></p>
                     <form method='post' action='delete_driver.php?step=final_confirm&formatted_id=$formatted_id'>
                         <label for='final_confirmation'>Enter confirmation:</label>
@@ -178,9 +219,15 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
     // Display first confirmation prompt
     $formatted_id = mysqli_real_escape_string($connections, $_GET['formatted_id']);
     echo "<div class='center-container'>
+            <h1>Delete Driver Confirmation</h1>
             <div class='message-container error-message'>
-                <img src='../../img/warning.gif' alt='Warning' class='warning-gif'>
-                <p>Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p>
+                <script src='https://cdn.lordicon.com/lordicon.js'></script>
+                    <lord-icon
+                        src='https://cdn.lordicon.com/akqsdstj.json'
+                        trigger='hover'
+                        style='width:170px;height:170px'>
+                    </lord-icon>
+                <p>Warning: Deleting this driver ($formatted_id) will also delete all related vehicle and violation records.</p><br>
                 <p>Are you sure you want to delete this driver record? Type 'CONFIRM DELETION' to confirm.</p>
                 <form method='post' action='delete_driver.php?step=confirm_deletion&formatted_id=$formatted_id'>
                     <label for='confirmation_string'>Enter confirmation:</label>
@@ -203,6 +250,8 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
 // Close the database connection
 mysqli_close($connections);
 ?>
+
+\
 
 </body>
 </html>

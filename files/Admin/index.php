@@ -89,7 +89,7 @@ if(isset($_SESSION["username"])) {
 				barWidth: 10,
 				barSpacing: 2});
 		
-			var map = $("#map");
+			let map = $("#map");
 		
 			map.vectorMap({
 				map: 'europe_merc_en',
@@ -101,16 +101,16 @@ if(isset($_SESSION["username"])) {
 		
 		
 			// Rickshaw
-			var seriesData = [ [], [] ];
+			let seriesData = [ [], [] ];
 		
-			var random = new Rickshaw.Fixtures.RandomData(50);
+			let random = new Rickshaw.Fixtures.RandomData(50);
 		
-			for (var i = 0; i < 90; i++)
+			for (let i = 0; i < 90; i++)
 			{
 				random.addData(seriesData);
 			}
 		
-			var graph = new Rickshaw.Graph( {
+			let graph = new Rickshaw.Graph( {
 				element: document.getElementById("rickshaw-chart-demo-2"),
 				height: 217,
 				renderer: 'area',
@@ -134,19 +134,19 @@ if(isset($_SESSION["username"])) {
 		
 			graph.render();
 		
-			var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+			let hoverDetail = new Rickshaw.Graph.HoverDetail( {
 				graph: graph,
 				xFormatter: function(x) {
 					return new Date(x * 1000).toString();
 				}
 			} );
 		
-			var legend = new Rickshaw.Graph.Legend( {
+			let legend = new Rickshaw.Graph.Legend( {
 				graph: graph,
 				element: document.getElementById('rickshaw-legend')
 			} );
 		
-			var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
+			let highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
 				graph: graph,
 				legend: legend
 			} );

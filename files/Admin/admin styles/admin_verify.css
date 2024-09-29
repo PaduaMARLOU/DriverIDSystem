@@ -13,6 +13,7 @@
     font-family: "Poppins", sans-serif;
     font-size: 20px;
     color: var(--comfort-black);
+    text-decoration: none;
 }
 
 body {
@@ -58,6 +59,7 @@ body {
 
 #back-btn:active {
     color: rgb(131, 37, 219);
+    transform: scale(0.9);
 }
 
 table {
@@ -76,6 +78,7 @@ table, th, td {
     position: relative;
     bottom: -5px;
     font-size: 27px;
+    width: 100%;
     color: rgb(58, 55, 55);
     transition: .3s;
 }
@@ -90,6 +93,10 @@ table, th, td {
 
 #delete:hover {
     color: rgb(255, 0, 0);
+}
+
+#verify:active, #delete:active {
+    transform: scale(.9);
 }
 
 th, td {
@@ -168,4 +175,26 @@ th {
     font-size: 32px;
     text-shadow: 1px 1px 5px white;
     box-shadow: 1px 1px 10px white;
+}
+
+.back{
+    position: relative;
+    left: .2rem;
+    border: 1.5px solid rgb(64, 138, 242);
+    border-radius: 3px;
+    font-size: 25px;
+    color: white;
+    padding-right: .5rem;
+    padding-left: .4rem;;
+    background-color: var(--comfort-blue);
+    transition: .3s;
+}
+
+.back:hover {
+    box-shadow: 1px 1px 5px rgb(74, 142, 238);
+}
+
+.back:active {
+    display: inline-block;
+    transform: scale(.9);
 }

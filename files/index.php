@@ -89,10 +89,6 @@ if (isset($_POST["btnLogin"])) {
 }
 ?>
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,10 +101,32 @@ if (isset($_POST["btnLogin"])) {
 </head>
 
 <body>
+    <style>
+        <?php include("adminportalcss/adminlogin.css"); ?>
 
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        *::selection {
+            background-color: #B158EE;
+            text-shadow: 1px 1px 10px gray;
+        }
+
+        .brgy {
+            text-shadow: 1px 1px 8px black;
+        }
+    </style>
+    
 	<br>
 
 	<center class="mains">
+        <br><br><br>
 		<a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
 			<img src="../img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
 		</a>
@@ -133,26 +151,17 @@ if (isset($_POST["btnLogin"])) {
 			<span class="error"><?php echo $notify; ?></span>
 
 
-			<input class="btn-log-in" type="submit" name="btnLogin" value="Login" onclick="playSound();">
+			<input class="btn-log-in" type="submit" name="btnLogin" value="Login">
 
 			<br>
 			
 			<br>
 
-			<!-- <a href="?forget=<?php echo md5(rand(1, 9)); ?>" class="forgot-pass">Forgot Password?</a> -->
-
 		</form>
+
+        <br>
 	</center>
 	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-	<script src="../js/script.js"></script>
-	<script type="text/javascript">
-    function playSound() {
-        console.log("playSound function called");
-        const audio = new Audio();
-        audio.src = "sound effect/switch-sound.mp3";
-        audio.play();
-    }
-	</script>
-</body>
+	<script src="../js/script.js"></script></body>
 </html>

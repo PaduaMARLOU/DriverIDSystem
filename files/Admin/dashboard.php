@@ -50,12 +50,11 @@
         $totalViolations[$row['violation_category']] = $row['total_violations'];
     }
 ?>
-
 				<style>
 					.time {
 						position: absolute;
 						top: 12px;
-						left: 440px;
+						left: 555px;
 						transition: .3s;
 						cursor: cell;
 					}
@@ -147,7 +146,7 @@
 							<div class="panel-heading">
 								<div class="panel-title">Latest Registered Drivers</div>
 								<div class="panel-options">
-									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -156,7 +155,7 @@
 							<table class="table table-bordered table-responsive">
 								<thead>
 									<tr>
-										<th>ID #</th>
+										<th>ID Number</th>
 										<th>Name</th>
 										<th>Vehicle Type</th>
 										<th>Association</th>
@@ -212,19 +211,13 @@
 					</div>
 				</div>
 
-
-
-
-
-
-
 				<div class="row">
 					<div class="col-sm-13">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="panel-title">Violations</div>
 								<div class="panel-options">
-									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -251,6 +244,8 @@
 									}
 
 									.bar-fill {
+										box-shadow: 1px 2px 4px #98989B;
+										border-radius: 3.5px;
 										height: 30px; /* Height of the bar */
 										background-color: #337ab7; /* Default color for the bar */
 										position: relative; /* Position relative for number */
@@ -326,7 +321,7 @@
 								</h4>
 							</div>
 							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -337,13 +332,8 @@
 								<style>
 									.association h5,
 									.association p {
-										color: black;
-										text-shadow: 
-											0 0 1px white, 
-											1px 1px 1px white, 
-											-1px -1px 1px white, 
-											1px -1px 1px white, 
-											-1px 1px 1px white;
+										color: white;
+										
 									}
 								</style>
 
@@ -366,7 +356,7 @@
 									while ($row = mysqli_fetch_assoc($result)) {
 										$association_color = htmlspecialchars($row['association_color']);
 										?>
-										<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 20px; padding: 10px; margin: 5px;">
+										<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 12px; padding: 10px; margin: 5px;">
 											<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
 											<p style="margin-bottom: 5px;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
 											<p style="margin-bottom: 5px;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
@@ -401,7 +391,7 @@
 							</div>
 
 							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>

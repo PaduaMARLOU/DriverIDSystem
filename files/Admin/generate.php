@@ -92,6 +92,7 @@
                     <?php
                     // Loop through each row of data
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $renew_stat_class = ($row['renew_stat'] == 'Active') ? 'active-renew' : '';
                         ?>
                         <tr>
                             <td><?php echo $row['formatted_id']; ?></td>
@@ -99,7 +100,7 @@
                             <td><?php echo $row['driver_category']; ?></td>
                             <td><?php echo $row['association']; ?></td>
                             <td class="center"><?php echo $row['verification_stat']; ?></td>
-                            <td class="center"><?php echo $row['renew_stat']; ?></td>
+                            <td class="center <?php echo $renew_stat_class; ?>"><?php echo $row['renew_stat']; ?></td>
                             <td>
                                 <button type="button" class="btn btn-success btn-sm btn-icon icon-left" data-toggle="modal" data-target="#generateIDModal" data-id="<?php echo $row['formatted_id']; ?>">
                                     <i class="entypo-vcard"></i>
@@ -181,6 +182,25 @@
 
         <!-- Demo Settings -->
         <script src="assets/js/neon-demo.js"></script>
+
+        <!-- Add this JavaScript to apply the class after the table is rendered -->
+        <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.renew-status').each(function() {
+                if ($(this).text().trim() === 'Active') {
+                    $(this).addClass('active-renew');
+                }
+            });
+        });
+        </script>
+
+        <!-- Add this to your existing CSS -->
+        <style>
+        .active-renew {
+            color: green;
+        }
+        </style>
+
     </div>
 </div>
 </body>

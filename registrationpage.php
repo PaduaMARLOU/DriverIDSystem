@@ -3,6 +3,12 @@
 <head>
 <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+}
 body {
   background-image: url('img/paper.jpeg');
   background-repeat: no-repeat;

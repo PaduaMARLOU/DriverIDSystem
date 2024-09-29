@@ -62,12 +62,54 @@ $years = range(date('Y') - 10, date('Y') + 10); // Last 10 years and next 10 yea
 <html>
 <head>
     <title>Calendar Entries</title>
-    <link rel="icon" href="../../../img/Brgy Estefania Logo.png" type="image/png">
+    <link rel="icon" href="../../../img/calendar.png" type="image/png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            outline: none;
+        }
+
         html {
             scroll-behavior: smooth; /* Smooth scroll for all pages */
         }
+
+        dotlottie-player {
+            position: absolute;
+            top: -.2rem;
+            left: 30rem;
+        }
+
+        dotlottie-player:hover {
+            filter: drop-shadow(1px 1px 5px #f8fafc);
+        }
+
+        #month, #year {
+            width: 140px; /* Set the desired width (adjust as needed) */
+        }
+
+        ion-icon {
+            position: absolute;
+            font-size: 40px;
+            top: 0;
+            left: 0;
+            color: #2CAEE2;
+            transition: .2s;
+        }
+
+        ion-icon:hover {
+            color: #31A0CC;
+        }
+
+        ion-icon:active {
+            transform: scale(.9);
+        }
+
     </style>
     <script>
         function openModal(date, description, slots, endTime, control) {
@@ -93,7 +135,10 @@ $years = range(date('Y') - 10, date('Y') + 10); // Last 10 years and next 10 yea
 </head>
 <body>
     <div class="container">
-        <h2>Calendar Entries</h2>
+        <a href="../control_panel.php"><ion-icon name="arrow-back-circle"></ion-icon></a><br><br>
+
+        <h2>Calendar Entries</h2><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+                                <dotlottie-player src="https://lottie.host/1569f314-dbff-4998-adb1-0122634f406d/SdgKFB00bV.json" background="transparent" speed="1" style="width: 180px; height: 180px;" loop autoplay></dotlottie-player>
 
         <!-- Add New Entry Button -->
         <button class="btn btn-primary" onclick="openModal()">Add New Entry</button>
@@ -127,25 +172,25 @@ $years = range(date('Y') - 10, date('Y') + 10); // Last 10 years and next 10 yea
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Slots</th>
-                    <th>End Time</th>
-                    <th>Control</th>
-                    <th>Actions</th>
+                    <th><center>Date</center></th>
+                    <th><center>Description</center></th>
+                    <th><center>Slots</center></th>
+                    <th><center>End Time</center></th>
+                    <th><center>Control</center></th>
+                    <th><center>Actions</center></th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $calendarEntries->fetch_assoc()): ?>
                     <tr id="date_<?php echo htmlspecialchars($row['calendar_date']); ?>">
-                        <td><?php echo htmlspecialchars($row['calendar_date']); ?></td>
+                        <td><center><?php echo htmlspecialchars($row['calendar_date']); ?></td></center>
                         <td><?php echo htmlspecialchars($row['calendar_description']); ?></td>
-                        <td><?php echo htmlspecialchars($row['slots']); ?></td>
+                        <td><center><?php echo htmlspecialchars($row['slots']); ?></td></center>
                         <td><?php echo htmlspecialchars($row['end_time']); ?></td>
                         <td><?php echo htmlspecialchars($row['calendar_control']); ?></td>
                         <td>
-                            <button class="btn btn-info btn-sm" onclick="openModal('<?php echo htmlspecialchars($row['calendar_date']); ?>', '<?php echo htmlspecialchars($row['calendar_description']); ?>', '<?php echo htmlspecialchars($row['slots']); ?>', '<?php echo htmlspecialchars($row['end_time']); ?>', '<?php echo htmlspecialchars($row['calendar_control']); ?>')">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo htmlspecialchars($row['calendar_date']); ?>')">Delete</button>
+                            <center><button class="btn btn-info btn-sm" onclick="openModal('<?php echo htmlspecialchars($row['calendar_date']); ?>', '<?php echo htmlspecialchars($row['calendar_description']); ?>', '<?php echo htmlspecialchars($row['slots']); ?>', '<?php echo htmlspecialchars($row['end_time']); ?>', '<?php echo htmlspecialchars($row['calendar_control']); ?>')">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo htmlspecialchars($row['calendar_date']); ?>')">Delete</button></center>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -197,6 +242,8 @@ $years = range(date('Y') - 10, date('Y') + 10); // Last 10 years and next 10 yea
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
 
