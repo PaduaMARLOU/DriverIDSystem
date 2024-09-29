@@ -225,6 +225,39 @@ if (isset($_SESSION["username"])) {
                     </div>
                 </div>
             </div>
+
+            <div class="control-panel-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Driver Reports</h2>
+                            <a href="#" class="control-panel-btn" id="reportsButton">
+                                <i class="fas fa-file"></i> View Driver Reports
+                            </a>
+                            <script>
+                                // Open admin registration page in a new tab when clicking on Calendar Control button
+                                document.getElementById('reportsButton').onclick = function() {
+                                    window.open("control/driver_reports.php", "_blank");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Database Backup</h2>
+                            <a href="#" class="control-panel-btn" id="violationButton">
+                                <i class="fas fa-download"></i> Backup Data
+                            </a>
+                            <script>
+                                // Open driver registration page in a new tab when clicking on Account Access Control button
+                                document.getElementById('violationButton').onclick = function() {
+                                    window.open("control/violation_categories.php", "_blank");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <footer class="customregister-footer">
                 <i>© 2024 Capstone Project of BSIS 3-A Group 4</i>
