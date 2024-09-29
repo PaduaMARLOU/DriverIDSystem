@@ -245,13 +245,13 @@ if (isset($_SESSION["username"])) {
                     <div class="col-md-6">
                         <div class="control-panel-box">
                             <h2>Database Backup</h2>
-                            <a href="#" class="control-panel-btn" id="violationButton">
+                            <a href="#" class="control-panel-btn" id="backupButton">
                                 <i class="fas fa-download"></i> Backup Data
                             </a>
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
-                                document.getElementById('violationButton').onclick = function() {
-                                    window.open("control/violation_categories.php", "_blank");
+                                document.getElementById('backupButton').onclick = function() {
+                                    window.open("control/backup.php", "_blank");
                                 };
                             </script>
                         </div>

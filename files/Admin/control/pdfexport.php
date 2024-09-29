@@ -98,14 +98,14 @@ $html .= '</table>';
 $dompdf->loadHtml($html);
 
 // Set paper size and orientation
-$dompdf->setPaper('A1', 'landscape'); // Set to A1 landscape
+$dompdf->setPaper('A3', 'landscape'); // Set to A1 landscape
 
 // Render the PDF
 $dompdf->render();
 
 // Output the generated PDF to a file
 $output = $dompdf->output();
-$filePath = 'temp_exported_data.pdf'; // Path where the PDF will be saved
+$filePath = 'vendor/temp/temp_exported_data.pdf'; // Path where the PDF will be saved
 file_put_contents($filePath, $output);
 
 // Redirect to the PDF file
