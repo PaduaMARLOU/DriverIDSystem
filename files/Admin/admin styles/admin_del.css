@@ -16,6 +16,10 @@
     color: white;
 }
 
+*::selection {
+    background-color: var(--comfort-red);
+}
+
 .all {
     position: relative;
     bottom: -6em;

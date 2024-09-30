@@ -171,6 +171,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 <body>
     <style>
         <?php include("../adminportalcss/admin_register.css"); ?>
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            color: white;
+            text-decoration: none;
+        }
     </style>
 
     <div class="container">

@@ -64,18 +64,23 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             width: 150px;
             height: 150px;
             margin: 10px auto;
-            border-radius: 50%;
+            border-radius: 5%;
             cursor: pointer;
             object-fit: cover;
+        }
+
+        .profile-img, .vehicle-img {
+            box-shadow: 1px 1px 4px #1A1A1B;
         }
 
         .doc-img,
         .vehicle-img {
             width: auto;
             height: auto;
-            max-width: 300px;
-            max-height: 300px;
-            margin: 10px auto;
+            max-width: 229.4px;
+            max-height: 229.4px;
+            margin: 5px auto;
+            border-radius: 2%;
             cursor: pointer;
             object-fit: cover;
         }
@@ -274,7 +279,6 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 <div>
                     <p><span class="info-label">Vehicle Category:</span> <?php echo $vehicle['vehicle_category']; ?></p>
                     <p><span class="info-label">Vehicle Front Image:</span><br><img src="<?php echo $vehicle_img_front_path; ?>" alt="Vehicle Front Image" class="vehicle-img" data-toggle="modal" data-target="#imageModal" data-image="<?php echo $vehicle_img_front_path; ?>"></p>
-
                 </div>
                 <div>
                     <p><span class="info-label">Vehicle Registered:</span> <?php echo $vehicle['vehicle_registered']; ?></p>
@@ -297,7 +301,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             </div>
 
             <!-- Association Information -->
-            <div class="profile-section">
+            <div class="profile-section"><br>
                 <h4>Association Information</h4>
                 <div class="row-two-columns">
                     <div>

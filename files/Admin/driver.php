@@ -40,6 +40,10 @@
 	table {
 		color: #48484C;
 	}
+
+	th {
+		font-size: 1em;
+	}
 </style>
 
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
@@ -99,7 +103,7 @@
 						<th style="color: #48484C;">Vehicle Type</th>
 						<th style="color: #48484C;">Association</th>
 						<th style="color: #48484C;">Driver Status</th>
-						<th style="color: #48484C;">Actions</th>
+						<th style="color: #48484C;" width="28%">Actions</th>
 					</tr>
 				</thead>
 				<tbody>

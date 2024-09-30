@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Records</title>
-    <link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
-</head>
-
-<body>
-    <style>
-        <?php include("admin styles/admin_verify.css"); ?>
-    </style>
-
-    <?php
+<?php
     session_start(); // Ensure session is started
 
     include("../../connections.php");
@@ -38,9 +23,24 @@
         header("Location: unauthorized.php");
         exit; // Ensure script stops executing after redirection
     }
+?>
 
-    echo "<table>";
-    echo "<tr>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Records</title>
+    <link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
+    <style>
+        <?php include("admin styles/admin_verify.css"); ?>
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
             <td><h2>ID</h2></td>
             <td><h2>First Name</h2></td>
             <td><h2>Middle Name</h2></td>
@@ -58,8 +58,9 @@
             <td><h2>Image</h2></td>
             <td><h2>Status</h2></td>
             <td><h2>Action</h2></td>
-        </tr>";
+        </tr>
 
+    <?php
     while ($row = mysqli_fetch_assoc($view_query)) {
         $db_id = $row["admin_id"];
         $db_f_name = $row["first_name"];
@@ -101,6 +102,7 @@
                 <td>$db_date_registered</td>
                 <td>";
 
+        // Fixing the image display syntax
         if (!empty($db_img)) {
             echo "<a href='../../uploads/profile/" . htmlspecialchars($db_img) . "' target='_blank'>
                     <img src='../../uploads/profile/" . htmlspecialchars($db_img) . "' alt='Admin Image' style='width: 125px; height: 120px; border-radius: 5px;'>
@@ -117,12 +119,12 @@
                 </td>
             </tr>";
     }
-
-    echo "</table>";
-
-    echo "<a href='index.php' class='back'>Back</a>";
     ?>
 
+    </table>
+
+    <a href='index.php' class='back'>Back</a>
+    
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

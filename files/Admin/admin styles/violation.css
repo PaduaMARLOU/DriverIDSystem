@@ -9,6 +9,12 @@
     text-decoration: none;
 }
 
+*::selection {
+    background-color: rgb(255, 84, 84);
+    color: white;
+    text-shadow: 1px 1px 3px rgb(104, 102, 102);
+}
+
 lord-icon {
     transition: .3s;
 }

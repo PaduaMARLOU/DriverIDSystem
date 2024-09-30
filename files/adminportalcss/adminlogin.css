@@ -11,9 +11,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-image: url('../img/Barangay\ Estefania\ Hall.jpeg');
+    background-image: url('../img/Barangay Estefania Hall.jpeg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed; /* Add this line */
     height: 100vh;
     display: flex;
     justify-content: center;

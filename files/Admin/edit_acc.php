@@ -11,9 +11,7 @@
 
 <body>
     <style>
-        <?php include("admin styles/admin_update.css"); ?>
-        
-        .background {
+        <?php include("admin styles/admin_update.css"); ?>.background {
             position: fixed;
             top: 0;
             left: 0;
@@ -30,78 +28,101 @@
     </style>
 
     <?php
-// Assuming your account is the super admin with account_type = 1
-$super_admin_account_type = 1; // Adjust this to your actual account type or use your specific admin_id
-
-$admin_id = $_REQUEST["admin_id"];
-include("../../connections.php");
-$get_record = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE admin_id = '$admin_id'");
-while ($row_edit = mysqli_fetch_assoc($get_record)) {
-    $db_id = $row_edit["admin_id"];
-    $db_f_name = $row_edit["first_name"];
-    $db_m_name = $row_edit["middle_name"];
-    $db_l_name = $row_edit["last_name"];
-    $db_gender = $row_edit["sex"];
-    $db_phone_num = $row_edit["mobile_number"];
-    $db_u_name = $row_edit["username"];
-    $db_password = $row_edit["password"];
-    $db_acc_type = $row_edit["account_type"];
-    $db_img = $row_edit["img"];
-}
-
-// Error handling and validation logic remains unchanged
-$errors = [];
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $first_name = $_POST['new_f_name'];
-    $middle_name = $_POST['new_m_name']; // Optional
-    $last_name = $_POST['new_l_name'];
-    $gender = $_POST['new_gender'];
-    $phone_num = $_POST['new_phone_num'];
-    
-    // Check if the current admin has permissions to change the username and password
-    if ($db_acc_type == $super_admin_account_type) {
-        $username = $_POST['new_u_name'];
-        $password = $_POST['new_password'];
+    $admin_id = $_REQUEST["admin_id"];
+    include("../../connections.php");
+    $get_record = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE admin_id = '$admin_id'");
+    while ($row_edit = mysqli_fetch_assoc($get_record)) {
+        $db_id = $row_edit["admin_id"];
+        $db_f_name = $row_edit["first_name"];
+        $db_m_name = $row_edit["middle_name"];
+        $db_l_name = $row_edit["last_name"];
+        $db_gender = $row_edit["sex"];
+        $db_phone_num = $row_edit["mobile_number"];
+        $db_u_name = $row_edit["username"];
+        $db_password = $row_edit["password"];
+        $db_acc_type = $row_edit["account_type"];
+        $db_img = $row_edit["img"];
     }
 
-    $acc_type = $_POST['new_acc_type'];
-    
-    // Image upload handling
-    // ...
+    // Error handling and validation logic
+    $errors = [];
 
-    // If there are no errors, proceed with updating the record
-    if (empty($errors)) {
-        $update_query = "UPDATE tbl_admin SET 
-                            first_name = '$first_name', 
-                            middle_name = '$middle_name', 
-                            last_name = '$last_name',
-                            sex = '$gender',
-                            mobile_number = '$phone_num',
-                            account_type = '$acc_type'";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $first_name = $_POST['new_f_name'];
+        $middle_name = $_POST['new_m_name']; // Optional
+        $last_name = $_POST['new_l_name'];
+        $gender = $_POST['new_gender'];
+        $phone_num = $_POST['new_phone_num'];
+        $username = $_POST['new_u_name'];
+        $password = $_POST['new_password'];
+        $acc_type = $_POST['new_acc_type'];
+        
+        // Handle image upload
+        if (isset($_FILES['admin_image']) && $_FILES['admin_image']['error'] === UPLOAD_ERR_OK) {
+            $img_tmp_name = $_FILES['admin_image']['tmp_name'];
+            $img_name = basename($_FILES['admin_image']['name']);
+            $img_dir = "../../uploads/profile/" . $img_name;
 
-        if ($db_acc_type == $super_admin_account_type) {
-            // Only update username and password for the super admin
-            $update_query .= ", username = '$username', password = '$password'";
+            // Move uploaded file to the target directory
+            if (move_uploaded_file($img_tmp_name, $img_dir)) {
+                $db_img = $img_name; // Update image path to new uploaded file
+            } else {
+                $errors[] = "Failed to upload the image.";
+            }
         }
 
-        $update_query .= " WHERE admin_id = '$admin_id'";
+        // Validate first name
+        if (!preg_match("/^[A-Za-z\s'-]+$/", $first_name)) {
+            $errors[] = "Invalid first name. Please use alphabetic characters only.";
+        }
+
+        // Validate last name
+        if (!preg_match("/^[A-Za-z\s'-]+$/", $last_name)) {
+            $errors[] = "Invalid last name. Please use alphabetic characters only.";
+        }
+
+        // Optional: Validate middle name if not empty
+        if (!empty($middle_name) && !preg_match("/^[A-Za-z\s'-]+$/", $middle_name)) {
+            $errors[] = "Invalid middle name. Please use alphabetic characters only.";
+        }
+
+        // Validate phone number
+        if (!preg_match("/^[0-9]{11}$/", $phone_num)) {
+            $errors[] = "Invalid phone number. Please enter exactly 11 digits.";
+        }
+
+        // If there are no errors, proceed with updating the record
+        if (empty($errors)) {
+            // Update the database here
+            $update_query = "UPDATE tbl_admin SET 
+                                first_name = '$first_name', 
+                                middle_name = '$middle_name', 
+                                last_name = '$last_name',
+                                sex = '$gender',
+                                mobile_number = '$phone_num',
+                                username = '$username',
+                                password = '$password',
+                                account_type = '$acc_type',
+                                img = '$db_img' 
+                             WHERE admin_id = '$admin_id'";
 
         if (mysqli_query($connections, $update_query)) {
             echo "<script>
                     alert('Admin record updated successfully.');
                     window.location.href = 'admin_records.php';
-                  </script>";
+                </script>";
         } else {
             echo "<p style='color: red;'>Error updating record: " . mysqli_error($connections) . "</p>";
         }
-    } else {
-        foreach ($errors as $error) {
-            echo "<center><br><p style='color: red; font-size: 25px; text-shadow: 1px 1px 5px white;'>$error</p></center>";
+
+        } else {
+            // Display errors
+            foreach ($errors as $error) {
+                echo "<center><br><p style='color: red; font-size: 25px; text-shadow: 1px 1px 5px white;'>$error</p></center>";
+            }
         }
     }
-}
-?>
-
+    ?>
 
     <br><br>
     <div class="background"></div>

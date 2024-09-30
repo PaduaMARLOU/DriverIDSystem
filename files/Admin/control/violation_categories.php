@@ -86,10 +86,21 @@ $enumValues = getEnumValues($connections, 'tbl_violation', 'violation_category')
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" href="../../../img/Brgy Estefania Logo.png" type="image/png">
+    <link rel="icon" href="../../../img/wrong.png" type="image/png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>Violation Categories</title>
     <style>
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            outline: none;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -100,6 +111,7 @@ $enumValues = getEnumValues($connections, 'tbl_violation', 'violation_category')
             background-position: center;
         }
         .container {
+            border-radius: 4px;
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
@@ -126,8 +138,8 @@ $enumValues = getEnumValues($connections, 'tbl_violation', 'violation_category')
             display: inline;
         }
         input[type="text"], select {
-            padding: 10px;
-            margin: 5px 0;
+            padding: 5px;
+            margin: 7px 0;
             border: 1px solid #ddd;
             border-radius: 3px;
             width: 200px;
@@ -156,21 +168,22 @@ $enumValues = getEnumValues($connections, 'tbl_violation', 'violation_category')
 </head>
 <body>
     <div class="container">
-        <button type="button" class="btn btn-secondary mt-3" onclick="window.close()">Back to Control Panel</button>
+        <a href="../control_panel.php" class="btn btn-secondary">Back to Control Panel</a>
+        <!-- <button type="button" class="btn btn-secondary mt-3" onclick="window.close()">Back to Control Panel</button> -->
         <br><hr>
-        <h1>Violation Categories</h1>
+        <center><h1>Violation Categories</h1></center>
         <ul>
             <?php foreach ($enumValues as $value): ?>
                 <li><?php echo htmlspecialchars($value); ?> 
                     <div>
-                        <form method="POST" onsubmit="return confirmDelete()" style="display:inline;">
-                            <input type="hidden" name="delete_value" value="<?php echo htmlspecialchars($value); ?>">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
                         <form method="POST" onsubmit="return confirmEdit()" style="display:inline;" class="form-inline">
                             <input type="hidden" name="original_value" value="<?php echo htmlspecialchars($value); ?>">
                             <input type="text" name="new_value_edit" required>
                             <button type="submit" name="edit_value" class="btn btn-primary btn-sm">Edit</button>
+                        </form>
+                        <form method="POST" onsubmit="return confirmDelete()" style="display:inline;">
+                            <input type="hidden" name="delete_value" value="<?php echo htmlspecialchars($value); ?>">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                         </form>
                     </div>
                 </li>
@@ -227,15 +240,15 @@ $enumValues = getEnumValues($connections, 'tbl_violation', 'violation_category')
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
         function confirmDelete() {
-            return confirm('Are you sure you want to delete this category?');
+            return confirm('Are you sure you want to delete this category? 😟');
         }
 
         function confirmEdit() {
-            return confirm('Are you sure you want to edit this category?');
+            return confirm('Are you sure you want to edit this category? 😜');
         }
 
         function confirmAdd() {
-            return confirm('Are you sure you want to add this category?');
+            return confirm('Are you sure you want to add this category? 😀');
         }
     </script>
 </body>

@@ -86,6 +86,15 @@ input[type="file"]::-webkit-file-upload-button {
     bottom: -1em;
 }
 
+.logo a {
+    transition: .28s;
+}
+
+.logo a:active {
+    display: inline-flex;
+    transform: scale(.9);
+}
+
 .brgy-logo {
     transition: .3s;
 }
@@ -157,6 +166,32 @@ input[type="file"]::-webkit-file-upload-button {
     right: -3px;
     padding-right: 7px;
 }
+
+/*Drop down */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Rotate the arrow when the dropdown is shown */
+.dropdown > a .arrow-down {
+    transition: transform 0.3s;
+}
+
+.dropdown .show + .arrow-down {
+    transform: rotate(-135deg);
+}
+
+ion-icon {
+    margin-right: 8px; 
+    vertical-align: -1.4px; 
+    font-size: 14px;
+}
+
 </style>
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -266,9 +301,9 @@ input[type="file"]::-webkit-file-upload-button {
                     Info
                 </a>
 
-                <a href="extra-lockscreen.html" class="nav-icon">
-                    <i class="entypo-lock"></i>
-                    Log Off
+                <a href="dev.php" class="nav-icon">
+                    <i class='bx bx-code-alt'></i>
+                    Dev
                 </a>
 
                 <span class="close-sui-popup" id="x"><ion-icon name="close-outline" class="x"></ion-icon></span><!-- this is mandatory -->
@@ -300,11 +335,20 @@ input[type="file"]::-webkit-file-upload-button {
                     <span class="title" title="Renewal icon">Renewal</span>
                 </a>
             </li>
-            <li>
-                <a href="violation.php">
+            <li class="dropdown">
+                <a href="#" onclick="toggleDropdown('violationDropdown')">
                     <i class="entypo-flag" title="Violation icon"></i>
                     <span class="title">Violation</span>
+                    <i class="arrow-down"></i> <!-- Icon for dropdown arrow -->
                 </a>
+                <ul id="violationDropdown" class="dropdown-content">
+                    <li>
+                        <a href="violation.php"><ion-icon name="person"></ion-icon>Driver's Violation</a>
+                    </li>
+                    <li>
+                        <a href="assoc_violation.php"><ion-icon name="business"></ion-icon>Associations Violation</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="generate.php">
@@ -325,6 +369,12 @@ input[type="file"]::-webkit-file-upload-button {
                 </a>
             </li>
             <li>
+                <a href="only_acc.php">
+                    <i class='bx bxs-edit' id="icon"></i>
+                    <span class="title" title="Modify your account">Update User</span>
+                </a>
+            </li>
+            <li>
                 <a href="#">
                     <i class='bx bxs-videos' id="icon"></i>
                     <span class="title" title="Video Tutorial">Tutorial</span>
@@ -334,6 +384,12 @@ input[type="file"]::-webkit-file-upload-button {
                 <a href="#">
                     <i class='bx bxs-joystick' id="icon"></i>
                     <span class="title" title="Games">Games</span>
+                </a>
+            </li>
+            <li>
+                <a href="instructions.php">
+                    <i class='bx bx-question-mark' id="icon"></i>
+                    <span class="title" title="Instructions">Instructions</span>
                 </a>
             </li>
         </ul>
@@ -355,4 +411,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 });
+
+function toggleDropdown(id) {
+    let dropdown = document.getElementById(id);
+    if (dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+    } else {
+        dropdown.classList.add('show');
+    }
+}
+
+// Optional: Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.dropdown > a')) {
+        let dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
 </script>

@@ -125,7 +125,8 @@ if (isset($_SESSION["username"])) {
         }
 
         a:focus {
-            color: green;
+            color: white;
+            text-shadow: 1px 2px 3px #4A4A4A;
         }
 
         .customregister-footer {
@@ -170,7 +171,7 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open admin registration page in a new tab when clicking on Calendar Control button
                                 document.getElementById('calendarButton').onclick = function() {
-                                    window.open("control/calendar_entries.php", "_blank");
+                                    window.open("control/calendar_entries.php", "_self");
                                 };
                             </script>
                         </div>
@@ -184,7 +185,7 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
                                 document.getElementById('accountButton').onclick = function() {
-                                    window.open("control/admin_accounts.php", "_blank");
+                                    window.open("admin_records.php", "_self");
                                 };
                             </script>
                         </div>
@@ -203,7 +204,7 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open admin registration page in a new tab when clicking on Calendar Control button
                                 document.getElementById('associationButton').onclick = function() {
-                                    window.open("control/association_settings.php", "_blank");
+                                    window.open("control/association_settings.php", "_self");
                                 };
                             </script>
                         </div>
@@ -217,7 +218,7 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
                                 document.getElementById('violationButton').onclick = function() {
-                                    window.open("control/violation_categories.php", "_blank");
+                                    window.open("control/violation_categories.php", "_self");
                                 };
                             </script>
                         </div>
@@ -230,6 +231,8 @@ if (isset($_SESSION["username"])) {
             </footer>
         </div>
     </div>
-</body>
 
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
 </html>

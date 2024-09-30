@@ -50,12 +50,11 @@
         $totalViolations[$row['violation_category']] = $row['total_violations'];
     }
 ?>
-
 				<style>
 					.time {
 						position: absolute;
 						top: 12px;
-						left: 500px;
+						left: 555px;
 						transition: .3s;
 						cursor: cell;
 					}
@@ -147,7 +146,7 @@
 							<div class="panel-heading">
 								<div class="panel-title">Latest Registered Drivers</div>
 								<div class="panel-options">
-									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -218,7 +217,7 @@
 							<div class="panel-heading">
 								<div class="panel-title">Violations</div>
 								<div class="panel-options">
-									<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -245,6 +244,8 @@
 									}
 
 									.bar-fill {
+										box-shadow: 1px 2px 4px #98989B;
+										border-radius: 3.5px;
 										height: 30px; /* Height of the bar */
 										background-color: #337ab7; /* Default color for the bar */
 										position: relative; /* Position relative for number */
@@ -305,9 +306,6 @@
 					</div>
 				</div>
 
-
-
-
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="panel panel-default">
@@ -320,7 +318,7 @@
 								</h4>
 							</div>
 							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -355,7 +353,7 @@
 									while ($row = mysqli_fetch_assoc($result)) {
 										$association_color = htmlspecialchars($row['association_color']);
 										?>
-										<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 20px; padding: 10px; margin: 5px;">
+										<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 12px; padding: 10px; margin: 5px;">
 											<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
 											<p style="margin-bottom: 5px;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
 											<p style="margin-bottom: 5px;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
@@ -374,8 +372,6 @@
 				</div>
 			</div>
 
-
-
 		<!-- Di lang pagkaksa kay ga black tanan ang ari sa dalom hahahaha -->
 			<div class="row" style="display: none;">
 				<div class="col-sm-13">
@@ -390,7 +386,7 @@
 							</div>
 
 							<div class="panel-options">
-								<a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a>
+								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>

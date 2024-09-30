@@ -151,15 +151,15 @@ if (isset($_POST["btnLogin"])) {
 			<span class="error"><?php echo $notify; ?></span>
 
 
-			<input class="btn-log-in" type="submit" name="btnLogin" value="Login" onclick="playSound();">
+			<input class="btn-log-in" type="submit" name="btnLogin" value="Login">
 
 			<br>
 			
 			<br>
 
-			<!-- <a href="?forget=<?php echo md5(rand(1, 9)); ?>" class="forgot-pass">Forgot Password?</a> -->
-
 		</form>
+
+        <br>
 	</center>
 	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
