@@ -99,7 +99,13 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .main-menu li a:hover {
+    font-size: 14px;
     background: linear-gradient(to right, #233F80, #375AAD);
+}
+
+.main-menu li a:active {
+    transform: scale(.9);
+    background: linear-gradient(to right, #213A72, #314D90);
 }
 
 .sidebar-menu-inner.collapsed .main-menu li a {
@@ -113,12 +119,47 @@ input[type="file"]::-webkit-file-upload-button {
 .sidebar-menu-inner.collapsed .sidebar-user-info {
     display: none;
 }
-
 .main-menu li a.collapsed {
     display: none;
 }
+
+.sidebar-collapse-icon {
+    transition: transform 0.5s ease-in-out;
+}
+
+.sidebar-menu-inner.collapsed .sidebar-collapse-icon {
+    transform: rotate(180deg); /* Rotate the icon when collapsed */
+    transition: .3s;
+}
+
+.nav-icon:hover {
+    font-size: 15px;
+}
+
+.nav-icon:active {
+    transform: scale(.9);
+}
+
+.x {
+    transition: .2s;
+}
+
+.x:hover {
+    font-size: 30px;
+}
+
+.close-sui-popup:active {
+    transform: scale(.9);
+}
+
+#icon {
+    position: relative;
+    right: -3px;
+    padding-right: 7px;
+}
 </style>
 
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <div class="sidebar-menu">
 
     <div class="sidebar-menu-inner">
@@ -127,7 +168,7 @@ input[type="file"]::-webkit-file-upload-button {
 
             <!-- logo -->
             <div class="logo">
-                <a href="index.html">
+                <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
                     <img src="assets/images/barangayestefanialogo.png" width="120" alt="Brgy. Estefania Logo" class="brgy-logo" title="Brgy. Estefania Logo"/>
                 </a>
             </div>
@@ -215,9 +256,9 @@ input[type="file"]::-webkit-file-upload-button {
 
             <div class="sui-hover inline-links animate-in">
                 <br><br>
-                <a href="#" class="nav-icon">
-                    <i class="entypo-pencil"></i>
-                    New Page
+                <a href="admin_records.php" class="nav-icon">
+                    <i class='bx bxs-user-account'></i>
+                    Admins
                 </a>
 
                 <a href="admin_approval.php" class="nav-icon">
@@ -283,12 +324,23 @@ input[type="file"]::-webkit-file-upload-button {
                     <span class="title" title="Control Panel icon">Control Panel</span>
                 </a>
             </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-videos' id="icon"></i>
+                    <span class="title" title="Video Tutorial">Tutorial</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-joystick' id="icon"></i>
+                    <span class="title" title="Games">Games</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', (event) => {

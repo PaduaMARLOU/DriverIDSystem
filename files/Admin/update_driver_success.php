@@ -275,8 +275,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <head>
                     <meta charset='UTF-8'>
                     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <link rel='icon' href='../../img/Brgy Estefania Logo.png' type='image/png'>
                     <title>Update Record</title>
                     <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+                        * {
+                            padding: 0;
+                            margin: 0;
+                            box-sizing: border-box;
+                            font-family: 'Poppins', sans-serif;
+                        }
+
                         body {
                             font-family: Arial, sans-serif;
                             background-color: #f4f4f4;
@@ -299,11 +309,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             color: #fff;
                             text-decoration: none;
                             border-radius: 5px;
-                            transition: background 0.3s ease;
+                            transition: .2s;
                         }
                         .btn:hover {
                             background: #0056b3;
                         }
+
+                        .btn:active {
+                            transform: scale(.9);
+                        }
+
                         .updated-details {
                             margin-top: 20px;
                             padding: 20px;
@@ -381,19 +396,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>";
 
         // Button to redirect to driver.php
-        echo "<br><a href='driver.php' class='btn'>Go to Driver Table</a>";
-        echo "<br><br><hr> or <hr>";
-        echo "<br><a href='verify.php' class='btn'>Go to Verification Table</a>";
+        echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='driver.php' class='btn'>Go to Driver Table</a>&nbsp;&nbsp;";
+        echo "or&nbsp;&nbsp;";
+        echo "<a href='verify.php' class='btn'>Go to Verification Table</a>";
 
-        // Redirect after displaying the success message and updated record details
+        echo "<br><br><div id='countdown-message'>
+        You will vanish in 10 seconds...
+            </div>";
+
         echo "<script>
-                setTimeout(function() {
-                    window.location.href = 'driver.php';
-                }, 10000); // 10 seconds delay
-              </script>
-          </div>
-        </body>
-        </html>";
+        let countdown = 60;
+        let countdownElement = document.getElementById('countdown-message');
+
+        let interval = setInterval(function() {
+            countdown--;
+            countdownElement.innerHTML = 'You will vanish in ' + countdown + ' seconds...';
+
+            if (countdown <= 0) {
+                clearInterval(interval);
+                window.location.href = 'driver.php';
+            }
+        }, 1000); // 1 second interval
+    </script>";
     } else {
         echo "Error updating records: " . $connections->error;
     }

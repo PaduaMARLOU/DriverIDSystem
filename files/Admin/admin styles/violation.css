@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    outline: none;
+    text-decoration: none;
+}
+
+lord-icon {
+    transition: .3s;
+}
+
+lord-icon:hover {
+    filter: drop-shadow(2px 3px 6px rgb(206, 60, 60));
+    cursor: cell;
+}
+
+h1 {
+    font-size: 38px;
+    color: rgb(255, 84, 84);
+    text-shadow: 1px 2px 2px rgb(187, 187, 187);
+}
+
+h2 {
+    font-size: 25px;
+}
+
+label {
+    font-size: 20px;
+}
+
+select {
+    width: 300px;
+    font-size: 18px;
+}
+
+textarea {
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+}
+
+input[type="submit"] {
+    font-size: 18px;
+    transition: .2s;
+}
+
+input[type="submit"]:active {
+    transform: scale(.9);
+}
+
+a {
+    border: 1.5px solid;
+    border-image: linear-gradient(to right, rgb(255, 84, 84), red) 1;
+    padding-top: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 2px;
+    font-size: 18px;
+    color: rgb(255, 84, 84);
+    border-radius: 5px;
+    transition: .3s;
+}
+
+a:hover {
+    background: linear-gradient(to right, rgb(255,84,84), red);
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: .3s;
+}
+
+a:active {
+    display: inline-block;
+    background: linear-gradient(to right, rgb(227, 80, 80), rgb(226, 16, 16));
+    transform: scale(.9);
+}

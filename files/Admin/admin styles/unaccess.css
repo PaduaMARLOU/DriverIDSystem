@@ -16,6 +16,10 @@
     color: white;
 }
 
+*::selection {
+    background-color: var(--comfort-red);
+}
+
 body {
     overflow-x: hidden;
 }
@@ -60,7 +64,6 @@ body {
 }
 
 .understand {
-    position: relative;
     text-decoration: none;
     bottom: -24px;
     border: 1.5px solid white;
@@ -79,6 +82,10 @@ body {
     font-size: 30px;
 }
 
+.understand:active {
+    transform: scale(.9);
+    background-color: rgba(64, 138, 242, 0.609);
+}
 .no {
     position: relative;
     top: 4.5em;

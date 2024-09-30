@@ -41,8 +41,8 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             margin-top: -80px;
             padding: 20px;
             border-radius: 10px;
-            border: 0.5in solid transparent; /* Border for letter size paper */
-            page-break-inside: avoid; /* Avoid breaking inside the container */
+            border: 0.5in solid transparent; 
+            page-break-inside: avoid; 
         }
         .profile-header {
             text-align: center;
@@ -100,48 +100,48 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px; /* Space between buttons */
+            gap: 10px; 
             padding-top: 10px;
-            margin-bottom: 20px; /* Adjust as needed for spacing */
+            margin-bottom: 20px; 
         }
 
         .btn {
-            min-width: 150px; /* Ensure buttons have the same minimum width */
-            height: 40px; /* Ensure buttons have the same height */
+            min-width: 150px; 
+            height: 40px; 
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .btn-default {
-            background-color: #6c757d; /* Gray color for default button */
-            border-color: #6c757d; /* Ensure border matches the button color */
-            color: white; /* Text color */
+            background-color: #6c757d; 
+            border-color: #6c757d; 
+            color: white; 
         }
 
         .btn-default:hover {
-            background-color: #5a6268; /* Darker gray on hover */
-            border-color: #545b62; /* Ensure border matches the button color on hover */
+            background-color: #5a6268; 
+            border-color: #545b62; 
         }
 
         .btn-verify {
-            background-color: green; /* Green color for verify button */
-            border-color: green; /* Ensure border matches the button color */
+            background-color: green; 
+            border-color: green; 
         }
 
         .btn-verify:hover {
-            background-color: darkgreen; /* Darker green on hover */
-            border-color: darkgreen; /* Ensure border matches the button color on hover */
+            background-color: darkgreen; 
+            border-color: darkgreen;
         }
 
         .btn-deny {
-            background-color: red; /* Red color for deny button */
-            border-color: red; /* Ensure border matches the button color */
+            background-color: red; 
+            border-color: red; 
         }
 
         .btn-deny:hover {
-            background-color: darkred; /* Darker red on hover */
-            border-color: darkred; /* Ensure border matches the button color on hover */
+            background-color: darkred; 
+            border-color: darkred; 
         }
 
 

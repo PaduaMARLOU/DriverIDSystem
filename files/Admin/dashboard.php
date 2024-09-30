@@ -55,7 +55,7 @@
 					.time {
 						position: absolute;
 						top: 12px;
-						left: 440px;
+						left: 500px;
 						transition: .3s;
 						cursor: cell;
 					}
@@ -156,7 +156,7 @@
 							<table class="table table-bordered table-responsive">
 								<thead>
 									<tr>
-										<th>ID #</th>
+										<th>ID Number</th>
 										<th>Name</th>
 										<th>Vehicle Type</th>
 										<th>Association</th>
@@ -211,12 +211,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
 
 				<div class="row">
 					<div class="col-sm-13">
@@ -337,13 +331,8 @@
 								<style>
 									.association h5,
 									.association p {
-										color: black;
-										text-shadow: 
-											0 0 1px white, 
-											1px 1px 1px white, 
-											-1px -1px 1px white, 
-											1px -1px 1px white, 
-											-1px 1px 1px white;
+										color: white;
+										
 									}
 								</style>
 

@@ -6,10 +6,11 @@
     <link rel="stylesheet" type="text/css" href="admin styles/unaccess.css">
     <title>Unauthorized</title>
 
-    <link rel="icon" href="../../img/stop.png" type="">
+    <link rel="icon" href="../../img/stop.png" type="image/png">
 </head>
 <body>
     <style>
+        <?php include("admin styles/unaccess.css"); ?>
         .background {
             position: fixed;
             top: 0;
@@ -25,6 +26,12 @@
             -webkit-filter: blur(2.5px);
             z-index: -1; /* Ensure it stays behind other content */
         }
+
+        .understand:active {
+            transform: scale(2);
+            background-color: rgba(64, 138, 242, 0.609);
+        }
+
     </style>
 
     <div class="background"></div>
@@ -36,7 +43,7 @@
                             <h2 class="sir">
                                 Only Sir Sayson is allowed to verify
                             </h2>
-                            <i class="clarify">You're not supposed to be here</i>
+                            <i class="clarify">You're not supposed to be here</i><br>
                             <br><a href="index.php" class="understand">I Understand</a>
                         </div>
                     </center>

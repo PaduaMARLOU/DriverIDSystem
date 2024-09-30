@@ -90,3 +90,12 @@
     background-color: var(--comfort-blue);
     font-size: 33px;
 }
+
+#yes:active {
+    transform: scale(.9);
+}
+
+#no:active {
+    display: inline-block;
+    transform: scale(.9);
+}

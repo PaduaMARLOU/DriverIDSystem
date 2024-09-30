@@ -62,7 +62,7 @@
     outline: none; /* Remove default focus outline */
 }
 
-.customregister-btn-admin {
+/* .customregister-btn-admin {
     background-color: #ff0000;
     color: white;
 }
@@ -78,7 +78,7 @@
 
 .customregister-btn-driver:hover {
     background-color: #00cc00;
-}
+} */
 
 .customregister-btn:hover,
 .customregister-btn:focus {

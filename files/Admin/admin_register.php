@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
             $status = 'Pending...';
         }
 
-        $sql = "INSERT INTO tbl_admin (first_name, middle_name, last_name, sex, mobile_number, username, password, attempt, relog_time, login_time, logout_time, account_type, date_registered, img, status) 
+        $sql = "INSERT INTO tbl_admin (first_name, middle_name, last_name, sex, mobile_number, username, password, attempt, relog_time, login_time, logout_time, account_type, date_registered, img, 'Pending...') 
                 VALUES (?, ?, ?, ?, ?, ?, ?, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ?, NOW(), '', ?)";
 
         $stmt = $connections->prepare($sql);
@@ -169,6 +169,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 </head>
 
 <body>
+    <style>
+        <?php include("../adminportalcss/admin_register.css"); ?>
+    </style>
 
     <div class="container">
         <center>
@@ -190,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
                     <span class="err"><?php echo $l_nameErr; ?></span><br>
 
                     <ion-icon name="male-female" class="icon"></ion-icon><select name="sex" class="t-box" id="gender">
-                        <option value="" class="t-box">Select Sex</option>
+                        <option value="" class="t-box">Select Gender</option>
                         <option class="t-box" value="Male" <?php if ($gender == "Male") echo "selected"; ?>>Male</option>
                         <option class="t-box" value="Female" <?php if ($gender == "Female") echo "selected"; ?>>Female</option>
                     </select><br>
@@ -211,7 +214,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
                     <ion-icon name="camera" class="icon"></ion-icon><input type="file" class="t-box" id="admin_image" name="admin_image" accept="image/*"><br>
                     <span class="err"><?php echo $imgErr; ?></span><br>
 
-                    <hr class="hr"><br>
                     <input type="submit" class="btn-register" value="REGISTER"><br><br>
                 </form>
             </div>
@@ -220,5 +222,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
 </body>
-
 </html>
