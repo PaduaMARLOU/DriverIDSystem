@@ -95,6 +95,15 @@ input[type="file"]::-webkit-file-upload-button {
     transform: scale(.9);
 }
 
+.logo a {
+    transition: .28s;
+}
+
+.logo a:active {
+    display: inline-flex;
+    transform: scale(.9);
+}
+
 .brgy-logo {
     transition: .3s;
 }
@@ -109,7 +118,13 @@ input[type="file"]::-webkit-file-upload-button {
 
 .main-menu li a:hover {
     font-size: 14px;
+    font-size: 14px;
     background: linear-gradient(to right, #233F80, #375AAD);
+}
+
+.main-menu li a:active {
+    transform: scale(.9);
+    background: linear-gradient(to right, #213A72, #314D90);
 }
 
 .main-menu li a:active {
@@ -195,6 +210,7 @@ ion-icon {
 </style>
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <div class="sidebar-menu">
 
     <div class="sidebar-menu-inner">
@@ -203,6 +219,7 @@ ion-icon {
 
             <!-- logo -->
             <div class="logo">
+                <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
                 <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
                     <img src="assets/images/barangayestefanialogo.png" width="120" alt="Brgy. Estefania Logo" class="brgy-logo" title="Brgy. Estefania Logo"/>
                 </a>
@@ -294,6 +311,9 @@ ion-icon {
                 <a href="admin_records.php" class="nav-icon">
                     <i class='bx bxs-user-account'></i>
                     Admins
+                <a href="admin_records.php" class="nav-icon">
+                    <i class='bx bxs-user-account'></i>
+                    Admins
                 </a>
 
                 <a href="admin_approval.php" class="nav-icon">
@@ -301,6 +321,9 @@ ion-icon {
                     Info
                 </a>
 
+                <a href="dev.php" class="nav-icon">
+                    <i class='bx bx-code-alt'></i>
+                    Dev
                 <a href="dev.php" class="nav-icon">
                     <i class='bx bx-code-alt'></i>
                     Dev

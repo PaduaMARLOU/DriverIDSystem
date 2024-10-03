@@ -55,6 +55,7 @@
 						position: absolute;
 						top: 12px;
 						left: 555px;
+						left: 555px;
 						transition: .3s;
 						cursor: cell;
 					}
@@ -67,14 +68,14 @@
 							<h1>
 								<?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?>
 								<span id="time"></span>
-								<lord-icon
+								<!-- <lord-icon
 									src="https://cdn.lordicon.com/lzgqzxrq.json"
 									trigger="hover"
 									colors="primary:#3a3347,secondary:#ebe6ef,tertiary:#4bb3fd,quaternary:#000000"
 									style="width:70px;height:70px"
 									class="time"
 									title="Time Navigation">
-								</lord-icon>
+								</lord-icon> -->
 							</h1>
 							<h3>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h3>
 						</div>
@@ -159,6 +160,7 @@
 								<div class="panel-title">Latest Registered Drivers</div>
 								<div class="panel-options">
 									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -167,6 +169,7 @@
 							<table class="table table-bordered table-responsive">
 								<thead>
 									<tr>
+										<th>ID Number</th>
 										<th>ID Number</th>
 										<th>Name</th>
 										<th>Vehicle Type</th>
@@ -229,6 +232,7 @@
 							<div class="panel-heading">
 								<div class="panel-title">Violations</div>
 								<div class="panel-options">
+									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -255,6 +259,8 @@
 									}
 
 									.bar-fill {
+										box-shadow: 1px 2px 4px #98989B;
+										border-radius: 3.5px;
 										box-shadow: 1px 2px 4px #98989B;
 										border-radius: 3.5px;
 										height: 30px; /* Height of the bar */
@@ -405,6 +411,7 @@
 							</div>
 
 							<div class="panel-options">
+								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
