@@ -356,6 +356,32 @@ ion-icon {
                     <span class="title" title="ID Generation icon">Generate ID</span>
                 </a>
             </li>
+            <li class="has-sub">
+                <a href="driver_data.php">
+                    <i class="entypo-doc-text"></i>
+                    <span class="title">Generate Report</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="driver_data.php">
+                            <i class="entypo-users"></i>
+                            <span class="title">Drivers and Associations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="violation_data.php">
+                            <i class="entypo-pencil"></i>
+                            <span class="title">Violations</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="entypo-attach"></i>
+                            <span class="title">Concerns and Complaints</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="register.php">
                     <i class="entypo-monitor"></i>

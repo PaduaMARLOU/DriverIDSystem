@@ -94,50 +94,62 @@
 
 
 				<div class="row">
+					<div class="col-sm-12">
+						<div class="row">
 
-				    <div class="col-sm-12">
+							<!-- Total Registered Drivers -->
+							<div class="col-sm-3">
+								<a href="driver_data.php" style="text-decoration: none;">
+									<div class="tile-stats tile-aqua">
+										<div class="icon"><i class="entypo-users"></i></div>
+										<div class="num"><?php echo $totalRegistered; ?></div>
+										<h3>Total Registered Drivers</h3>
+										<p>Total</p>
+									</div>
+								</a>
+							</div>
 
-				        <div class="row">
+							<!-- Registered E-Bike Drivers -->
+							<div class="col-sm-3">
+								<a href="driver_data.php?driver_category=E-Bike" style="text-decoration: none;">
+									<div class="tile-stats tile-red">
+										<div class="icon"><i class="entypo-users"></i></div>
+										<div class="num"><?php echo $totalEbike; ?></div>
+										<h3>Registered E-Bike Drivers</h3>
+										<p>E-Bike</p>
+									</div>
+								</a>
+							</div>
 
-				            <div class="col-sm-3">
-				                <div class="tile-stats tile-aqua">
-				                    <div class="icon"><i class="entypo-users"></i></div>
-				                    <div class="num"><?php echo $totalRegistered; ?></div>
-				                    <h3>Total Registered Drivers</h3>
-				                    <p>Total</p>
-				                </div>
-				            </div>
+							<!-- Registered Tricycle Drivers -->
+							<div class="col-sm-3">
+								<a href="driver_data.php?driver_category=Tricycle" style="text-decoration: none;">
+									<div class="tile-stats tile-green">
+										<div class="icon"><i class="entypo-users"></i></div>
+										<div class="num"><?php echo $totalTricycle; ?></div>
+										<h3>Registered Tricycle Drivers</h3>
+										<p>Tricycle</p>
+									</div>
+								</a>
+							</div>
 
-				            <div class="col-sm-3">
-				                <div class="tile-stats tile-red">
-				                    <div class="icon"><i class="entypo-users"></i></div>
-				                    <div class="num"><?php echo $totalEbike; ?></div>
-				                    <h3>Registered E-Bike Drivers</h3>
-				                    <p>E-Bike</p>
-				                </div>
-				            </div>
+							<!-- Registered Trisikad Drivers -->
+							<div class="col-sm-3">
+								<a href="driver_data.php?driver_category=Trisikad" style="text-decoration: none;">
+									<div class="tile-stats tile-orange">
+										<div class="icon"><i class="entypo-users"></i></div>
+										<div class="num"><?php echo $totalTrisikad; ?></div>
+										<h3>Registered Trisikad Drivers</h3>
+										<p>Trisikad</p>
+									</div>
+								</a>
+							</div>
 
-				            <div class="col-sm-3">
-				                <div class="tile-stats tile-green">
-				                    <div class="icon"><i class="entypo-users"></i></div>
-				                    <div class="num"><?php echo $totalTricycle; ?></div>
-				                    <h3>Registered Tricycle Drivers</h3>
-				                    <p>Tricycle</p>
-				                </div>
-				            </div>
-
-				            <div class="col-sm-3">
-				                <div class="tile-stats tile-orange">
-				                    <div class="icon"><i class="entypo-users"></i></div>
-				                    <div class="num"><?php echo $totalTrisikad; ?></div>
-				                    <h3>Registered Trisikad Drivers</h3>
-				                    <p>Trisikad</p>
-				                </div>
-				            </div>
-
-				        </div>
-				    </div>
+						</div>
+					</div>
 				</div>
+
+
 
 
 				<div class="row">
@@ -217,7 +229,6 @@
 							<div class="panel-heading">
 								<div class="panel-title">Violations</div>
 								<div class="panel-options">
-									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -290,12 +301,13 @@
 											// Calculate the percentage of this category
 											$percentage = ($count / $totalCount) * 100;
 
+											// Make the bar clickable and redirect to violation_data.php
 											echo "<div class='bar'>
 													<div class='bar-label'>$category</div>
-													<div class='bar-fill' style='background-color: $color; width: {$barWidth}%;'>
+													<a href='violation_data.php?violation_category=" . urlencode($category) . "' class='bar-fill' style='background-color: $color; width: {$barWidth}%;'>
 														<div class='bar-number'>$count</div>
 														<div class='bar-percentage'>" . number_format($percentage, 2) . "%</div>
-													</div>
+													</a>
 												</div>";
 										}
 									}
@@ -306,71 +318,78 @@
 					</div>
 				</div>
 
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<div class="panel-title">
-								<h4>
-									Association Statistics
-									<br>
-									<small>Number of Associations and Drivers per Association</small>
-								</h4>
+
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="panel-title">
+									<h4>
+										Association Statistics
+										<br>
+										<small>Number of Associations and Drivers per Association</small>
+									</h4>
+								</div>
+								<div class="panel-options">
+									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
+									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
+								</div>
 							</div>
-							<div class="panel-options">
-								<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
-								<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
-								<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
-								<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
-							</div>
-						</div>
-						<div class="panel-body no-padding">
-							<div id="association-stats">
-								<style>
-									.association h5,
-									.association p {
-										color: white;
-										
-									}
-								</style>
+							<div class="panel-body no-padding">
+								<div id="association-stats">
+									<style>
+										.association h5,
+										.association p {
+											color: white;
+											text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+										}
+									</style>
 
-
-								<?php
-								// Assuming you have a database connection established
-								include "../../connections.php";
-								// Retrieve data from tbl_driver with association details
-								$query = "SELECT d.fk_association_id, a.association_category, a.association_name, a.association_area, 
-										a.association_color, COUNT(*) as num_drivers
-										FROM tbl_driver d
-										INNER JOIN tbl_association a ON d.fk_association_id = a.association_id
-										WHERE d.verification_stat = 'Registered' AND d.renew_stat = 'Active'
-										GROUP BY d.fk_association_id";
-								$result = mysqli_query($connections, $query); // assuming $connections is your database connection
-
-								// Check if there are any associations
-								if(mysqli_num_rows($result) > 0) {
-									// Loop through the fetched data and generate HTML dynamically
-									while ($row = mysqli_fetch_assoc($result)) {
-										$association_color = htmlspecialchars($row['association_color']);
-										?>
-										<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 12px; padding: 10px; margin: 5px;">
-											<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
-											<p style="margin-bottom: 5px;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
-											<p style="margin-bottom: 5px;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
-											<p style="margin-bottom: 5px;">Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
-										</div>
 									<?php
+									// Assuming you have a database connection established
+									include "../../connections.php";
+
+									// Retrieve data from tbl_driver with association details
+									$query = "SELECT d.fk_association_id, a.association_category, a.association_name, a.association_area, 
+											a.association_color, COUNT(*) as num_drivers
+											FROM tbl_driver d
+											INNER JOIN tbl_association a ON d.fk_association_id = a.association_id
+											WHERE d.verification_stat = 'Registered' AND d.renew_stat = 'Active'
+											GROUP BY d.fk_association_id";
+									$result = mysqli_query($connections, $query);
+
+									// Check if there are any associations
+									if(mysqli_num_rows($result) > 0) {
+										// Loop through the fetched data and generate HTML dynamically
+										while ($row = mysqli_fetch_assoc($result)) {
+											$association_color = htmlspecialchars($row['association_color']);
+											$association_name = urlencode($row['association_name']); // URL encode the association name for the query string
+											?>
+											<!-- Wrap each association block inside an anchor tag -->
+											<a href="driver_data.php?association_name=<?php echo urlencode($row['association_name']); ?>" style="text-decoration: none;">
+												<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 12px; padding: 10px; margin: 5px;">
+													<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
+													<p style="margin-bottom: 5px;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
+													<p style="margin-bottom: 5px;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
+													<p style="margin-bottom: 5px;">Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
+												</div>
+											</a>
+										<?php
+										}
+									} else {
+										// If no associations found
+										echo "<p>No associations found.</p>";
 									}
-								} else {
-									// If no associations found
-									echo "<p>No associations found.</p>";
-								}
-								?>
+									?>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+
+
 
 		<!-- Di lang pagkaksa kay ga black tanan ang ari sa dalom hahahaha -->
 			<div class="row" style="display: none;">
