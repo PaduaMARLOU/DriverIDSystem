@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment'])) {
             <label for="comment">Comment:</label><br>
             <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
             <input type="submit" value="Submit Comment">
-            <a href="index.php" class="back-btn">Back</a>
+            <a href="scan.php" class="back-btn">Back</a>
         </form>
 
     <?php else: ?>

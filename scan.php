@@ -16,23 +16,46 @@ include('connections.php');
             margin: auto;
             padding: 20px;
         }
-        #result {
+        #result, #error {
             margin-top: 20px;
             font-size: 18px;
+        }
+        #result {
             color: green;
         }
         #error {
-            margin-top: 20px;
-            font-size: 18px;
             color: red;
+        }
+        .input-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .input-section input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            width: 300px;
+        }
+        .input-section input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h2>Driver Verification via QR Code</h2>
+    <h2>Driver Verification via QR Code or Code Input</h2>
+
     <div id="qr-reader"></div>
     <div id="result"></div>
     <div id="error"></div>
+
+    <div class="input-section">
+        <h3>Or Input Driver's Code Here</h3>
+        <form id="code-form" method="GET" action="scan_detected.php">
+            <input type="text" name="formatted_id" placeholder="Enter Driver's Code" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
     <a href="index.php" class="back-btn">Back</a>
 
@@ -47,7 +70,7 @@ include('connections.php');
 
         function onScanFailure(error) {
             // Show a user-friendly error message
-            document.getElementById("error").innerText = "Please Scan Valid Driver QR Code.";
+            document.getElementById("error").innerText = "Please Scan a Valid Driver QR Code.";
         }
 
         let html5QrcodeScanner = new Html5QrcodeScanner(

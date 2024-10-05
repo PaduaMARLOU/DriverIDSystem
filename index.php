@@ -12,14 +12,16 @@
         <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
             <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
         </a>
-        <h1>Driver's Portal <br>Registration Booking</h1>
+        <h1>Driver's Portal</h1>
         <div>
             <a href="registrationpage.php" class="btn btn-register">Register</a>
             <a href="renewpage.php" class="btn btn-renew">Renew</a>
+            <a href="scan.php" class="btn btn-scan">Scan or Comment</a>
         </div>
         <p style="text-align: justify;">
             <strong style="color: green;">Register:</strong> Pindoton para makapili sang adlaw kung san-o gusto nga magpa-schedule para magparehistro sang ID. <br><br>
-            <strong style="color: red;">Renew:</strong> Pindoton para malantaw kung active ukon indi ang status sang imo nga ID.
+            <strong style="color: red;">Renew:</strong> Pindoton para malantaw kung active ukon indi ang status sang imo nga ID.<br><br>
+            <strong style="color: blue;">Scan or Comment:</strong> Pindoton para mascan ang QR Code sang Driver's ID kag pwede man nga magkumento na hamtang sa ila.
         </p>
         <br><br>
         <footer class="footer">

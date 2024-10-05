@@ -75,6 +75,11 @@ h1 {
     color: white;
 }
 
+.btn-scan {
+    background-color: #00bfff;
+    color: white;
+}
+
 .btn:hover {
     transform: scale(1.1);
     box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
@@ -86,6 +91,10 @@ h1 {
 
 .btn-renew:hover {
     background-color: #e53935;
+}
+
+.btn-scan:hover {
+    background-color: #0098ca;
 }
 
 /* Footer styles */
