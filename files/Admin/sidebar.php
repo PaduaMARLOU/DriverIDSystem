@@ -393,7 +393,7 @@ ion-icon {
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="comment_data.php">
                             <i class="entypo-attach"></i>
                             <span class="title">Concerns and Complaints</span>
                         </a>
