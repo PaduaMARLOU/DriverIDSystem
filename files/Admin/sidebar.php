@@ -308,9 +308,7 @@ ion-icon {
 
             <div class="sui-hover inline-links animate-in">
                 <br><br>
-                <a href="admin_records.php" class="nav-icon">
-                    <i class='bx bxs-user-account'></i>
-                    Admins
+
                 <a href="admin_records.php" class="nav-icon">
                     <i class='bx bxs-user-account'></i>
                     Admins
@@ -321,9 +319,6 @@ ion-icon {
                     Info
                 </a>
 
-                <a href="dev.php" class="nav-icon">
-                    <i class='bx bx-code-alt'></i>
-                    Dev
                 <a href="dev.php" class="nav-icon">
                     <i class='bx bx-code-alt'></i>
                     Dev

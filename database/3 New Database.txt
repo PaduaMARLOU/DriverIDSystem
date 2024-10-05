@@ -235,3 +235,22 @@ INSERT INTO `tbl_calendar` (`calendar_id`, `calendar_date`, `calendar_descriptio
 (NULL, '2024-12-08', 'Feast of the Immaculate Conception of the Blessed Virgin Mary - Special (Non-Working) Day', NULL, NULL, 'Disable'),
 (NULL, '2024-12-24', 'Christmas Eve - Special (Non-Working) Day', NULL, NULL, 'Disable'),
 (NULL, '2024-12-31', 'New Year\'s Eve - Special (Non-Working) Day', NULL, NULL, 'Disable');
+
+/*add for comments table*/
+CREATE TABLE `tbl_comment` (
+  `comment_id` int(20) NOT NULL,
+  `fk_driver_id` int(11) DEFAULT NULL, 
+  `comment_details` LONGTEXT DEFAULT NULL,
+  `comment_date` datetime NOT NULL 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `tbl_comment`
+  ADD PRIMARY KEY (`comment_id`),
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE tbl_comment
+ADD CONSTRAINT fk_driver_id_comment
+FOREIGN KEY (fk_driver_id)
+REFERENCES tbl_driver(driver_id)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
