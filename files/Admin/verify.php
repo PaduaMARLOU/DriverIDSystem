@@ -20,7 +20,59 @@ if(isset($_SESSION["username"])) {
     exit; // Ensure script stops executing after redirection
 }
 
+// Fetch expected drivers
+$expectedDriversQuery = "SELECT COUNT(*) as expected_count 
+                          FROM tbl_appointment 
+                          WHERE DATE(appointment_date) = CURDATE()"; // Use the correct column name
+
+$expectedDriversResult = mysqli_query($connections, $expectedDriversQuery);
+
+if ($expectedDriversResult) {
+    $expectedDrivers = mysqli_fetch_assoc($expectedDriversResult)['expected_count'];
+} else {
+    // Output the error message for debugging
+    echo "Error fetching expected drivers: " . mysqli_error($connections);
+    $expectedDrivers = 0; // Set to 0 if the query fails
+}
+
+// Fetch remaining drivers
+$remainingDriversQuery = "SELECT COUNT(*) as remaining_count 
+                          FROM tbl_driver 
+                          INNER JOIN tbl_appointment 
+                          ON tbl_driver.fk_sched_id = tbl_appointment.sched_id 
+                          WHERE tbl_driver.verification_stat = 'Pending' 
+                          AND DATE(tbl_appointment.appointment_date) = CURDATE()"; // Use the correct column name
+
+$remainingDriversResult = mysqli_query($connections, $remainingDriversQuery);
+
+if ($remainingDriversResult) {
+    $remainingDrivers = mysqli_fetch_assoc($remainingDriversResult)['remaining_count'];
+} else {
+    // Output the error message for debugging
+    echo "Error fetching remaining drivers: " . mysqli_error($connections);
+    $remainingDrivers = 0; // Set to 0 if the query fails
+}
+
+// Fetch total number of drivers to verify
+$totalDriversQuery = "SELECT COUNT(*) as total_count 
+                      FROM tbl_driver 
+                      WHERE verification_stat = 'Pending'"; // Count all drivers with pending verification
+
+$totalDriversResult = mysqli_query($connections, $totalDriversQuery);
+
+if ($totalDriversResult) {
+    $totalDrivers = mysqli_fetch_assoc($totalDriversResult)['total_count'];
+} else {
+    // Output the error message for debugging
+    echo "Error fetching total drivers: " . mysqli_error($connections);
+    $totalDrivers = 0; // Set to 0 if the query fails
+}
+
+// Close the database connection
+mysqli_close($connections);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,42 +93,76 @@ if(isset($_SESSION["username"])) {
     <link rel="stylesheet" href="assets/css/neon-forms.css">
     <link rel="stylesheet" href="assets/css/custom.css">
     <script src="assets/js/jquery-1.11.3.min.js"></script>
-    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body class="page-body" data-url="http://neon.dev">
-<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+<div class="page-container">
     <?php include "sidebar.php" ?>
     <div class="main-content">
         <?php include "header.php" ?>
         <hr />
+        
+        <h3 style="color: gray;">
+            Expected Number of Drivers to Verify Today: <span style="color: blue;"><?php echo $expectedDrivers; ?></span><br>
+            Drivers to Verify Today Remaining: <a href="verify.php?filter=today" style="color: blue; text-decoration: underline;"><?php echo $remainingDrivers; ?></a><br>
+            Total Drivers to Verify: <a href="verify.php" style="color: blue; text-decoration: underline;"><?php echo $totalDrivers; ?></a>
+        </h3>
+
+        
         <?php
-        // Assuming you have already established a database connection
-        include "../../connections.php";
-        // Fetch data from the database where verification_stat is 'Pending'
-        $query = "SELECT 
-                      tbl_driver.fk_sched_id,
-                      tbl_driver.formatted_id, 
-                      tbl_driver.first_name, 
-                      tbl_driver.middle_name, 
-                      tbl_driver.last_name, 
-                      tbl_driver.driver_category, 
-                      tbl_driver.verification_stat, 
-                      tbl_association.association_name, 
-                      tbl_association.association_area
-                  FROM 
-                      tbl_driver 
-                  INNER JOIN 
-                      tbl_association 
-                  ON 
-                      tbl_driver.fk_association_id = tbl_association.association_id 
-                  WHERE 
-                      tbl_driver.verification_stat = 'Pending'";
+        // Check if filter parameter is set in the URL
+        $filterToday = isset($_GET['filter']) && $_GET['filter'] == 'today';
+
+        // Prepare the SQL query based on the filter
+        if ($filterToday) {
+            // Only show drivers that need to be verified today
+            $query = "SELECT 
+                          tbl_driver.fk_sched_id,
+                          tbl_driver.formatted_id, 
+                          tbl_driver.first_name, 
+                          tbl_driver.middle_name, 
+                          tbl_driver.last_name, 
+                          tbl_driver.driver_category, 
+                          tbl_driver.verification_stat, 
+                          tbl_association.association_name, 
+                          tbl_association.association_area
+                      FROM 
+                          tbl_driver 
+                      INNER JOIN 
+                          tbl_association 
+                      ON 
+                          tbl_driver.fk_association_id = tbl_association.association_id 
+                      INNER JOIN 
+                          tbl_appointment 
+                      ON 
+                          tbl_driver.fk_sched_id = tbl_appointment.sched_id 
+                      WHERE 
+                          tbl_driver.verification_stat = 'Pending' 
+                      AND 
+                          DATE(tbl_appointment.appointment_date) = CURDATE()"; // Assuming appointment_date is the date field
+        } else {
+            // Show all drivers that need to be verified
+            $query = "SELECT 
+                          tbl_driver.fk_sched_id,
+                          tbl_driver.formatted_id, 
+                          tbl_driver.first_name, 
+                          tbl_driver.middle_name, 
+                          tbl_driver.last_name, 
+                          tbl_driver.driver_category, 
+                          tbl_driver.verification_stat, 
+                          tbl_association.association_name, 
+                          tbl_association.association_area
+                      FROM 
+                          tbl_driver 
+                      INNER JOIN 
+                          tbl_association 
+                      ON 
+                          tbl_driver.fk_association_id = tbl_association.association_id 
+                      WHERE 
+                          tbl_driver.verification_stat = 'Pending'";
+        }
+
         $result = mysqli_query($connections, $query);
+
         // Check if query was successful
         if ($result) {
             ?>

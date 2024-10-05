@@ -163,7 +163,7 @@ if (!empty($fieldsByTable)) {
     <div id="tbl_appointment_fields" class="fields-container" style="<?php echo in_array('tbl_appointment', $_GET['tables'] ?? []) ? 'display: block;' : ''; ?>">
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.sched_id" <?php echo in_array('tbl_appointment.sched_id', $selectedFields) ? 'checked' : ''; ?>> sched_id</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.fk_driver_id" <?php echo in_array('tbl_appointment.fk_driver_id', $selectedFields) ? 'checked' : ''; ?>> fk_driver_id</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_appointment.DATE" <?php echo in_array('tbl_appointment.DATE', $selectedFields) ? 'checked' : ''; ?>> DATE</label><br>
+        <label><input type="checkbox" name="fields[]" value="tbl_appointment.DATE" <?php echo in_array('tbl_appointment.appointment_date', $selectedFields) ? 'checked' : ''; ?>> appointment_date</label><br>
         <!-- Add more fields as needed -->
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.booking_date" <?php echo in_array('tbl_appointment.booking_date', $selectedFields) ? 'checked' : ''; ?>> booking_date</label><br>
     </div>

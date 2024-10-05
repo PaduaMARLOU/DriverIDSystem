@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
         $last_inserted_id = $connections->insert_id;
 
         // Insert into tbl_appointment
-        $sql_appointment = "INSERT INTO tbl_appointment(fk_driver_id, DATE, booking_date) VALUES ('$last_inserted_id', '$date', '$current_date_str')";
+        $sql_appointment = "INSERT INTO tbl_appointment(fk_driver_id, appointment_date, booking_date) VALUES ('$last_inserted_id', '$date', '$current_date_str')";
 
         if ($connections->query($sql_appointment)) {
             $sched_id = $connections->insert_id;

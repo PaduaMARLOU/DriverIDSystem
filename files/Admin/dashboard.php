@@ -49,6 +49,24 @@
     while ($row = mysqli_fetch_assoc($violationResult)) {
         $totalViolations[$row['violation_category']] = $row['total_violations'];
     }
+
+    // Get the current date
+    $currentDate = date('Y-m-d');
+
+    // Query to count expected number of drivers to verify today
+    $queryExpected = "SELECT COUNT(*) AS expected_count FROM tbl_appointment WHERE appointment_date = '$currentDate'";
+    $resultExpected = mysqli_query($connections, $queryExpected);
+    $rowExpected = mysqli_fetch_assoc($resultExpected);
+    $expectedDrivers = $rowExpected['expected_count'];
+
+    // Query to count drivers to verify remaining (pending verification status)
+    $queryRemaining = "SELECT COUNT(*) AS remaining_count 
+                       FROM tbl_driver d 
+                       JOIN tbl_appointment a ON d.fk_sched_id = a.sched_id 
+                       WHERE a.appointment_date = '$currentDate' AND d.verification_stat = 'pending'";
+    $resultRemaining = mysqli_query($connections, $queryRemaining);
+    $rowRemaining = mysqli_fetch_assoc($resultRemaining);
+    $remainingDrivers = $rowRemaining['remaining_count'];
 ?>
 				<style>
 					.time {
@@ -77,7 +95,16 @@
 									title="Time Navigation">
 								</lord-icon> -->
 							</h1>
-							<h3>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h3>
+							<h2>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h2>
+
+							<h3 style="color: gray;">
+								<!-- Expected Number of Drivers to Verify Today: <span style="color: blue;"><?php echo $expectedDrivers; ?></span><br> -->
+								Drivers to Verify Today Remaining: <a href="verify.php?filter=today" style="color: blue; text-decoration: underline;"><?php echo $remainingDrivers; ?></a>
+							</h3>
+
+
+
+
 						</div>
 					</div>
 				</div>
@@ -92,6 +119,7 @@
 					setInterval(updateTime, 1000);
 					updateTime(); // Initial call to display the time immediately
 				</script>
+
 
 
 				<div class="row">
@@ -160,7 +188,6 @@
 								<div class="panel-title">Latest Registered Drivers</div>
 								<div class="panel-options">
 									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
-									<!-- <a href="#sample-modal" data-toggle="modal" data-target="#sample-modal-dialog-1" class="bg"><i class="entypo-cog"></i></a> -->
 									<a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
 									<a href="#" data-rel="reload"><i class="entypo-arrows-ccw"></i></a>
 									<a href="#" data-rel="close"><i class="entypo-cancel"></i></a>
@@ -169,7 +196,6 @@
 							<table class="table table-bordered table-responsive">
 								<thead>
 									<tr>
-										<th>ID Number</th>
 										<th>ID Number</th>
 										<th>Name</th>
 										<th>Vehicle Type</th>

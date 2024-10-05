@@ -19,7 +19,7 @@ function build_calendar($month, $year) {
     }
 
     // SQL query to count bookings for each day
-    $stmt = $connections->prepare("SELECT DATE, COUNT(*) AS bookings_count FROM tbl_appointment WHERE MONTH(DATE) = ? AND YEAR(DATE) = ? GROUP BY DATE");
+    $stmt = $connections->prepare("SELECT appointment_date, COUNT(*) AS bookings_count FROM tbl_appointment WHERE MONTH(appointment_date) = ? AND YEAR(appointment_date) = ? GROUP BY appointment_date");
     $stmt->bind_param('ss', $month, $year);
     $bookings = array();
     if ($stmt->execute()) {
@@ -27,7 +27,7 @@ function build_calendar($month, $year) {
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 // Store date and bookings count
-                $bookings[$row['DATE']] = $row['bookings_count'];
+                $bookings[$row['appointment_date']] = $row['bookings_count'];
             }
         }
         $stmt->close();
