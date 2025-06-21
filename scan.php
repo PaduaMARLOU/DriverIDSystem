@@ -7,39 +7,10 @@ include('connections.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Scanner</title>
+    <link rel="stylesheet" type="text/css" href="driverportalcss/scan.css">
+    <link rel="icon" href="img/Brgy. Estefania Logo (Old).png" type="image/png">
+    <title>Brgy Estefania QR Code Scanner</title>
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-    <style>
-        #qr-reader {
-            width: 500px;
-            margin: auto;
-            padding: 20px;
-        }
-        #result, #error {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        #result {
-            color: green;
-        }
-        #error {
-            color: red;
-        }
-        .input-section {
-            margin-top: 30px;
-            text-align: center;
-        }
-        .input-section input[type="text"] {
-            padding: 10px;
-            font-size: 18px;
-            width: 300px;
-        }
-        .input-section input[type="submit"] {
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
     <h2>Driver Verification via QR Code or Code Input</h2>
@@ -57,6 +28,11 @@ include('connections.php');
     </div>
 
     <a href="index.php" class="back-btn">Back</a>
+    
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    
+    <br><br>
+    <center><dotlottie-player src="https://lottie.host/1a904589-b08e-4834-9962-082fcc80f0d7/iBg0tP91U6.json" background="transparent" speed="1" style="width: 300px; height: 250px;" loop autoplay></dotlottie-player></center>
 
     <script>
         let scanLock = false; // To prevent multiple submissions
@@ -106,7 +82,6 @@ include('connections.php');
                     console.error('Error logging to Google Form:', error);
                 });
         }
-
 
         function onScanFailure(error) {
             document.getElementById("error").innerText = "Please Scan a Valid Driver QR Code.";

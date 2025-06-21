@@ -41,11 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addAssociation'])) {
     $category = $_POST['association_category'];
     $name = $_POST['association_name'];
     $area = $_POST['association_area'];
-    $president = $_POST['association_president'];
     $color = $_POST['association_color'];
     $colorName = $_POST['association_color_name'];
 
-    $insertQuery = "INSERT INTO tbl_association (association_category, association_name, association_area, association_president, association_color, association_color_name) VALUES ('$category', '$name', '$area', '$president', '$color', '$colorName')";
+    $insertQuery = "INSERT INTO tbl_association (association_category, association_name, association_area, association_color, association_color_name) VALUES ('$category', '$name', '$area', '$color', '$colorName')";
     mysqli_query($connections, $insertQuery);
     header('Location: association_settings.php');
 }
@@ -56,11 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editAssociation'])) {
     $category = $_POST['association_category'];
     $name = $_POST['association_name'];
     $area = $_POST['association_area'];
-    $president = $_POST['association_president'];
     $color = $_POST['association_color'];
     $colorName = $_POST['association_color_name'];
 
-    $updateQuery = "UPDATE tbl_association SET association_category='$category', association_name='$name', association_area='$area', association_president='$president', association_color='$color', association_color_name='$colorName' WHERE association_id='$id'";
+    $updateQuery = "UPDATE tbl_association SET association_category='$category', association_name='$name', association_area='$area', association_color='$color', association_color_name='$colorName' WHERE association_id='$id'";
     mysqli_query($connections, $updateQuery);
     header('Location: association_settings.php');
 }
@@ -80,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../../img/Brgy Estefania Logo.png" type="image/png">
+    <link rel="icon" href="../../../img/Brgy. Estefania Logo (Old).png" type="image/png">
     <title>Association Settings</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
@@ -101,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
             padding: 0;
             border: none;
         }
-
         dotlottie-player {
             position: absolute;
             top: -.1rem;
@@ -133,25 +130,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const colorInput = document.querySelectorAll('.color-picker');
+            
             colorInput.forEach(input => {
                 input.addEventListener('change', function() {
                     const colorValue = this.value;
-                    const colorNameInput = this.closest('.form-group').nextElementSibling.querySelector('input[name="association_color_name"]');
+                    const colorCell = this.closest('tr').querySelector('.color-cell');
 
+                    // Fetch color name and adjust text color based on lightness
                     fetch(`https://www.thecolorapi.com/id?hex=${colorValue.substring(1)}`)
                         .then(response => response.json())
                         .then(data => {
-                            colorNameInput.value = data.name.value;
+                            colorCell.innerText = data.name.value;
+                            colorCell.style.backgroundColor = colorValue;
+                            colorCell.style.color = isColorDark(colorValue) ? 'white' : 'black';
                         })
                         .catch(error => console.error('Error:', error));
                 });
             });
         });
+
+        // Function to check if a color is dark or light
+        function isColorDark(hexColor) {
+            hexColor = hexColor.replace("#", "");
+            const r = parseInt(hexColor.substring(0, 2), 16);
+            const g = parseInt(hexColor.substring(2, 4), 16);
+            const b = parseInt(hexColor.substring(4, 6), 16);
+            // Calculate brightness
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            return brightness < 128;
+        }
     </script>
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">Association Settings</h2><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+    <h2 class="mb-4">Association Settings</h2>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
     <dotlottie-player src="https://lottie.host/a9bf801c-30b0-41a8-9efb-085c36577b9b/SQIdQVvlCa.json" background="transparent" speed="1" style="width: 180px; height: 180px;" loop autoplay></dotlottie-player>
     <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAssociationModal">Add New Association</button>
     <table class="table table-bordered">
@@ -161,9 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
             <th><center>Category</center></th>
             <th><center>Name</center></th>
             <th><center>Area</center></th>
-            <th><center>President</center></th>
             <th><center>Color</center></th>
-            <th><center>Color Name</center></th>
             <th><center>Actions</center></th>
         </tr>
         </thead>
@@ -174,9 +185,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                 <td><?php echo $row['association_category']; ?></td>
                 <td><?php echo $row['association_name']; ?></td>
                 <td><?php echo $row['association_area']; ?></td>
-                <td><?php echo $row['association_president']; ?></td>
-                <td style="background-color: <?php echo $row['association_color']; ?>"><?php echo $row['association_color']; ?></td>
-                <td><?php echo $row['association_color_name']; ?></td>
+                <td class="color-cell" style="background-color: <?php echo $row['association_color']; ?>; color: <?php echo (hexdec(substr($row['association_color'], 1, 2)) * 0.299 + hexdec(substr($row['association_color'], 3, 2)) * 0.587 + hexdec(substr($row['association_color'], 5, 2)) * 0.114) > 128 ? 'black' : 'white'; ?>">
+                    <?php echo $row['association_color_name']; ?>
+                </td>
                 <td>
                     <center><button class="btn btn-warning" data-toggle="modal" data-target="#editAssociationModal<?php echo $row['association_id']; ?>">Edit</button>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#deleteAssociationModal<?php echo $row['association_id']; ?>">Delete</button></center>
@@ -210,10 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                                 <div class="form-group">
                                     <label>Area</label>
                                     <input type="text" name="association_area" class="form-control" value="<?php echo $row['association_area']; ?>" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>President</label>
-                                    <input type="text" name="association_president" class="form-control" value="<?php echo $row['association_president']; ?>" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Color</label>
@@ -260,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
         <?php endwhile; ?>
         </tbody>
     </table>
-    <a href="../control_panel.php" class="back">Back</a>
+    <a href="../control_panel.php" class="back">Back</a><br><br>
 </div>
 
 <!-- Add Association Modal -->
@@ -290,10 +297,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteAssociation']))
                     <div class="form-group">
                         <label>Area</label>
                         <input type="text" name="association_area" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>President</label>
-                        <input type="text" name="association_president" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Color</label>

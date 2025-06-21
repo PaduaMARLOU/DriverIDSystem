@@ -82,7 +82,7 @@ mysqli_close($connections);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
-    <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" href="../../img/profile.png" type="image/png">
     <title>Barangay Estefania Admin - Driver ID System</title>
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
     <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
@@ -170,18 +170,41 @@ mysqli_close($connections);
             <br />
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    var $table4 = jQuery("#table-4");
+                    let $table4 = jQuery("#table-4");
+                    let accountType = <?php echo json_encode($account_type); ?>;
+
                     $table4.DataTable({
                         dom: 'Bfrtip',
-                        buttons: [
-                            'copyHtml5',
-                            'excelHtml5',
-                            'csvHtml5',
-                            'pdfHtml5'
-                        ]
+                        buttons: accountType == 1 ? [ // Only show buttons if account_type is 1
+                            {
+                                extend: 'copyHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            }
+                        ] : [] // No buttons if account_type is not 1
                     });
                 });
             </script>
+
             <table class="table table-bordered datatable" id="table-4">
                 <thead>
                     <tr>
@@ -205,7 +228,9 @@ mysqli_close($connections);
                             <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
                             <td><?php echo $row['driver_category']; ?></td>
                             <td><?php echo $row['association_name'] . ' - ' . $row['association_area']; ?></td>
-                            <td class="center"><?php echo $row['verification_stat']; ?></td>
+                            <td class="center">
+                                <span style="color: #609AE5;"><?php echo $row['verification_stat'] . "..."; ?></span>
+                            </td>
                             <td>
                                 <a href="#" class="btn btn-success btn-sm btn-icon icon-left" onclick="confirmVerify('<?php echo $row['formatted_id']; ?>')">
                                     <i class="entypo-check"></i>
@@ -265,7 +290,7 @@ mysqli_close($connections);
             function confirmVerify(driverId) {
                 if (confirm("Let's review the Driver's Profile first?")) {
                     // Open in a new tab
-                    window.open("driver_profile_unverified.php?id=" + driverId, '_blank');
+                    window.open("driver_profile_unverified.php?id=" + driverId, '_self');
                 }
             }
         </script>

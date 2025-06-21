@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include("../../connections.php");
@@ -10,6 +9,7 @@ if (isset($_SESSION["username"])) {
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
     $fetch = mysqli_fetch_assoc($authentication);
     $account_type = $fetch["account_type"];
+    $admin_id = $fetch["admin_id"]; // Assuming admin_id is the primary key of tbl_admin
 
     if ($account_type != 1) {
         header("Location: ../../Forbidden2.php");
@@ -180,7 +180,14 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
     
     // Check if final confirmation string is provided and matches
     if (isset($_POST['final_confirmation']) && $_POST['final_confirmation'] === 'YES') {
+        // Log the action
+        $driver_id_result = mysqli_query($connections, "SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id'");
+        $driver_id_row = mysqli_fetch_assoc($driver_id_result);
+        $driver_id = $driver_id_row['driver_id'];
         
+        // Disable foreign key checks temporarily to bypass the constraint
+        mysqli_query($connections, "SET FOREIGN_KEY_CHECKS = 0");
+
         // Prepare DELETE queries for related records
         $delete_violations_query = "DELETE FROM tbl_violation WHERE fk_driver_id = (SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id')";
         $delete_vehicles_query = "DELETE FROM tbl_vehicle WHERE fk_driver_id = (SELECT driver_id FROM tbl_driver WHERE formatted_id = '$formatted_id')";
@@ -191,16 +198,45 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
         $delete_vehicles_result = mysqli_query($connections, $delete_vehicles_query);
         $delete_driver_result = mysqli_query($connections, $delete_driver_query);
 
-        // Check if deletion was successful
-        if ($delete_driver_result) {
-            // Deletion successful, display success message as HTML with CSS
-            echo "<div class='center-container'>
-                    <div class='message-container success-message'>
-                        <p>Driver record and all related records deleted successfully. Redirecting...</p>
-                    </div>
-                  </div>";
-            // Redirect to driver.php after 2 seconds
-            redirectToDriver();
+        // Enable foreign key checks again
+        mysqli_query($connections, "SET FOREIGN_KEY_CHECKS = 1");
+
+        // After successful deletion
+if ($delete_driver_result) {
+
+    // Prepare log details
+    $action_details = "Deleted driver and related records for Driver ID: $formatted_id";
+    date_default_timezone_set('Asia/Manila');
+    $action_date = date('Y-m-d H:i:s'); // Current date and time in Asia/Manila timezone
+
+    // Disable foreign key checks to allow log insertion
+    mysqli_query($connections, "SET FOREIGN_KEY_CHECKS = 0");
+
+    // Insert log entry
+    $log_query = "INSERT INTO tbl_log (fk_admin_id, action_details, action_date, fk_driver_id) 
+                  VALUES ('$admin_id', '$action_details', '$action_date', '$driver_id')";
+    if (!mysqli_query($connections, $log_query)) {
+        // Debugging information in case of error
+        echo "<div class='center-container'>
+                <div class='message-container error-message'>
+                    <p>Log insertion failed: " . mysqli_error($connections) . "</p>
+                    <p>Log Query: $log_query</p>
+                </div>
+              </div>";
+    } else {
+        // Log inserted successfully
+        echo "<div class='center-container'>
+                <div class='message-container success-message'>
+                    <p>Driver record and all related records deleted successfully. Redirecting...</p>
+                </div>
+              </div>";
+    }
+
+    // Re-enable foreign key checks
+    mysqli_query($connections, "SET FOREIGN_KEY_CHECKS = 1");
+
+    // Redirect to driver.php after 2 seconds
+    redirectToDriver();
         } else {
             // Deletion failed, display error message
             echo "<script>
@@ -239,19 +275,8 @@ if (isset($_GET['step']) && $_GET['step'] == 'confirm_deletion' && isset($_GET['
                 </form>
             </div>
           </div>";
-} else {
-    // If formatted_id parameter is not set, display an error message and redirect back to driver.php
-    echo "<script>
-            alert('Error: Driver ID not provided.');
-            window.location.href = 'driver.php';
-        </script>";
 }
 
-// Close the database connection
-mysqli_close($connections);
 ?>
-
-\
-
 </body>
 </html>

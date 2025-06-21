@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Neon Admin Panel">
     <meta name="author" content="">
-    <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
 	<title>Barangay Estefania Admin - Driver ID System</title>
     
     <!-- CSS Links -->
@@ -44,6 +44,7 @@
         .customregister-btn-admin {
             background-color: #ff0000;
             color: white;
+            transition: .2s;
         }
 
         .customregister-btn-admin:hover {
@@ -78,7 +79,7 @@
             <div class="customregister-body">
                 <div class="customregister-container">
                     <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
-                        <img src="../../img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="customregister-logo">
+                        <img src="../../img/Brgy. Estefania Logo (Old).png" alt="Barangay Estefania Logo" class="customregister-logo">
                     </a>
                     <h1 class="customregister-h1">Barangay Estefania Admin Access Registration Portal</h1>
                     <div>
@@ -96,13 +97,13 @@
     </div>
 
     <script>
-        // Open admin registration page in a new tab when clicking on Driver button
+        // Open admin registration page in a this tab when clicking on Driver button
         document.getElementById('adminButton').onclick = function() {
             window.open("admin_register.php", "_self");
         };
         // Open driver registration page in a new tab when clicking on Driver button
         document.getElementById('driverButton').onclick = function() {
-            window.open("../../registrationpage.php", "_self");
+            window.open("../../registrationpage.php", "_blank");
         };
     </script>
 </body>

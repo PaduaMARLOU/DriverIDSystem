@@ -72,39 +72,36 @@
 					.time {
 						position: absolute;
 						top: 12px;
-						left: 555px;
-						left: 555px;
+						left: 505px;
 						transition: .3s;
 						cursor: cell;
+						margin-left: 20px;
 					}
+					
 				</style>
 				<script src="https://cdn.lordicon.com/lordicon.js"></script>
 
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="well">
-							<h1>
+							<h1 title="Date and Time">
 								<?php date_default_timezone_set('Asia/Manila'); echo date("F j, Y"); ?>
 								<span id="time"></span>
-								<!-- <lord-icon
+								<lord-icon
 									src="https://cdn.lordicon.com/lzgqzxrq.json"
 									trigger="hover"
 									colors="primary:#3a3347,secondary:#ebe6ef,tertiary:#4bb3fd,quaternary:#000000"
 									style="width:70px;height:70px"
 									class="time"
-									title="Time Navigation">
-								</lord-icon> -->
+									title="Clock">
+								</lord-icon> 
 							</h1>
-							<h2>Welcome to the Driver's ID Management System <strong>Admin <?php echo $first_name; ?></strong></h2>
+							<h2 title="Welcome to the Driver's ID System">Welcome to the Driver's ID Management System <strong title="Admin">Admin <?php echo $first_name; ?></strong></h2>
 
-							<h3 style="color: gray;">
+							<h3 style="color: gray;" title="Drivers to verify">
 								<!-- Expected Number of Drivers to Verify Today: <span style="color: blue;"><?php echo $expectedDrivers; ?></span><br> -->
-								Drivers to Verify Today Remaining: <a href="verify.php?filter=today" style="color: blue; text-decoration: underline;"><?php echo $remainingDrivers; ?></a>
+								Drivers to Verify Today Remaining: <a href="verify.php?filter=today" style="color: #4D87D0; text-decoration: none;"><?php echo $remainingDrivers; ?></a>
 							</h3>
-
-
-
-
 						</div>
 					</div>
 				</div>
@@ -120,14 +117,12 @@
 					updateTime(); // Initial call to display the time immediately
 				</script>
 
-
-
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="row">
 
 							<!-- Total Registered Drivers -->
-							<div class="col-sm-3">
+							<div class="col-sm-3" title="Total Registered Drivers">
 								<a href="driver_data.php" style="text-decoration: none;">
 									<div class="tile-stats tile-aqua">
 										<div class="icon"><i class="entypo-users"></i></div>
@@ -139,7 +134,7 @@
 							</div>
 
 							<!-- Registered E-Bike Drivers -->
-							<div class="col-sm-3">
+							<div class="col-sm-3" title="Total Registered E-Bike Drivers">
 								<a href="driver_data.php?driver_category=E-Bike" style="text-decoration: none;">
 									<div class="tile-stats tile-red">
 										<div class="icon"><i class="entypo-users"></i></div>
@@ -151,7 +146,7 @@
 							</div>
 
 							<!-- Registered Tricycle Drivers -->
-							<div class="col-sm-3">
+							<div class="col-sm-3" title="Total Registered Tricycle Drivers">
 								<a href="driver_data.php?driver_category=Tricycle" style="text-decoration: none;">
 									<div class="tile-stats tile-green">
 										<div class="icon"><i class="entypo-users"></i></div>
@@ -163,7 +158,7 @@
 							</div>
 
 							<!-- Registered Trisikad Drivers -->
-							<div class="col-sm-3">
+							<div class="col-sm-3" title="Total Registered Trisikad Drivers">
 								<a href="driver_data.php?driver_category=Trisikad" style="text-decoration: none;">
 									<div class="tile-stats tile-orange">
 										<div class="icon"><i class="entypo-users"></i></div>
@@ -178,12 +173,9 @@
 					</div>
 				</div>
 
-
-
-
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="panel panel-default">
+						<div class="panel panel-default" title="Current Registered Drivers">
 							<div class="panel-heading">
 								<div class="panel-title">Latest Registered Drivers</div>
 								<div class="panel-options">
@@ -252,7 +244,7 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row" title="Violations Committed">
 					<div class="col-sm-13">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -352,7 +344,7 @@
 
 
 
-				<div class="row">
+				<div class="row" title="Associations Statistics">
 					<div class="col-sm-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -372,54 +364,116 @@
 							<div class="panel-body no-padding">
 								<div id="association-stats">
 									<style>
+										.association {
+											display: flex;
+											flex-direction: column;
+											justify-content: space-between; /* Ensures content is evenly distributed */
+											min-height: 100px; /* Minimum height to ensure uniformity */
+											background-color: inherit;
+											border-radius: 12px;
+											padding: 10px;
+											margin: 5px;
+										}
+
 										.association h5,
 										.association p {
 											color: white;
 											text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+											margin: 0;
+										}
+
+										.association .association-details {
+											flex-grow: 1; /* Allows content to grow and fill available space */
 										}
 									</style>
 
 									<?php
-									// Assuming you have a database connection established
+									// Include database connection
 									include "../../connections.php";
 
-									// Retrieve data from tbl_driver with association details
-									$query = "SELECT d.fk_association_id, a.association_category, a.association_name, a.association_area, 
-											a.association_color, COUNT(*) as num_drivers
-											FROM tbl_driver d
-											INNER JOIN tbl_association a ON d.fk_association_id = a.association_id
-											WHERE d.verification_stat = 'Registered' AND d.renew_stat = 'Active'
-											GROUP BY d.fk_association_id";
+									// Updated query with ORDER BY association_name
+									$query = "SELECT a.association_id, a.association_category, a.association_name, a.association_area, 
+													a.association_color, 
+													COUNT(d.driver_id) AS num_drivers,
+													/* Subquery for total violations among registered and active drivers */
+													(SELECT COUNT(v.violation_id) 
+													FROM tbl_violation v 
+													INNER JOIN tbl_driver d ON v.fk_driver_id = d.driver_id 
+													WHERE d.fk_association_id = a.association_id 
+													AND d.verification_stat = 'Registered' 
+													AND d.renew_stat = 'Active') AS total_violations,
+													/* Subquery for current (unrenewed) violations among registered and active drivers */
+													(SELECT COUNT(v.violation_id) 
+													FROM tbl_violation v 
+													INNER JOIN tbl_driver d ON v.fk_driver_id = d.driver_id 
+													WHERE d.fk_association_id = a.association_id 
+													AND d.verification_stat = 'Registered' 
+													AND d.renew_stat = 'Active'
+													AND (v.renewed_date IS NULL OR v.renewed_date = '')) AS current_violations
+											FROM tbl_association a
+											LEFT JOIN tbl_driver d ON a.association_id = d.fk_association_id
+											AND d.verification_stat = 'Registered'
+											AND d.renew_stat = 'Active'
+											GROUP BY a.association_id
+											ORDER BY a.association_name"; // Added ORDER BY clause
+
+
+									// Execute the query
 									$result = mysqli_query($connections, $query);
 
-									// Check if there are any associations
-									if(mysqli_num_rows($result) > 0) {
-										// Loop through the fetched data and generate HTML dynamically
+									// Check for SQL errors
+									if (!$result) {
+										echo "Error: " . mysqli_error($connections);
+									} elseif (mysqli_num_rows($result) > 0) {
+										// Display associations if any results were returned
+										$counter = 0; // Counter to track rows
+										echo '<div class="row">'; // Start a new row for associations
 										while ($row = mysqli_fetch_assoc($result)) {
 											$association_color = htmlspecialchars($row['association_color']);
-											$association_name = urlencode($row['association_name']); // URL encode the association name for the query string
 											?>
-											<!-- Wrap each association block inside an anchor tag -->
-											<a href="driver_data.php?association_name=<?php echo urlencode($row['association_name']); ?>" style="text-decoration: none;">
-												<div class="association" style="display: inline-block; background-color: <?php echo $association_color; ?>; border-radius: 12px; padding: 10px; margin: 5px;">
-													<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
-													<p style="margin-bottom: 5px;">Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
-													<p style="margin-bottom: 5px;">Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
-													<p style="margin-bottom: 5px;">Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
-												</div>
-											</a>
-										<?php
+											<div class="col-sm-4"> <!-- 3 items per row, each taking up 4 columns -->
+												<a href="driver_data.php?association_name=<?php echo urlencode($row['association_name']); ?>" style="text-decoration: none;">
+													<div class="association" style="background-color: <?php echo $association_color; ?>;">
+														<h5 style="margin-top: 0;"><?php echo htmlspecialchars($row['association_name']); ?></h5>
+														<p>Association Category: <strong><?php echo htmlspecialchars($row['association_category']); ?></strong></p>
+														<p>Association Area: <strong><?php echo htmlspecialchars($row['association_area']); ?></strong></p>
+														<p>Number of Drivers: <strong><?php echo htmlspecialchars($row['num_drivers']); ?></strong></p>
+														<div class="association-details">
+															<!--<p>
+																<a href="violation.php?association_name=<?php /*echo urlencode($row['association_name']); ?>&view=total" style="color: white; text-decoration: underline;">
+																	Total Violations: <strong><?php echo htmlspecialchars($row['total_violations']); */?></strong>
+																</a>
+															</p>-->
+															<p>
+																<a href="violation.php?association_name=<?php echo urlencode($row['association_name']); ?>&view=current" style="color: white; text-decoration: underline;">
+																	Current Violations (not renewed): <strong><?php echo htmlspecialchars($row['current_violations']); ?></strong>
+																</a>
+															</p>
+														</div>
+													</div>
+												</a>
+											</div>
+											<?php
+											$counter++; 
+											if ($counter % 3 == 0) {
+												echo '</div><div class="row">'; // Create a new row every 3 items
+											}
 										}
+										echo '</div>'; // End the final row
 									} else {
-										// If no associations found
+										// No associations found
 										echo "<p>No associations found.</p>";
 									}
+
+									// Close database connection
+									mysqli_close($connections);
 									?>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 
 
 

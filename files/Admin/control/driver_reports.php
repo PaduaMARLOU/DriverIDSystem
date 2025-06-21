@@ -1,3 +1,7 @@
+<head>
+    <link rel="icon" href="../../../img/database.png" type="image/png">
+</head>
+
 <?php
 include '../../../connections.php'; // Database connection
 
@@ -63,7 +67,7 @@ if (!empty($fieldsByTable)) {
             echo "</table><br>";
         } else {
             echo "<h3>Results from $table</h3>";
-            echo "No results found.<br>";
+            echo "&nbsp;&nbsp;No results found.<br>";
         }
     }
 } else {
@@ -76,15 +80,13 @@ if (!empty($fieldsByTable)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Fields from Tables</title>
-    <style>
-        .fields-container {
-            display: none; /* Hide by default */
-            margin-left: 20px;
-        }
-    </style>
+    <title>Field Tables</title>
 </head>
 <body>
+
+<style>
+    <?php include("../../../driverportalcss/driver_reports.css") ?>
+</style>
 
 <h3>Select Tables and Fields</h3>
 
@@ -105,10 +107,6 @@ if (!empty($fieldsByTable)) {
         <label><input type="checkbox" name="fields[]" value="tbl_driver.address" <?php echo in_array('tbl_driver.address', $selectedFields) ? 'checked' : ''; ?>> address</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_driver.mobile_number" <?php echo in_array('tbl_driver.mobile_number', $selectedFields) ? 'checked' : ''; ?>> mobile_number</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_driver.civil_status" <?php echo in_array('tbl_driver.civil_status', $selectedFields) ? 'checked' : ''; ?>> civil_status</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_driver.religion" <?php echo in_array('tbl_driver.religion', $selectedFields) ? 'checked' : ''; ?>> religion</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_driver.citizenship" <?php echo in_array('tbl_driver.citizenship', $selectedFields) ? 'checked' : ''; ?>> citizenship</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_driver.height" <?php echo in_array('tbl_driver.height', $selectedFields) ? 'checked' : ''; ?>> height</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_driver.weight" <?php echo in_array('tbl_driver.weight', $selectedFields) ? 'checked' : ''; ?>> weight</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_driver.name_to_notify" <?php echo in_array('tbl_driver.name_to_notify', $selectedFields) ? 'checked' : ''; ?>> name_to_notify</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_driver.relationship" <?php echo in_array('tbl_driver.relationship', $selectedFields) ? 'checked' : ''; ?>> relationship</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_driver.num_to_notify" <?php echo in_array('tbl_driver.num_to_notify', $selectedFields) ? 'checked' : ''; ?>> num_to_notify</label><br>
@@ -130,9 +128,6 @@ if (!empty($fieldsByTable)) {
         <!-- Add more fields as needed -->
         <label><input type="checkbox" name="fields[]" value="tbl_vehicle.addr_of_owner" <?php echo in_array('tbl_vehicle.addr_of_owner', $selectedFields) ? 'checked' : ''; ?>> addr_of_owner</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_vehicle.owner_phone_num" <?php echo in_array('tbl_vehicle.owner_phone_num', $selectedFields) ? 'checked' : ''; ?>> owner_phone_num</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_vehicle.vehicle_color" <?php echo in_array('tbl_vehicle.vehicle_color', $selectedFields) ? 'checked' : ''; ?>> vehicle_color</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_vehicle.brand" <?php echo in_array('tbl_vehicle.brand', $selectedFields) ? 'checked' : ''; ?>> brand</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_vehicle.brand_plate_num" <?php echo in_array('tbl_vehicle.brand_plate_num', $selectedFields) ? 'checked' : ''; ?>> brand_plate_num</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_vehicle.vehicle_registered" <?php echo in_array('tbl_vehicle.vehicle_registered', $selectedFields) ? 'checked' : ''; ?>> vehicle_registered</label><br>
     </div>
 
@@ -163,7 +158,7 @@ if (!empty($fieldsByTable)) {
     <div id="tbl_appointment_fields" class="fields-container" style="<?php echo in_array('tbl_appointment', $_GET['tables'] ?? []) ? 'display: block;' : ''; ?>">
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.sched_id" <?php echo in_array('tbl_appointment.sched_id', $selectedFields) ? 'checked' : ''; ?>> sched_id</label><br>
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.fk_driver_id" <?php echo in_array('tbl_appointment.fk_driver_id', $selectedFields) ? 'checked' : ''; ?>> fk_driver_id</label><br>
-        <label><input type="checkbox" name="fields[]" value="tbl_appointment.DATE" <?php echo in_array('tbl_appointment.appointment_date', $selectedFields) ? 'checked' : ''; ?>> appointment_date</label><br>
+        <label><input type="checkbox" name="fields[]" value="tbl_appointment.appointment_date" <?php echo in_array('tbl_appointment.appointment_date', $selectedFields) ? 'checked' : ''; ?>> appointment_date</label><br>
         <!-- Add more fields as needed -->
         <label><input type="checkbox" name="fields[]" value="tbl_appointment.booking_date" <?php echo in_array('tbl_appointment.booking_date', $selectedFields) ? 'checked' : ''; ?>> booking_date</label><br>
     </div>
@@ -174,23 +169,25 @@ if (!empty($fieldsByTable)) {
     <label for="search">Search:</label>
     <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
 
-    <button type="submit">Show Results</button>
+    <button type="submit" class="search">Show Results</button>
 </form>
 
-<form method="GET" action="excelexport.php" onsubmit="captureSelectedFields()">
-    <input type="hidden" name="num_rows" value="<?php echo htmlspecialchars($numRows); ?>">
-    <input type="hidden" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
-    <button type="submit">Export to Excel</button>
-</form>
+<div class="exportBtn">
+    <a href="../control_panel.php" class="back">Back</a>
+    <form method="GET" action="excelexport.php" onsubmit="captureSelectedFields()">
+        <input type="hidden" name="num_rows" value="<?php echo htmlspecialchars($numRows); ?>">
+        <input type="hidden" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
+        <button type="submit" id="excelBtn">Export to Excel</button>
+    </form>
 
-<form method="GET" action="pdfexport.php" onsubmit="event.preventDefault(); printPDF();">
-    <input type="hidden" name="num_rows" value="<?php echo htmlspecialchars($numRows); ?>">
-    <input type="hidden" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
-    <input type="hidden" name="fields" value="<?php echo htmlspecialchars(json_encode($selectedFields)); ?>">
-    <input type="hidden" name="tables" value="<?php echo htmlspecialchars(json_encode($selectedTables)); ?>">
-    <button type="submit">Export to PDF</button>
-</form>
-
+    <form method="GET" action="pdfexport.php" onsubmit="event.preventDefault(); printPDF();">
+        <input type="hidden" name="num_rows" value="<?php echo htmlspecialchars($numRows); ?>">
+        <input type="hidden" name="search" value="<?php echo htmlspecialchars($searchTerm); ?>">
+        <input type="hidden" name="fields" value="<?php echo htmlspecialchars(json_encode($selectedFields)); ?>">
+        <input type="hidden" name="tables" value="<?php echo htmlspecialchars(json_encode($selectedTables)); ?>">
+        <button type="submit" id="pdfBtn">Export to PDF</button>
+    </form>
+</div>
 
 <script>
 function toggleFields(checkbox) {
@@ -270,8 +267,8 @@ function captureSelectedFields() {
 
 function printPDF() {
     // Open the PDF in a new window/tab
-    var pdfUrl = 'pdfexport.php?' + new URLSearchParams(new FormData(document.querySelector('form'))).toString();
-    var win = window.open(pdfUrl, '_blank');
+    let pdfUrl = 'pdfexport.php?' + new URLSearchParams(new FormData(document.querySelector('form'))).toString();
+    let win = window.open(pdfUrl, '_blank');
 
     // Wait for the PDF to load, then trigger print
     win.onload = function() {
@@ -280,7 +277,9 @@ function printPDF() {
 }
 </script>
 
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
 
+<dotlottie-player src="https://lottie.host/513fa1a2-10c8-4e11-8af7-ce732c73b035/qOrY6ZhPuz.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
 
 </body>
 </html>

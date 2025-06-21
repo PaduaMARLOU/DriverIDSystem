@@ -21,10 +21,8 @@ $association = mysqli_fetch_assoc($association_result);
 
 // Paths to the images
 $pic_2x2_path = "../../" . $driver['pic_2x2'];
-$doc_proof_path = "../../" . $driver['doc_proof'];
 $vehicle_img_front_path = "../../" . $vehicle['vehicle_img_front'];
-$vehicle_img_back_path = "../../" . $vehicle['vehicle_img_back'];
-$logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to your logo image
+$logo_path = "../../img/Brgy. Estefania Logo (Old).png"; // Replace with the path to your logo image
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +31,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
 <head>
     <meta charset="UTF-8">
     <title>Driver Profile</title>
-    <link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
+    <link rel="icon" href="../../img/driver.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
@@ -164,10 +162,28 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
             /* Ensure border matches the button color on hover */
         }
 
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        ion-icon {
+            font-size: 40px;
+        }
+
+        a {
+            transition: .2s;
+        }
+
+        a:active {
+            transform: scale(.9);
+        }
+
         @media print {
 
             .btn-print,
-            .btn-generate-id {
+            .btn-generate-id, .btn-back {
                 display: none;
             }
 
@@ -245,8 +261,8 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 </div>
                 <div>
                     <p><span class="info-label">Mobile Number:</span> <?php echo $driver['mobile_number']; ?></p>
-                    <p><span class="info-label">Sex:</span> <?php echo $driver['sex']; ?></p>
-                    <p><span class="info-label">Age:</span> <?php echo $driver['age']; ?></p>
+                    <p><span class="info-label">Gender:</span> <?php echo $driver['sex']; ?></p>
+                    <!-- <p><span class="info-label">Age:</span> <?php echo $driver['age']; ?></p> -->
                 </div>
             </div>
             <div class="row-one-column">
@@ -280,24 +296,13 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                     <p><span class="info-label">Vehicle Category:</span> <?php echo $vehicle['vehicle_category']; ?></p>
                     <p><span class="info-label">Vehicle Front Image:</span><br><img src="<?php echo $vehicle_img_front_path; ?>" alt="Vehicle Front Image" class="vehicle-img" data-toggle="modal" data-target="#imageModal" data-image="<?php echo $vehicle_img_front_path; ?>"></p>
                 </div>
-                <div>
-                    <p><span class="info-label">Vehicle Registered:</span> <?php echo $vehicle['vehicle_registered']; ?></p>
-                    <p><span class="info-label">Vehicle Back Image:</span><br><img src="<?php echo $vehicle_img_back_path; ?>" alt="Vehicle Back Image" class="vehicle-img" data-toggle="modal" data-target="#imageModal" data-image="<?php echo $vehicle_img_back_path; ?>"></p>
-                </div>
             </div>
             <div class="row-three-columns2">
                 <div>
-                    <p><span class="info-label">Brand:</span> <?php echo $vehicle['brand']; ?></p>
                     <p><span class="info-label">Name of Owner:</span> <?php echo $vehicle['name_of_owner']; ?></p>
                     <p><span class="info-label">Address of Owner:</span> <?php echo $vehicle['addr_of_owner']; ?></p>
-                </div>
-                <div>
-                    <p><span class="info-label">Plate Number:</span> <?php echo $vehicle['plate_num']; ?></p>
-                    <p><span class="info-label">Vehicle Color:</span> <?php echo $vehicle['vehicle_color']; ?></p>
                     <p><span class="info-label">Owner Phone Number:</span> <?php echo $vehicle['owner_phone_num']; ?></p>
                 </div>
-            </div>
-            <div>
             </div>
 
             <!-- Association Information -->
@@ -306,15 +311,10 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 <div class="row-two-columns">
                     <div>
                         <p><span class="info-label">Association Category:</span> <?php echo $association['association_category']; ?></p>
-                        <p><span class="info-label">Association President:</span> <?php echo $association['association_president']; ?></p>
+                        <p><span class="info-label">Association Color:</span> <?php echo $association['association_color_name']; ?></p>
                     </div>
                     <div>
                         <p><span class="info-label">Association Name:</span> <?php echo $association['association_name']; ?></p>
-                        <p><span class="info-label">Association Color:</span> <?php echo $association['association_color_name']; ?></p>
-                    </div>
-                </div>
-                <div class="row-one=column">
-                    <div>
                         <p><span class="info-label">Association Area:</span> <?php echo $association['association_area']; ?></p>
                     </div>
                 </div>
@@ -322,6 +322,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
         </div>
 
         <div class="button-container text-center">
+            <a href="../Admin/driver.php" class="back"><ion-icon name="arrow-back-outline"></ion-icon></a>
             <button class="btn btn-primary btn-print" onclick="window.print()">Print Profile</button>
             <a href="ID_generation.php?id=<?php echo $driver['formatted_id']; ?>" class="btn btn-success btn-generate-id btn-sm btn-icon icon-left">
                 <i class="entypo-vcard"></i>
@@ -354,5 +355,7 @@ $logo_path = "../../img/Brgy Estefania Logo.png"; // Replace with the path to yo
                 modal.find('#modalImage').attr('src', imageSrc)
             })
         </script>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

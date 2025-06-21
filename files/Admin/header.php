@@ -37,12 +37,12 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- Profile Info and Notifications -->
     <div class="col-md-6 col-sm-8 clearfix">
         <ul class="user-info pull-left pull-none-xsm" style="margin-top: 10px;">
-            <li style="font-weight: bold; font-size: 30px; color: #333;">Barangay Estefania Driver ID System</li>
+            <li style="font-weight: bold; font-size: 30px; color: #333;" title="Brgy. Estefania Driver's ID System">Barangay Estefania Driver's ID System</li>
         </ul>
     </div>
 
     <!-- Raw Links -->
-    <div class="col-md-6 col-sm-4 clearfix hidden-xs">
+    <div class="col-md-6 col-sm-4 clearfix hidden-xs" title="Log-Out">
         <ul class="list-inline links-list pull-right">
             <li class="sep"></li>
             <li class="sep"></li>

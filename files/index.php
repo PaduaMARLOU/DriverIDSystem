@@ -11,14 +11,16 @@ if (isset($_SESSION["username"])) {
 
     if ($account_type == 1 || $account_type == 2) {
         echo "<script>window.location.href='Admin';</script>";
+    } elseif ($account_type == 4) {
+        echo "<script>window.location.href='Responder';</script>";
     } else {
-        // Handle non-admin user if needed
+        // Handle other account types if needed
     }
 }
 
+
 date_default_timezone_set("Asia/Manila");
-$date_now = date("m/d/Y");
-$time_now = date("h:i a");
+$date_now = date("Y-m-d H:i:s");
 $notify = $attempt = $relog_time = "";
 
 $end_time = date("Y-m-d H:i:s", strtotime("+15 minutes"));
@@ -53,41 +55,77 @@ if (isset($_POST["btnLogin"])) {
             $new_time = strtotime("now");
 
             $account_type = $fetch["account_type"];
+            $admin_id = $fetch["admin_id"]; // Get admin ID for logging
 
-            if ($account_type == 1 || $account_type == 2) {
-                if ($db_relog_time <= $new_time) {
-                    if ($db_password == $password) {
-                        $_SESSION["username"] = $username;
-                        $login_time = date("Y-m-d H:i:s");
-                        mysqli_query($connections, "UPDATE tbl_admin SET attempt=0, relog_time=NULL, login_time='$login_time' WHERE username='$username'");
-                        echo "<script>window.location.href='Admin';</script>";
+            if ($db_relog_time <= $new_time) {
+                if ($db_password == $password) {
+                    // Successful login
+                    $_SESSION["username"] = $username;
+                    $login_time = date("Y-m-d H:i:s");
+                    mysqli_query($connections, "UPDATE tbl_admin SET attempt=0, relog_time=NULL, login_time='$login_time' WHERE username='$username'");
+
+                    // Log successful login
+                    $action_details = "Admin with ID $admin_id logged in successfully.";
+                    if (!mysqli_query($connections, "INSERT INTO tbl_log (fk_admin_id, action_details, action_date) VALUES ('$admin_id', '$action_details', '$date_now')")) {
+                        error_log("Error logging successful login: " . mysqli_error($connections));
+                    }
+
+                    // Assuming $account_type is already fetched from the database
+                    if ($account_type == 4) {
+                        echo "<script>window.location.href = 'Responder';</script>";
                     } else {
-                        $attempt = (int)$db_attempt + 1;
-
-                        if ($attempt >= 3) {
-                            $attempt = 3;
-                            mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt', relog_time='$end_time' WHERE username='$username'");
-                            $notify = "You have reached the maximum of three (3) login attempts. Please try again after 15 minutes: <b>$end_time_display</b>";
-                        } else {
-                            mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt' WHERE username='$username'");
-                            $passwordErr = "Password is incorrect";
-                            $notify = "Login Attempt: <b>$attempt</b>";
-                        }
+                        echo "<script>window.location.href = 'Admin';</script>";
                     }
                 } else {
-                    $notify = "You must wait until: <b>$my_relog_time</b> before you can login again.";
+                    // Incorrect password attempt
+                    $attempt = (int)$db_attempt + 1;
+
+                    if ($attempt >= 3) {
+                        $attempt = 3;
+                        mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt', relog_time='$end_time' WHERE username='$username'");
+                        $notify = "You have reached the maximum of three (3) login attempts. Please try again after 15 minutes: <b>$end_time_display</b>";
+
+                        // Log maximum attempt reached
+                        $action_details = "Admin with ID $admin_id reached the maximum login attempts.";
+                        if (!mysqli_query($connections, "INSERT INTO tbl_log (fk_admin_id, action_details, action_date) VALUES ('$admin_id', '$action_details', '$date_now')")) {
+                            error_log("Error logging maximum attempts: " . mysqli_error($connections));
+                        }
+                    } else {
+                        mysqli_query($connections, "UPDATE tbl_admin SET attempt='$attempt' WHERE username='$username'");
+                        $passwordErr = "Password is incorrect";
+                        $notify = "Login Attempt: <b>$attempt</b>";
+
+                        // Log incorrect password attempt
+                        $action_details = "Failed login attempt for Admin ID $admin_id. Attempt $attempt.";
+                        if (!mysqli_query($connections, "INSERT INTO tbl_log (fk_admin_id, action_details, action_date) VALUES ('$admin_id', '$action_details', '$date_now')")) {
+                            error_log("Error logging incorrect password attempt: " . mysqli_error($connections));
+                        }
+                    }
                 }
-            } elseif ($account_type == 3) {
-                $notify = "Please wait for the confirmation of the Super Admin for your Admin privileges.";
             } else {
-                $passwordErr = "Your account type is not recognized.";
+                // Attempted login during lockout
+                $notify = "You must wait until: <b>$my_relog_time</b> before you can login again.";
+
+                // Log login attempt during lockout
+                $action_details = "Admin ID $admin_id attempted login during lockout period.";
+                if (!mysqli_query($connections, "INSERT INTO tbl_log (fk_admin_id, action_details, action_date) VALUES ('$admin_id', '$action_details', '$date_now')")) {
+                    error_log("Error logging lockout attempt: " . mysqli_error($connections));
+                }
             }
         } else {
+            // Username not registered
             $usernameErr = "Username is not registered!";
+
+            // Log unregistered username attempt
+            $action_details = "Login attempt with unregistered username '$username'.";
+            if (!mysqli_query($connections, "INSERT INTO tbl_log (action_details, action_date) VALUES ('$action_details', '$date_now')")) {
+                error_log("Error logging unregistered username attempt: " . mysqli_error($connections));
+            }
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,8 +134,8 @@ if (isset($_POST["btnLogin"])) {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="adminportalcss/adminlogin.css">
-	<title>Log-In</title>
-	<link rel="icon" type="image/jpg" href="../img/Brgy Estefania Logo.png">
+	<title>Admin Log-In</title>
+	<link rel="icon" type="image/png" href="../img/Brgy. Estefania Logo (Old).png">
 </head>
 
 <body>
@@ -121,6 +159,7 @@ if (isset($_POST["btnLogin"])) {
         .brgy {
             text-shadow: 1px 1px 8px black;
         }
+        
     </style>
     
 	<br>
@@ -128,9 +167,9 @@ if (isset($_POST["btnLogin"])) {
 	<center class="mains">
         <br><br><br>
 		<a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
-			<img src="../img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
+			<img src="../img/Brgy. Estefania Logo (Old).png" alt="Barangay Estefania Logo" class="logo">
 		</a>
-		<h1 class="brgy">Barangay Estefania Driver's ID System<br>Admin Login Portal</h1>
+		<br><br><h1 class="brgy">Admin Login Portal</h1>
 
 		<form method="POST" class="log-in-form">
 			<br>
@@ -143,7 +182,7 @@ if (isset($_POST["btnLogin"])) {
 
 			<br>
 
-			<ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" name="password" placeholder="Password" value=""> <br>
+			<ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" name="password" placeholder="Password" value="" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and include both letters and numbers" required> <br>
 			<span class="error"><?php echo $passwordErr; ?></span>
 
 			<br>
@@ -155,6 +194,10 @@ if (isset($_POST["btnLogin"])) {
 
 			<br>
 			
+            <br>
+            <a href="forgot_password.php" class="f-pass"">Forgot Password</a>
+
+
 			<br>
 
 		</form>

@@ -83,7 +83,7 @@
 
                 <h1>Capstone Adviser:</h1><br>
                 <aside class="adviser">
-                    <a href="Capstone Adviser/Doc_Holiber.php"><img src="../../img/Sir Holiber.jpg" alt=""></a>
+                    <a href="Capstone Adviser/Doc_Oliver.php"><img src="../../img/Sir Holiber.jpg" alt=""></a>
                 </aside>
             </div>
         </center>

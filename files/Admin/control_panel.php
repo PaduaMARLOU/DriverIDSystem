@@ -31,7 +31,7 @@ if (isset($_SESSION["username"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Neon Admin Panel">
     <meta name="author" content="">
-    <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
     <title>Barangay Estefania Admin - Driver ID System</title>
 
     <!-- CSS Links -->
@@ -230,28 +230,28 @@ if (isset($_SESSION["username"])) {
                 <div class="row">
                     <div class="col-md-6">
                         <div class="control-panel-box">
-                            <h2>Driver Reports</h2>
-                            <a href="#" class="control-panel-btn" id="reportsButton">
-                                <i class="fas fa-file"></i> View Driver Reports
+                            <h2>Admin Approval</h2>
+                            <a href="#" class="control-panel-btn" id="approvalButton">
+                                <i class="fas fa-user-plus"></i> Approve or Deny Admin Registrations
                             </a>
                             <script>
                                 // Open admin registration page in a new tab when clicking on Calendar Control button
-                                document.getElementById('reportsButton').onclick = function() {
-                                    window.open("control/driver_reports.php", "_blank");
+                                document.getElementById('approvalButton').onclick = function() {
+                                    window.open("admin_approval.php", "_self");
                                 };
                             </script>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="control-panel-box">
-                            <h2>Database Backup</h2>
-                            <a href="#" class="control-panel-btn" id="backupButton">
-                                <i class="fas fa-download"></i> Backup Data
+                            <h2>Denied Driver Registrations</h2>
+                            <a href="#" class="control-panel-btn" id="deniedButton">
+                                <i class="fas fa-user-times"></i> Manage Denied Drivers
                             </a>
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
-                                document.getElementById('backupButton').onclick = function() {
-                                    window.open("control/backup.php", "_blank");
+                                document.getElementById('deniedButton').onclick = function() {
+                                    window.open("denied_driver_record.php", "_self");
                                 };
                             </script>
                         </div>
@@ -270,7 +270,7 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open admin registration page in a new tab when clicking on Calendar Control button
                                 document.getElementById('reportsButton').onclick = function() {
-                                    window.open("control/driver_reports.php", "_blank");
+                                    window.open("control/driver_reports.php", "_self");
                                 };
                             </script>
                         </div>
@@ -284,7 +284,40 @@ if (isset($_SESSION["username"])) {
                             <script>
                                 // Open driver registration page in a new tab when clicking on Account Access Control button
                                 document.getElementById('backupButton').onclick = function() {
-                                    window.open("control/backup.php", "_blank");
+                                    window.open("control/backup.php", "_self");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Vehicle Settings</h2>
+                            <a href="#" class="control-panel-btn" id="vehicleButton">
+                                <i class="fas fa-motorcycle"></i> Manage Vehicle for ID Generation
+                            </a>
+                            <script>
+                                // Open admin registration page in a new tab when clicking on Calendar Control button
+                                document.getElementById('vehicleButton').onclick = function() {
+                                    window.open("control/vehicle_settings.php", "_self");
+                                };
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="control-panel-box">
+                            <h2>Officials Settings</h2>
+                            <a href="#" class="control-panel-btn" id="officialsButton">
+                                <i class="fas fa-users"></i> Manage Officials
+                            </a>
+                            <script>
+                                // Open driver registration page in a new tab when clicking on Account Access Control button
+                                document.getElementById('officialsButton').onclick = function() {
+                                    window.open("control/officials_settings.php", "_self");
                                 };
                             </script>
                         </div>
@@ -293,7 +326,7 @@ if (isset($_SESSION["username"])) {
             </div>
 
             <footer class="customregister-footer">
-                <i>© 2024 Capstone Project of BSIS 3-A Group 4</i>
+                <i>© 2024 Capstone Project of BSIS 4-A Group 4</i>
             </footer>
         </div>
     </div>

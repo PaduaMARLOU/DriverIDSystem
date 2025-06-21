@@ -43,8 +43,12 @@
                         // Check the renewal status and set $message
                         if ($renew_stat == "Active") {
                             $message = "<span class='active'>Your Status is Active!</span>";
-                        } elseif ($renew_stat == "For Renewal" || empty($renew_stat)) {
+                        } elseif ($renew_stat == "For Renewal") {
                             $message = "<span class='renew'>Please Process your Renewal in the Barangay Hall.</span>";
+                        } elseif ($renew_stat == "Revoked due to Violations") {
+                            $message = "<span class='renew'>Revoked due to multiple violations.<br>Please proceed to Barangay Hall.</span>";
+                        } elseif (empty($renew_stat)) {
+                            $message = "<span class='renew'>Please Process your Registration in the Barangay Hall.</span>";
                         } else {
                             $message = "<span class='invalid'>Invalid Driver ID Code!</span>";
                         }

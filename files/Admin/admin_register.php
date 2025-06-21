@@ -6,14 +6,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include("../../connections.php");
 
-if(isset($_SESSION["username"])) {
+if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
 
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
     $fetch = mysqli_fetch_assoc($authentication);
     $account_type = $fetch["account_type"];
-    
-    if($account_type != 1 && $account_type != 2){
+
+    if ($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden3.php");
         exit; // Ensure script stops executing after redirection
     }
@@ -22,8 +22,8 @@ if(isset($_SESSION["username"])) {
     exit; // Ensure script stops executing after redirection
 }
 
-$f_name = $m_name = $l_name = $gender = $phone_num = $u_name = $password = $cfm_password = "";
-$f_nameErr = $m_nameErr = $l_nameErr = $genderErr = $phone_numErr = $u_nameErr = $passwordErr = $cfm_passwordErr = $imgErr = "";
+$f_name = $m_name = $l_name = $gender = $phone_num = $email = $u_name = $password = $cfm_password = "";
+$f_nameErr = $m_nameErr = $l_nameErr = $genderErr = $phone_numErr = $emailErr = $u_nameErr = $passwordErr = $cfm_passwordErr = $imgErr = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 
@@ -57,6 +57,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
         $phone_num = htmlspecialchars($_POST["mobile_number"]);
     }
 
+    if (empty($_POST["email"])) {
+        $emailErr = "Email is required";
+    } elseif (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format";
+    } else {
+        $email = htmlspecialchars($_POST["email"]);
+    }    
+
     if (empty($_POST["username"])) {
         $u_nameErr = "Username is required";
     } else {
@@ -88,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
         $u_nameErr = "This username is already taken.";
     }
 
-    if (empty($f_nameErr) && empty($m_nameErr) && empty($l_nameErr) && empty($genderErr) && empty($phone_numErr) && empty($u_nameErr) && empty($passwordErr) && empty($cfm_passwordErr) && empty($imgErr)) {
+    if (empty($f_nameErr) && empty($m_nameErr) && empty($l_nameErr) && empty($genderErr) && empty($phone_numErr) && empty($emailErr) && empty($u_nameErr) && empty($passwordErr) && empty($cfm_passwordErr) && empty($imgErr)) {
 
         // Determine account_type and status based on registering admin's account_type
         $acc_type = 0;
@@ -102,11 +110,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
             $status = 'Pending...';
         }
 
-        $sql = "INSERT INTO tbl_admin (first_name, middle_name, last_name, sex, mobile_number, username, password, attempt, relog_time, login_time, logout_time, account_type, date_registered, img, 'Pending...') 
-                VALUES (?, ?, ?, ?, ?, ?, ?, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ?, NOW(), '', ?)";
+        $sql = "INSERT INTO tbl_admin (first_name, middle_name, last_name, sex, mobile_number, email, username, password, attempt, relog_time, login_time, logout_time, account_type, date_registered, img, status) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ?, NOW(), '', ?)";
 
         $stmt = $connections->prepare($sql);
-        $stmt->bind_param("sssssssis", $f_name, $m_name, $l_name, $gender, $phone_num, $u_name, $password, $acc_type, $status);
+        $stmt->bind_param("ssssssssis", $f_name, $m_name, $l_name, $gender, $phone_num, $email, $u_name, $password, $acc_type, $status);
 
         if ($stmt->execute()) {
             // Get the admin_id of the newly inserted record
@@ -122,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
             $img_tmp_name = $_FILES['admin_image']['tmp_name'];
             $img_size = $_FILES['admin_image']['size'];
             $img_error = $_FILES['admin_image']['error'];
-            
+
             $img_ext = pathinfo($img_name, PATHINFO_EXTENSION);
             $img_ext_lc = strtolower($img_ext);
             $allowed_exts = array("jpg", "jpeg", "png");
@@ -163,16 +171,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
     <link rel="stylesheet" type="text/css" href="../adminportalcss/admin_register.css">
     <title>Admin Registration</title>
 
-    <link rel="icon" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" href="../../img/Brgy. Estefania Logo (Old).png">
 
     <link rel="stylesheet" href="../adminportalcss/adminlogin.css">
 </head>
 
 <body>
     <style>
-        <?php include("../adminportalcss/admin_register.css"); ?>
+        <?php include("../adminportalcss/admin_register.css"); ?>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
         * {
             padding: 0;
             margin: 0;
@@ -181,12 +188,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
             color: white;
             text-decoration: none;
         }
+
+        .back-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 30px;
+            filter: drop-shadow(1px 1px 2px gray);
+            color: rgb(255, 255, 255);
+            transition: .2s;
+        }
+
+        .back-btn:active {
+            display: inline-block;
+            transform: scale(.9);
+        }
     </style>
 
+    <a href="../Admin/register.php" class="back-btn"><ion-icon name="arrow-back-outline"></ion-icon></a>
     <div class="container">
-        <center>
+        <center><br><br>
             <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
-                <img src="../../img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" class="logo">
+                <img src="../../img/Brgy. Estefania Logo (Old).png" alt="Barangay Estefania Logo" class="logo">
             </a>
             <div class="admin-register">
                 <form id="registrationForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
@@ -209,16 +232,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
                     </select><br>
                     <span class="err"><?php echo $genderErr; ?></span><br>
 
-                    <ion-icon name="call" class="icon"></ion-icon><input type="text" class="t-box" id="phone_num" name="mobile_number" value="<?php echo $phone_num; ?>" placeholder="Mobile Number..."><br>
+                    <ion-icon name="call" class="icon"></ion-icon><input type="text" class="t-box" id="phone_num" name="mobile_number" value="<?php echo $phone_num; ?>" placeholder="Mobile Number..." maxlength="11" pattern="[0-9]{11}" inputmode="numeric" title="Please enter your 11 digit number."><br>
                     <span class="err"><?php echo $phone_numErr; ?></span><br>
 
-                    <ion-icon name="person" class="icon"></ion-icon><input type="text" class="t-box" id="u_name" name="username" value="<?php echo $u_name; ?>" placeholder="Username..."><br>
+                    <ion-icon name="mail" class="icon"></ion-icon>
+                    <input type="email" class="t-box" id="email" name="email" 
+                        value="<?php echo htmlspecialchars($email); ?>" 
+                        placeholder="Email..." 
+                        required 
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        title="Please enter a valid email address.">
+                    <br>
+                    <span class="err"><?php echo $emailErr; ?></span><br>
+
+                    <ion-icon name="person" class="icon"></ion-icon><input type="text" class="t-box" id="u_name" name="username" value="<?php echo $u_name; ?>" placeholder="Username..." required><br>
                     <span class="err"><?php echo $u_nameErr; ?></span><br>
 
-                    <ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" id="password" name="password" placeholder="Password..."><br>
+                    <ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" id="password" name="password" placeholder="Password..." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and include both letters and numbers" required><br>
                     <span class="err"><?php echo $passwordErr; ?></span><br>
 
-                    <ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" id="cfm_password" name="confirm_password" placeholder="Confirm Password..."><br>
+                    <ion-icon name="lock-closed" class="icon"></ion-icon><input type="password" class="t-box" id="cfm_password" name="confirm_password" placeholder="Confirm Password..." pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and include both letters and numbers" required><br>
                     <span class="err"><?php echo $cfm_passwordErr; ?></span><br>
 
                     <ion-icon name="camera" class="icon"></ion-icon><input type="file" class="t-box" id="admin_image" name="admin_image" accept="image/*"><br>
@@ -226,10 +259,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['admin_image'])) {
 
                     <input type="submit" class="btn-register" value="REGISTER"><br><br>
                 </form>
-            </div>
+            </div><br>
         </center>
     </div>
 
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

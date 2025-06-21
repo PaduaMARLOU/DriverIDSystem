@@ -1,3 +1,28 @@
+<?php
+
+session_start();
+
+include("../../connections.php");
+
+if(isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
+
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
+
+    if($account_type != 1 && $account_type != 2) {
+        header("Location: ../../Forbidden.php");
+        exit; // Ensure script stops executing after redirection
+    }
+} else {
+    header("Location: ../../Forbidden.php");
+    exit; // Ensure script stops executing after redirection
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,12 +72,29 @@
                     
         
         <?php
-        // Assuming you have already established a database connection
         include "../../connections.php";
 
-        // Fetch data from the database where renew_stat is 'For Renewal' or 'Revoked due to Violations'
+        // Set the timezone to Asia/Manila
+        date_default_timezone_set('Asia/Manila');
+        
+        // Get the current year
+        $current_year = date('Y');
+        
+        // SQL query to update renew_stat to "For Renewal" if the registration year was last year
+        $update_query = "
+            UPDATE tbl_driver
+            SET renew_stat = 'For Renewal'
+            WHERE YEAR(driver_registered) = ($current_year - 1)
+            AND renew_stat != 'For Renewal';
+        ";
+        
+        // Execute the update query
+        mysqli_query($connections, $update_query);
+        
+        // Now fetch the data for display as usual
         $query = "SELECT formatted_id, first_name, middle_name, last_name, driver_category, 
-                  CONCAT(a.association_name, ' - ', a.association_area) AS association, renew_stat 
+                  CONCAT(a.association_name, ' - ', a.association_area) AS association, renew_stat,
+                  DATE_ADD(DATE_FORMAT(driver_registered, '%Y-01-01'), INTERVAL 1 YEAR) AS date_expired 
                   FROM tbl_driver d 
                   LEFT JOIN tbl_association a ON d.fk_association_id = a.association_id 
                   WHERE renew_stat IN ('For Renewal', 'Revoked due to Violations')";
@@ -66,16 +108,37 @@
 
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    var $table4 = jQuery("#table-4");
+                    let $table4 = jQuery("#table-4");
+                    let accountType = <?php echo json_encode($account_type); ?>;
 
                     $table4.DataTable({
                         dom: 'Bfrtip',
-                        buttons: [
-                            'copyHtml5',
-                            'excelHtml5',
-                            'csvHtml5',
-                            'pdfHtml5'
-                        ]
+                        buttons: accountType == 1 ? [ // Only show buttons if account_type is 1
+                            {
+                                extend: 'copyHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                exportOptions: {
+                                    columns: ':not(:last-child)' // Exclude the last column (Actions)
+                                }
+                            }
+                        ] : [] // No buttons if account_type is not 1
                     });
                 });
             </script>
@@ -88,6 +151,7 @@
                         <th>Vehicle Type</th>
                         <th>Association</th>
                         <th>Renew Status</th>
+                        <th>Date of Expiration</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -102,6 +166,7 @@
                             <td><?php echo $row['driver_category']; ?></td>
                             <td><?php echo $row['association']; ?></td>
                             <td class="center"><?php echo $row['renew_stat']; ?></td>
+                            <td><?php echo $row['date_expired']; ?></td>
                             <td>
                                 <a href="#" class="btn btn-info btn-sm btn-icon icon-left" onclick="confirmRenew('<?php echo $row['formatted_id']; ?>')">
                                     <i class="entypo-arrows-ccw"></i>
@@ -120,6 +185,7 @@
                         <th>Vehicle Type</th>
                         <th>Association</th>
                         <th>Renew Status</th>
+                        <th>Date of Expiration</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>

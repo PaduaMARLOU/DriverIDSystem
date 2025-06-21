@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Neon Admin Panel" />
-	<meta name="author" content="" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Neon Admin Panel" />
+    <meta name="author" content="" />
 
-	<link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
 
-	<title>Barangay Estefania Admin - Driver ID System</title>
+    <title>Barangay Estefania Admin - Driver ID System</title>
 
-	<link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
-	<link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-	<link rel="stylesheet" href="assets/css/neon-core.css">
-	<link rel="stylesheet" href="assets/css/neon-theme.css">
-	<link rel="stylesheet" href="assets/css/neon-forms.css">
-	<link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/neon-core.css">
+    <link rel="stylesheet" href="assets/css/neon-theme.css">
+    <link rel="stylesheet" href="assets/css/neon-forms.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
 
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
 
-	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-	
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
+    <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
@@ -36,27 +37,27 @@
 
 <body class="page-body" data-url="http://neon.dev">
 
-<style>
-	table {
-		color: #48484C;
-	}
+    <style>
+        table {
+            color: #48484C;
+        }
 
-	th {
-		font-size: 1em;
-	}
-</style>
+        th {
+            font-size: 1em;
+        }
+    </style>
 
-<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-	
-	<?php include "sidebar.php" ?>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always --> 
 
-	<div class="main-content">
+    <?php include "sidebar.php" ?>
+
+    <div class="main-content">
         <?php include "header.php" ?>
-        
+
         <hr />
         <h3 style="color: orange;">Driver Violation Summary</h3>
         <hr>
-        
+
         <?php
         include "../../connections.php"; // Include your database connection
 
@@ -65,13 +66,14 @@
 
         // Build the SQL query based on the presence of the violation category
         $query = "
-            SELECT d.driver_id, d.formatted_id, d.first_name, d.middle_name, d.last_name, 
-                a.association_name, a.association_area, 
-                v.violation_category, v.violation_date, v.renewed_date
-            FROM tbl_driver d
-            LEFT JOIN tbl_association a ON d.fk_association_id = a.association_id
-            LEFT JOIN tbl_violation v ON d.driver_id = v.fk_driver_id
-            WHERE d.verification_stat = 'Registered'";
+        SELECT d.driver_id, d.formatted_id, d.first_name, d.middle_name, d.last_name, 
+            a.association_name, a.association_area, 
+            v.violation_category, v.violation_date, v.renewed_date
+        FROM tbl_driver d
+        LEFT JOIN tbl_association a ON d.fk_association_id = a.association_id
+        LEFT JOIN tbl_violation v ON d.driver_id = v.fk_driver_id
+        WHERE d.verification_stat = 'Registered' AND v.violation_date IS NOT NULL";
+
 
         // If a violation category is specified, add it to the query
         if ($violation_category) {
@@ -83,28 +85,66 @@
 
         $result = mysqli_query($connections, $query);
 
-        // Initialize an array to store violation counts for each driver
-        $driver_violations = [];
-
         // Check if query was successful
         if ($result) {
             ?>
             <h3>Export Violation Data</h3>
             <br />
 
+            <div>
+                <label for="showEntriesInput">Show entries: </label>
+                <input type="number" id="showEntriesInput" value="10" min="1" style="width: 60px;" />
+                <span id="totalEntries"></span> <!-- Placeholder for total entries -->
+            </div>
+
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
                     let $table4 = jQuery("#table-4");
 
-                    $table4.DataTable({
+                    let dataTable = $table4.DataTable({
                         dom: 'Bfrtip',
                         buttons: [
-                            'copyHtml5',
-                            'excelHtml5',
-                            'csvHtml5',
-                            'pdfHtml5'
-                        ]
+                            {
+                                extend: 'copyHtml5',
+                                text: 'Copy',
+                                exportOptions: {
+                                    rows: ':visible' // Allow exporting only visible rows
+                                }
+                            },
+                            {
+                                extend: 'excelHtml5',
+                                text: 'Excel',
+                                exportOptions: {
+                                    rows: ':visible' // Allow exporting only visible rows
+                                }
+                            },
+                            {
+                                extend: 'csvHtml5',
+                                text: 'CSV',
+                                exportOptions: {
+                                    rows: ':visible' // Allow exporting only visible rows
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: 'PDF',
+                                exportOptions: {
+                                    rows: ':visible' // Allow exporting only visible rows
+                                }
+                            }
+                        ],
+                        "pageLength": 10, // Default page length
+                        "lengthChange": false, // Disable length change dropdown
                     });
+
+                    // Function to update DataTable page length based on input
+                    $('#showEntriesInput').on('change', function() {
+                        let entries = $(this).val();
+                        dataTable.page.len(entries).draw(); // Update page length and redraw
+                    });
+
+                    // Set total entries text
+                    $('#totalEntries').text(`out of <?php echo mysqli_num_rows($result); ?> entries`); // Update total entries text
                 });
             </script>
 
@@ -136,7 +176,7 @@
                             $driver_violations[$driver_id]++; // Increment the violation count for the driver
                             $violation_status = "Violation " . $driver_violations[$driver_id];
                         }
-                        ?>
+                    ?>
                         <tr>
                             <td><?php echo $row['formatted_id']; ?></td>
                             <td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
@@ -176,40 +216,39 @@
         <!-- Footer -->
         <?php include "footer.php" ?>
     </div>
-
-
-
-
 </div>
 
 
 
-	<!-- Imported styles on this page -->
-	<link rel="stylesheet" href="assets/js/datatables/datatables.css">
-	<link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
-	<link rel="stylesheet" href="assets/js/select2/select2.css">
-
-	<!-- Bottom scripts (common) -->
-	<script src="assets/js/gsap/TweenMax.min.js"></script>
-	<script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
-	<script src="assets/js/bootstrap.js"></script>
-	<script src="assets/js/joinable.js"></script>
-	<script src="assets/js/resizeable.js"></script>
-	<script src="assets/js/neon-api.js"></script>
 
 
-	<!-- Imported scripts on this page -->
-	<script src="assets/js/datatables/datatables.js"></script>
-	<script src="assets/js/select2/select2.min.js"></script>
-	<script src="assets/js/neon-chat.js"></script>
+    <!-- Imported styles on this page -->
+    <link rel="stylesheet" href="assets/js/datatables/datatables.css">
+    <link rel="stylesheet" href="assets/js/select2/select2-bootstrap.css">
+    <link rel="stylesheet" href="assets/js/select2/select2.css">
+
+    <!-- Bottom scripts (common) -->
+    <script src="assets/js/gsap/TweenMax.min.js"></script>
+    <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/neon-api.js"></script>
 
 
-	<!-- JavaScripts initializations and stuff -->
-	<script src="assets/js/neon-custom.js"></script>
+    <!-- Imported scripts on this page -->
+    <script src="assets/js/datatables/datatables.js"></script>
+    <script src="assets/js/select2/select2.min.js"></script>
+    <script src="assets/js/neon-chat.js"></script>
 
 
-	<!-- Demo Settings -->
-	<script src="assets/js/neon-demo.js"></script>
+    <!-- JavaScripts initializations and stuff -->
+    <script src="assets/js/neon-custom.js"></script>
+
+
+    <!-- Demo Settings -->
+    <script src="assets/js/neon-demo.js"></script>
 
 </body>
+
 </html>

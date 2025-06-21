@@ -30,6 +30,6 @@ if (session_status() === PHP_SESSION_NONE) {
 		<!-- Footer -->
 		<footer class="main">
 			
-			&copy; 2024 <strong>Barangay Estefania Driver ID System</strong> || Capstone Project by <a href="../../img/Capstone Proposal.jpg" target="_blank">BSIS-4A</a><link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
+			<span title="copyright">&copy;</span> <span title="Year Accomplished">2024</span> <strong title="Brgy. Estefania Driver's ID System">Barangay Estefania Driver ID's System</strong> || <span title="Capstone Project">Capstone Project by</span> <a href="../../img/Capstone Proposal.jpg" target="_blank" title="Members">BSIS-4A</a><link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
 		
 		</footer>

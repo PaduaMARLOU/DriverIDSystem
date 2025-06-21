@@ -132,6 +132,22 @@ body {
     color: white;
 }
 
+.f-pass {
+    color: lightblue;
+    transition: .2s;
+}
+
+.f-pass:hover {
+    color: violet;
+    font-size: 18px;
+    text-shadow: 1px 1px 10px rgb(95, 94, 94);
+}
+
+.f-pass:active {
+    display: inline-flex;
+    transform: scale(.9);
+}
+
 .error {
     color: white;
     text-shadow: 1px 1px 10px red;

@@ -21,117 +21,147 @@ $current_user = mysqli_fetch_assoc($current_user_query);
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Account</title>
-    <link rel="icon" href="../../img/Brgy Estefania Logo.png" type="image/png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Neon Admin Panel">
+    <meta name="author" content="">
+    <link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
+    <title>Barangay Estefania Admin - Driver ID System</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
+    <link rel="stylesheet" href="assets/css/font-icons/entypo/css/entypo.css">
+    <link href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/neon-core.css">
+    <link rel="stylesheet" href="assets/css/neon-theme.css">
+    <link rel="stylesheet" href="assets/css/neon-forms.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="../adminportalcss/register.css"> <!-- Your custom CSS -->
+    
+    <!-- JavaScript Links -->
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <script src="assets/js/gsap/TweenMax.min.js"></script>
+    <script src="assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/joinable.js"></script>
+    <script src="assets/js/resizeable.js"></script>
+    <script src="assets/js/neon-api.js"></script>
+    <script src="assets/js/datatables/datatables.js"></script>
+    <script src="assets/js/select2/select2.min.js"></script>
+    <script src="assets/js/neon-chat.js"></script>
+    <script src="assets/js/neon-custom.js"></script>
+    <script src="assets/js/neon-demo.js"></script>
+    
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="page-body" data-url="http://neon.dev">
     <style>
-        <?php include("admin styles/admin_verify.css"); ?>
-
-        * {
-            outline: none;
-        }
-
-        h2 {
-            position: absolute;
-            top: 2rem;
-            font-size: 30px;
-            color: #51565D;
-        }
-
-        .form {
-            position: absolute;
+        /* Styles exclusive to the form-container */
+        .form-container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            margin-top: 2rem;
             border: 2px solid #74777A;
             border-radius: 4px;
-            top: 2rem;
-            height: 25rem;
-            width: 20rem;
-            left: 23rem;
-            margin: -20px;
+            padding: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
             box-shadow: 1px 1px 10px #B1B3B5;
             backdrop-filter: blur(3px);
         }
 
-        label, input, button {
-            position: relative;
-            top: 2rem;
+        .form-container h2 {
+            font-size: 30px;
+            color: #51565D;
+            margin-bottom: 1rem;
         }
 
-        hr {
-            position: relative;
-            top: 12px;
-            height: 2px; 
-            background-color: #74777A; 
-            border: none; 
+        .form-container label {
+            font-size: 18px;
+            color: #51565D;
         }
 
-        ion-icon {
-            position: absolute;
+        .form-container input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #74777A;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            border-radius: 4px;
+            border: 1.8px solid #51565D;
+            font-size: 18px;
+            background-color: transparent;
+            color: #51565D;
+            cursor: pointer;
+            padding: 0.75rem;
+            width: 100%;
+            transition: 0.25s;
+        }
+
+        .form-container button:hover {
+            color: white;
+            background-color: #2888E5;
+        }
+        
+        .form-container ion-icon {
             font-size: 28px;
-            top: 0;
-            left: 0;
             color: #51565D;
             transition: .2s;
         }
 
-        button {
-            border-radius: 4px;
-            border: 1.8px solid #51565D;
-            font-size: 25px;
-            background-color: transparent;
-            height: 42px;
-            width: 275px;
-            color: #51565D;
-            cursor: pointer;
-            transition: .25s;
-        }
-
-        button:hover {
-            height: 50px;
-            width: 290px;
-            font-size: 27px;
-            color: white;
-            background-color: #2888E5;
-        }
-
-        button:active {
-            background-color: #3584D0;
-            transform: scale(.9);
-
-        }
-
-        ion-icon:active {
-            transform: scale(.9);
+        .form-container ion-icon:hover {
+            color: #2888E5;
         }
     </style>
-</head>
-
-<body>
-    <div class="form">
-        <h2>Update Account</h2>
-        <form action="update_acc.php" method="POST" onsubmit="return validateForm() && confirmUpdate()">
-            <hr>
-            <center>
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($current_user['username']); ?>" required><br><br>
-
-                <label for="password">New Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-
-                <label for="confirm_password">Confirm New Password:</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-
-                <input type="hidden" name="admin_id" value="<?php echo $user_id; ?>"><br><br>
+    
+    <div class="page-container">
+        <!-- Sidebar -->
+        <?php include "sidebar.php"; ?>
+        
+        <div class="main-content">
+            <!-- Header -->
+            <?php include "header.php"; ?>
             
-                <button type="submit">Update</button>
-            </center>
-            <a href='index.php'><ion-icon name="arrow-back-outline"></ion-icon></a>
-        </form>  
+            <hr />
+            
+            <!-- Update Account Form Content -->
+            <div class="form-container">
+                <h2>Update Account</h2>
+                <form action="update_acc.php" method="POST" onsubmit="return validateForm() && confirmUpdate()">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($current_user['username']); ?>" required>
+
+                    <label for="current_password">Current Password:</label>
+                    <input type="password" id="current_password" name="current_password" required>
+
+                    <label for="password">New Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <label for="confirm_password">Confirm New Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+
+                    <input type="hidden" name="admin_id" value="<?php echo $user_id; ?>">
+                
+                    <button type="submit">Update</button>
+                </form>
+                <!-- <a href='index.php'><ion-icon name="arrow-back-outline"></ion-icon></a> -->
+            </div>
+
+            <!-- Footer -->
+            <?php include "footer.php"; ?>
+        </div>
     </div>
 
     <script>

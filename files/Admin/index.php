@@ -34,7 +34,7 @@ if(isset($_SESSION["username"])) {
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+	<link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
 
 	<title>Barangay Estefania Admin - Driver ID System</title>
 

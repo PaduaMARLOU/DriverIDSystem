@@ -27,6 +27,7 @@
             z-index: -1;
             /* Ensure it stays behind other content */
         }
+        
     </style>
 
     <?php
@@ -143,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <br><br>
 
                 <ion-icon name="lock-closed"></ion-icon>
-                <input type="password" name="new_password" value="<?php echo $db_password; ?>" required placeholder="Password">
+                <input type="password" name="new_password" value="<?php echo $db_password; ?>" placeholder="Password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and include both letters and numbers" required>
                 <br><br>
 
                 <ion-icon name="key"></ion-icon>
@@ -178,5 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     </script>
+
 </body>
 </html>

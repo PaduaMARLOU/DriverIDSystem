@@ -60,29 +60,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Details</title>
+    <link rel="stylesheet" type="text/css" href="driverportalcss/scan_detected.css">
+    <link rel="icon" href="img/Brgy. Estefania Logo (Old).png" type="image/png">
+    <title>Brgy Estefania Driver Details</title>
 </head>
 <body>
-    <h2>Driver Details</h2>
+    <div class="container">
+        <h2>Driver Details</h2>
 
-    <?php if ($driver_found): ?>
-        <p>Formatted ID: <?php echo htmlspecialchars($row['formatted_id']); ?></p>
-        <p>Verification Status: <?php echo htmlspecialchars($row['verification_stat']); ?></p>
-        <p>Renewal Status: <?php echo htmlspecialchars($row['renew_stat']); ?></p>
+        <?php if ($driver_found): ?>
+            <p>
+                <strong>Formatted ID:</strong> 
+                <span style="color: 
+                    <?php 
+                    // Check if both statuses are active/registered
+                    echo ($row['verification_stat'] === 'Registered' && $row['renew_stat'] === 'Active') ? 'green' : 'red'; 
+                    ?>">
+                    <?php echo htmlspecialchars($row['formatted_id']); ?>
+                </span><br>
+                <strong>Verification Status:</strong>
+                <span style="color: <?php echo ($row['verification_stat'] === 'Registered' ? 'green' : 'red'); ?>">
+                    <?php echo htmlspecialchars($row['verification_stat']); ?>
+                </span><br>
+                <strong>Renewal Status:</strong>
+                <span style="color: <?php echo ($row['renew_stat'] === 'Active' ? 'green' : 'red'); ?>">
+                    <?php echo htmlspecialchars($row['renew_stat']); ?>
+                </span>
+            </p>
 
-        <!-- Comment Form -->
-        <h3>Leave a Comment for This Driver</h3>
-        <form method="POST" action="">
-            <label for="comment">Comment:</label><br>
-            <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br><br>
-            <input type="submit" value="Submit Comment">
+            <!-- Comment Form -->
+            <h3>Leave a Comment for This Driver</h3>
+            <form method="POST" action="">
+                <label for="comment">Comment:</label><br>
+                <textarea id="comment" name="comment" rows="4" required></textarea><br>
+                <input type="submit" value="Submit Comment">
+                <a href="scan.php" class="back-btn">Back</a>
+            </form>
+
+        <?php else: ?>
+            <p>No driver found with the given ID.</p>
             <a href="scan.php" class="back-btn">Back</a>
-        </form>
-
-    <?php else: ?>
-        <p>No driver found with the given ID.</p>
-        <a href="scan.php" class="back-btn">Back</a>
-    <?php endif; ?>
-
+        <?php endif; ?>
+    </div>
 </body>
 </html>

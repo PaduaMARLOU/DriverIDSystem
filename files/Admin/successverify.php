@@ -4,7 +4,7 @@ session_start();
 
 include("../../connections.php");
 
-if(isset($_SESSION["username"])) {
+if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
 
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
@@ -13,7 +13,7 @@ if(isset($_SESSION["username"])) {
 
     $account_type = $fetch["account_type"];
 
-    if($account_type != 1 && $account_type != 2) {
+    if ($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
@@ -93,6 +93,11 @@ if(isset($_SESSION["username"])) {
                     // Update vehicle_registered in tbl_vehicle with the same datetime using fk_driver_id
                     $update_vehicle_query = "UPDATE tbl_vehicle SET vehicle_registered = '$current_datetime' WHERE fk_driver_id = '$driver_id'";
                     $update_vehicle_result = mysqli_query($connections, $update_vehicle_query);
+
+                    // Log the verification success
+                    $action_details = "Verified Driver ID: $formatted_id";
+                    $log_query = "INSERT INTO tbl_log (fk_admin_id, fk_driver_id, action_details, action_date) VALUES ('$admin_id', '$driver_id', '$action_details', '$current_datetime')";
+                    mysqli_query($connections, $log_query); // Ignore errors for logging
 
                     if ($update_vehicle_result) {
                         echo "<p class='message'>Verification status and vehicle registration updated successfully for Driver ID: $formatted_id.</p>";

@@ -36,25 +36,36 @@ if($result) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment Success</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="icon" href="img/success-icon.png" type="image/png">
 </head>
 <body>
+    <style>
+        <?php include("driverportalcss/register_success.css") ?>
+    </style>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h2 class="text-center" style="color: green;">Appointment Success</h2>
                 <h5 class="text-center" style="color: red;"><strong>Please don't forget to screenshot this.</strong></h5>
-                        <br>
-                        <hr>
+                    <br>
+                    <hr>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <p><strong>Appointment ID:</strong> <?php echo $appointmentID; ?></p>
-                        <p><strong>Your Appointment Date:</strong> <span style="color: #FF5349;"><?php echo $date; ?></span></p>
+                        <p><strong>Appointment ID:</strong> <span style="font-size: 1.42em;"><?php echo $appointmentID; ?></span></p>
+                        <p><strong>Your Appointment Date:</strong> <span style="color: #3bc356; font-size: 1.42em;"><?php echo $date; ?></span></p>
                         <p><i>Please prepare your proof of documents that will show it's you and kindly also bring your vehicle.</i></p>
-                        <h6><p><span style="color: #808080">!You are now prioritized to be catered within this day. The queue will still be first come first serve.!</span></p></h6>
-
+                        <h6><p><span style="color: #808080; font-size: 1.4rem;">You are now prioritized to be catered within this day. The queue will still be first come first serve!</span></p></h6><br>
+                        <center><a href="index.php">Back to Driver's Portal</a></center>
                     </div>
                 </div>
 
+                <script src="https://cdn.lordicon.com/lordicon.js"></script>
+                    <center><lord-icon
+                        src="https://cdn.lordicon.com/guqkthkk.json"
+                        trigger="hover"
+                        style="width:180px;height:180px">
+                    </lord-icon></center>
             </div>
         </div>
     </div>

@@ -33,7 +33,7 @@ if(isset($_GET['driver_id'])) {
     $driver_id = $_GET['driver_id'];
 
     // Fetch driver details
-    $driver_query = "SELECT formatted_id, first_name, middle_name, last_name FROM tbl_driver WHERE formatted_id = '$driver_id'";
+    $driver_query = "SELECT formatted_id, first_name, middle_name, last_name, driver_id FROM tbl_driver WHERE formatted_id = '$driver_id'";
     $driver_result = mysqli_query($connections, $driver_query);
     $driver_row = mysqli_fetch_assoc($driver_result);
     
@@ -58,6 +58,12 @@ if(isset($_GET['driver_id'])) {
                 $insert_result = mysqli_query($connections, $insert_query);
 
                 if($insert_result) {
+                    // Log the action
+                    $action_details = "Added violation for driver " . $driver_row['formatted_id'];
+                    $log_query = "INSERT INTO tbl_log (fk_admin_id, action_details, action_date, fk_driver_id) 
+                                  VALUES ('" . $_SESSION["admin_id"] . "', '$action_details', NOW(), '" . $driver_row['driver_id'] . "')";
+                    mysqli_query($connections, $log_query); // Log the action
+
                     $success_message = "Violation added successfully.";
                     echo "<script>alert('Violation added successfully.');</script>";
                     echo "<script>window.location.href = 'violation.php';</script>";
@@ -66,7 +72,7 @@ if(isset($_GET['driver_id'])) {
                     $error_message = "Error adding violation: " . mysqli_error($connections);
                 }
             } else {
-                $error_message = "Please fill in all fields.";
+                $error_message = "<span style='font-size: 1.3rem;'>Please fill in all fields.</span>";
             }
         }
     } else {

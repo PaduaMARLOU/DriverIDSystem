@@ -1,3 +1,7 @@
+* {
+    font-size: 20px;
+}
+
 @media only screen and (max-width: 760px),
     (min-device-width: 802px) and (max-device-width: 1020px) {
 
@@ -60,7 +64,7 @@
         table-layout: fixed;
     }
     td {
-        width: 33%;
+        width: 100%;
     }
 }
 
@@ -97,3 +101,5 @@ th {
     color: white;
     border: 2px solid #000; /* Thicker black border */
 }
+
+

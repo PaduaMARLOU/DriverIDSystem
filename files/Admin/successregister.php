@@ -6,14 +6,14 @@
     <link rel="stylesheet" type="text/css" href="../adminportalcss/admin_successregisterstyle.css">
     <title>Registration Successful</title>
 
-    <link rel="icon" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" type="image/png" href="../../img/Brgy. Estefania Logo (Old).png">
 </head>
 <body>
 
     <div class="background"></div>
         <div class="content">
                 <center>
-                    <img src="../../img/Brgy Estefania Logo.png" alt="Brgy Estefania Logo" width="200px" style="filter: drop-shadow(1px 1px 10px white);">
+                    <img src="../../img/Brgy. Estefania Logo (Old).png" alt="Brgy Estefania Logo" width="200px" style="filter: drop-shadow(1px 1px 10px white);">
                     <h1 class="welc">Welcome!</h1>
                     <p class="succ">You are now registered.</p><br>
                     <i class="i">Wait for Super Admin for the Verification if you are registered by Admin only</i><br><br>

@@ -1,0 +1,77 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f9fa; /* Light gray background for contrast */
+    color: #333; /* Darker text for readability */
+}
+h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #007BFF; /* Primary blue color */
+    margin-bottom: 20px;
+}
+h3 {
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: #555; /* Darker gray for subheadings */
+}
+#qr-reader {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ced4da; /* Light border for the QR reader */
+    border-radius: 8px; /* Rounded corners for the QR reader */
+    background-color: #fff; /* White background for clarity */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+#result, #error {
+    margin-top: 20px;
+    font-size: 20px; /* Increased font size for results */
+    text-align: center; /* Center the text */
+}
+#result {
+    color: green;
+}
+#error {
+    color: red;
+}
+.input-section {
+    margin-top: 30px;
+    text-align: center;
+}
+.input-section input[type="text"] {
+    padding: 12px;
+    font-size: 18px;
+    width: 300px;
+    border: 1px solid #ced4da; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+.input-section input[type="submit"] {
+    padding: 12px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: #007BFF; /* Primary button color */
+    color: #fff; /* White text for contrast */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s;
+    margin-left: 10px; /* Space between text input and button */
+}
+.input-section input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007BFF; /* Link color */
+    font-weight: bold;
+    font-size: 18px;
+}
+.back-btn:hover {
+    text-decoration: underline;
+}

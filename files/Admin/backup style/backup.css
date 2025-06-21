@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    outline: none;
+    background-color: rgb(255, 246, 235);
+}
+
+/* Center the entire content */
+.centered-content {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Style the heading */
+.centered-content h1 {
+    font-size: 3rem;
+    color: #333;
+}
+
+/* Style the form and button */
+.centered-content form {
+    margin-top: 20px;
+}
+
+.centered-content button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Green background for the "Download Backup" button */
+.centered-content button[name="download"] {
+    background-color: #28a745; /* Green color */
+}
+
+/* Hover effect for the download button */
+.centered-content button[name="download"]:hover {
+    background-color: #218838; /* Darker green */
+}
+
+/* Blue background for the "Go Back" button */
+.centered-content .for-back-button {
+    background-color: #007bff; /* Blue color */
+    margin-top: 20px; /* Space between the download and back button */
+}
+
+/* Hover effect for the back button */
+.centered-content .for-back-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+/* Add some margin to the page for the form */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}

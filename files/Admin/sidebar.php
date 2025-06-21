@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include("../../connections.php");
 
-if(isset($_SESSION["username"])) {
+if (isset($_SESSION["username"])) {
     $username = $_SESSION["username"];
 
     $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
@@ -16,7 +16,7 @@ if(isset($_SESSION["username"])) {
     $admin_id = $fetch["admin_id"];
     $img = $fetch["img"] ? $fetch["img"] : 'noprofile.jpg';
 
-    if($account_type != 1 && $account_type != 2){
+    if ($account_type != 1 && $account_type != 2) {
         header("Location: ../../Forbidden.php");
         exit; // Ensure script stops executing after redirection
     }
@@ -28,185 +28,167 @@ if(isset($_SESSION["username"])) {
 ?>
 
 <style>
-.icon {
-    position: relative;
-    right: -2px;
-    font-size: 18px;
-}
+    .icon {
+        position: relative;
+        right: -2px;
+        font-size: 18px;
+    }
 
-.upload img {
-    border-radius: 10%;
-    border: 3px solid #B9BFC5;
-    transition: .3s; 
-}
+    .upload img {
+        border-radius: 10%;
+        border: 3px solid #B9BFC5;
+        transition: .3s;
+    }
 
-.upload img:hover {
-    border: 3px solid #BEC3C6;
-    box-shadow: 1px 1px 7px #E9EEF3;
-}
+    .upload img:hover {
+        border: 3px solid #BEC3C6;
+        box-shadow: 1px 1px 7px #E9EEF3;
+    }
 
-.upload .round {
-    position: absolute;
-    bottom: 3em;
-    left: 4em;
-    width: 27px;
-    height: 27px;
-    line-height: 38px;
-    text-align: center;
-    overflow: hidden;
-}
+    .upload .round {
+        position: absolute;
+        bottom: 3em;
+        left: 4em;
+        width: 27px;
+        height: 27px;
+        line-height: 38px;
+        text-align: center;
+        overflow: hidden;
+    }
 
-.upload .round input[type="file"] {
-    position: absolute;
-    transform: scale(2);
-    top: 2em;
-    opacity: 0;
-}
+    .upload .round input[type="file"] {
+        position: absolute;
+        transform: scale(2);
+        top: 2em;
+        opacity: 0;
+    }
 
-input[type="file"]::-webkit-file-upload-button {
-    position: relative;
-    top: -1.6em;
-    cursor: pointer;
-}
+    input[type="file"]::-webkit-file-upload-button {
+        position: relative;
+        top: -1.6em;
+        cursor: pointer;
+    }
 
-#x {
-    font-size: 25px;
-    color: white;
-}
+    #x {
+        font-size: 25px;
+        color: white;
+    }
 
-.nav-icon {
-    position: relative;
-    display: flex;
-    text-align: center;
-    font-size: 13px;
-}
+    .nav-icon {
+        position: relative;
+        display: flex;
+        text-align: center;
+        font-size: 13px;
+    }
 
-.user {
-    position: relative;
-    bottom: -1em;
-}
+    .user {
+        position: relative;
+        bottom: -1em;
+    }
 
-.logo a {
-    transition: .28s;
-}
+    .logo a {
+        transition: .28s;
+    }
 
-.logo a:active {
-    display: inline-flex;
-    transform: scale(.9);
-}
+    .logo a:active {
+        display: inline-flex;
+        transform: scale(.9);
+    }
 
-.logo a {
-    transition: .28s;
-}
+    .logo a {
+        transition: .28s;
+    }
 
-.logo a:active {
-    display: inline-flex;
-    transform: scale(.9);
-}
+    .logo a:active {
+        display: inline-flex;
+        transform: scale(.9);
+    }
 
-.brgy-logo {
-    transition: .3s;
-}
+    .brgy-logo {
+        transition: .3s;
+    }
 
-.brgy-logo:hover {
-    filter: drop-shadow(1px 1px 5px white);
-}
+    .brgy-logo:hover {
+        filter: drop-shadow(1px 1px 5px white);
+    }
 
-.main-menu li a {
-    transition: .3s;
-}
+    .main-menu li a {
+        transition: .3s;
+    }
 
-.main-menu li a:hover {
-    font-size: 14px;
-    font-size: 14px;
-    background: linear-gradient(to right, #233F80, #375AAD);
-}
+    .main-menu li a:hover {
+        font-size: 14px;
+        font-size: 14px;
+        background: linear-gradient(to right, #233F80, #375AAD);
+    }
 
-.main-menu li a:active {
-    transform: scale(.9);
-    background: linear-gradient(to right, #213A72, #314D90);
-}
+    .main-menu li a:active {
+        transform: scale(.9);
+        background: linear-gradient(to right, #213A72, #314D90);
+    }
 
-.main-menu li a:active {
-    transform: scale(.9);
-    background: linear-gradient(to right, #213A72, #314D90);
-}
+    .main-menu li a:active {
+        transform: scale(.9);
+        background: linear-gradient(to right, #213A72, #314D90);
+    }
 
-.sidebar-menu-inner.collapsed .main-menu li a {
-    display: none;
-}
+    .sidebar-menu-inner.collapsed .main-menu li a {
+        display: none;
+    }
 
-.sidebar-menu-inner.collapsed .logo {
-    display: none;
-}
+    .sidebar-menu-inner.collapsed .logo {
+        display: none;
+    }
 
-.sidebar-menu-inner.collapsed .sidebar-user-info {
-    display: none;
-}
-.main-menu li a.collapsed {
-    display: none;
-}
+    .sidebar-menu-inner.collapsed .sidebar-user-info {
+        display: none;
+    }
 
-.sidebar-collapse-icon {
-    transition: transform 0.5s ease-in-out;
-}
+    .main-menu li a.collapsed {
+        display: none;
+    }
 
-.sidebar-menu-inner.collapsed .sidebar-collapse-icon {
-    transform: rotate(180deg); /* Rotate the icon when collapsed */
-    transition: .3s;
-}
+    .sidebar-collapse-icon {
+        transition: transform 0.5s ease-in-out;
+    }
 
-.nav-icon:hover {
-    font-size: 15px;
-}
+    .sidebar-menu-inner.collapsed .sidebar-collapse-icon {
+        transform: rotate(180deg);
+        /* Rotate the icon when collapsed */
+        transition: .3s;
+    }
 
-.nav-icon:active {
-    transform: scale(.9);
-}
+    .nav-icon:hover {
+        font-size: 15px;
+    }
 
-.x {
-    transition: .2s;
-}
+    .nav-icon:active {
+        transform: scale(.9);
+    }
 
-.x:hover {
-    font-size: 30px;
-}
+    .x {
+        transition: .2s;
+    }
 
-.close-sui-popup:active {
-    transform: scale(.9);
-}
+    .x:hover {
+        font-size: 30px;
+    }
 
-#icon {
-    position: relative;
-    right: -3px;
-    padding-right: 7px;
-}
+    .close-sui-popup:active {
+        transform: scale(.9);
+    }
 
-/*Drop down */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
+    #icon {
+        position: relative;
+        right: -3px;
+        padding-right: 7px;
+    }
 
-/* Rotate the arrow when the dropdown is shown */
-.dropdown > a .arrow-down {
-    transition: transform 0.3s;
-}
-
-.dropdown .show + .arrow-down {
-    transform: rotate(-135deg);
-}
-
-ion-icon {
-    margin-right: 8px; 
-    vertical-align: -1.4px; 
-    font-size: 14px;
-}
-
+    ion-icon {
+        margin-right: 8px;
+        vertical-align: -1.4px;
+        font-size: 14px;
+    }
 </style>
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -220,13 +202,13 @@ ion-icon {
             <!-- logo -->
             <div class="logo">
                 <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
-                <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
-                    <img src="assets/images/barangayestefanialogo.png" width="120" alt="Brgy. Estefania Logo" class="brgy-logo" title="Brgy. Estefania Logo"/>
-                </a>
+                    <a href="https://www.facebook.com/profile.php?id=100068486726755" target="_blank">
+                        <img src="../../img/Brgy. Estefania Logo (Old).png" width="120" alt="Brgy. Estefania Logo" class="brgy-logo" title="Brgy. Estefania Logo" />
+                    </a>
             </div>
 
             <!-- logo collapse icon -->
-            <div class="sidebar-collapse">
+            <div class="sidebar-collapse" title="menu navigation">
                 <a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
                     <i class="entypo-menu"></i>
                 </a>
@@ -251,7 +233,7 @@ ion-icon {
                             <input type="hidden" name="id" value="<?php echo htmlspecialchars($admin_id); ?>">
                             <input type="hidden" name="name" value="<?php echo htmlspecialchars($username); ?>">
                             <ion-icon name="camera-sharp" style="color: #DCE1E7; filter: drop-shadow(1px 1px 5px black)" class="icon"></ion-icon>
-                            <input type="file" name="img" id="img" accept=".jpg, .jpeg, .png" title="Upload Picture">                        
+                            <input type="file" name="img" id="img" accept=".jpg, .jpeg, .png" title="Upload Picture">
                         </div>
                     </div>
                 </form>
@@ -285,7 +267,7 @@ ion-icon {
                         $newImgName .= "." . $imgExtension;
                         $uploadDir = '../../uploads/profile/';
                         $uploadFile = $uploadDir . $newImgName;
-                        
+
                         // Update database and move file
                         $query = "UPDATE tbl_admin SET img = '$newImgName' WHERE admin_id = '$id'";
                         if (mysqli_query($connections, $query)) {
@@ -302,27 +284,23 @@ ion-icon {
                 ?>
                 <a href="#" class="user-link">
                     <span class="user" id="welcome">Welcome,</span>
-                    <strong class="user" id="username" title="<?php echo htmlspecialchars($first_name) ?>"><?php echo htmlspecialchars($first_name); ?></strong>
+                    <strong class="user" id="username" title="Admin <?php echo htmlspecialchars($first_name) ?>"><?php echo htmlspecialchars($first_name); ?></strong>
                 </a>
             </div>
 
             <div class="sui-hover inline-links animate-in">
                 <br><br>
 
-                <a href="admin_records.php" class="nav-icon">
-                    <i class='bx bxs-user-account'></i>
-                    Admins
-                </a>
-
-                <a href="admin_approval.php" class="nav-icon">
-                    <i class="entypo-bell"></i>
-                    Info
-                </a>
-
-                <a href="dev.php" class="nav-icon">
+                <center>
+                    <a href="update_acc.php" class="nav-icon">
+                        <i class='bx bxs-user-account'></i>
+                        Update User Account
+                    </a>
+                </center>
+                <!-- <a href="dev.php" class="nav-icon">
                     <i class='bx bx-code-alt'></i>
                     Dev
-                </a>
+                </a> -->
 
                 <span class="close-sui-popup" id="x"><ion-icon name="close-outline" class="x"></ion-icon></span><!-- this is mandatory -->
             </div>
@@ -337,7 +315,7 @@ ion-icon {
             </li>
             <li>
                 <a href="driver.php">
-                    <i class="entypo-users"></i>
+                    <i class="entypo-user"></i>
                     <span class="title" title="Drivers icon">Driver</span>
                 </a>
             </li>
@@ -353,20 +331,11 @@ ion-icon {
                     <span class="title" title="Renewal icon">Renewal</span>
                 </a>
             </li>
-            <li class="dropdown">
-                <a href="#" onclick="toggleDropdown('violationDropdown')">
-                    <i class="entypo-flag" title="Violation icon"></i>
-                    <span class="title">Violation</span>
-                    <i class="arrow-down"></i> <!-- Icon for dropdown arrow -->
+            <li>
+                <a href="violation.php">
+                    <i class="entypo-flag"></i>
+                    <span class="title" title="Violation icon">Violation</span>
                 </a>
-                <ul id="violationDropdown" class="dropdown-content">
-                    <li>
-                        <a href="violation.php"><ion-icon name="person"></ion-icon>Driver's Violation</a>
-                    </li>
-                    <li>
-                        <a href="assoc_violation.php"><ion-icon name="business"></ion-icon>Associations Violation</a>
-                    </li>
-                </ul>
             </li>
             <li>
                 <a href="generate.php">
@@ -374,6 +343,20 @@ ion-icon {
                     <span class="title" title="ID Generation icon">Generate ID</span>
                 </a>
             </li>
+            <li>
+                <a href="association.php">
+                    <i class="entypo-users"></i>
+                    <span class="title" title="Association icon">Association List</span>
+                </a>
+            </li>
+            <li>
+                <a href="register.php">
+                    <i class="entypo-monitor"></i>
+                    <span class="title" title="Register icon">Registration</span>
+                </a>
+            </li>
+            
+            <?php if (isset($account_type) && $account_type == 1): ?>
             <li class="has-sub">
                 <a href="driver_data.php">
                     <i class="entypo-doc-text"></i>
@@ -401,35 +384,32 @@ ion-icon {
                 </ul>
             </li>
             <li>
-                <a href="register.php">
-                    <i class="entypo-monitor"></i>
-                    <span class="title" title="Register icon">Registration</span>
-                </a>
-            </li>
-            <li>
                 <a href="control_panel.php">
                     <i class="entypo-cog"></i>
                     <span class="title" title="Control Panel icon">Control Panel</span>
                 </a>
             </li>
             <li>
-                <a href="only_acc.php">
-                    <i class='bx bxs-edit' id="icon"></i>
-                    <span class="title" title="Modify your account">Update User</span>
+                <a href="activity_log.php">
+                    <i class="entypo-eye"></i>
+                    <span class="title" title="Activity Log icon">Activity Log</span>
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-videos' id="icon"></i>
-                    <span class="title" title="Video Tutorial">Tutorial</span>
-                </a>
-            </li>
-            <li>
+        <?php endif; ?>
+            
+        <li>
+            <a href="https://www.youtube.com/playlist?list=PLCLixf-9E19qxw90jWZak4Hw2bHysB_jx" target="_blank">
+                <i class='bx bxs-videos' id="icon"></i>
+                <span class="title" title="Video Tutorial">Tutorial</span>
+            </a>
+        </li>
+
+            <!-- <li>
                 <a href="#">
                     <i class='bx bxs-joystick' id="icon"></i>
                     <span class="title" title="Games">Games</span>
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a href="instructions.php">
                     <i class='bx bx-question-mark' id="icon"></i>
@@ -443,39 +423,38 @@ ion-icon {
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const sidebarCollapseIcon = document.querySelector('.sidebar-collapse-icon');
-    const sidebarMenuItems = document.querySelectorAll('.main-menu li a');
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const sidebarCollapseIcon = document.querySelector('.sidebar-collapse-icon');
+        const sidebarMenuItems = document.querySelectorAll('.main-menu li a');
 
-    sidebarCollapseIcon.addEventListener('click', () => {
-        document.querySelector('.sidebar-menu-inner').classList.toggle('collapsed');
+        sidebarCollapseIcon.addEventListener('click', () => {
+            document.querySelector('.sidebar-menu-inner').classList.toggle('collapsed');
 
-        sidebarMenuItems.forEach(item => {
-            item.classList.toggle('collapsed');
+            sidebarMenuItems.forEach(item => {
+                item.classList.toggle('collapsed');
+            });
         });
     });
-});
 
-function toggleDropdown(id) {
-    let dropdown = document.getElementById(id);
-    if (dropdown.classList.contains('show')) {
-        dropdown.classList.remove('show');
-    } else {
-        dropdown.classList.add('show');
+    function toggleDropdown(id) {
+        let dropdown = document.getElementById(id);
+        if (dropdown.classList.contains('show')) {
+            dropdown.classList.remove('show');
+        } else {
+            dropdown.classList.add('show');
+        }
     }
-}
 
-// Optional: Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-    if (!event.target.matches('.dropdown > a')) {
-        let dropdowns = document.getElementsByClassName("dropdown-content");
-        for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+    // Optional: Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown > a')) {
+            let dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                let openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
             }
         }
     }
-}
-
 </script>

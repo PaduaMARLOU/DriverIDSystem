@@ -45,10 +45,10 @@ function build_calendar($month, $year) {
     $currentTime = date('H:i');
 
     $calendar = "<table class='table table-bordered'>";
-    $calendar .= "<center><h2>$monthName $year</h2>";
-    $calendar .= "<a class='btn btn-xs btn-success' href='?month=" . date('m', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "'>Previous Month</a> ";
-    $calendar .= "<a class='btn btn-xs btn-danger' href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
-    $calendar .= "<a class='btn btn-xs btn-primary' href='?month=" . date('m', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "'>Next Month</a></center><br>";
+    $calendar .= "<center><h2>$monthName $year</h2><br>";
+    $calendar .= "<a class='btn btn-xs btn-success' style='font-size: 18px;' href='?month=" . date('m', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month - 1, 1, $year)) . "'>Previous Month</a> ";
+    $calendar .= "<a class='btn btn-xs btn-danger' style='font-size: 18px;' href='?month=" . date('m') . "&year=" . date('Y') . "'>Current Month</a> ";
+    $calendar .= "<a class='btn btn-xs btn-primary' style='font-size: 18px;' href='?month=" . date('m', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "&year=" . date('Y', mktime(0, 0, 0, (int)$month + 1, 1, $year)) . "'>Next Month</a></center><br>";
 
     $calendar .= "<tr>";
     foreach ($daysOfWeek as $day) {
@@ -126,7 +126,7 @@ function build_calendar($month, $year) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="driverportalcss/calendarstyle.css">
-    <link rel="icon" href="img/Brgy Estefania Logo.png" type="image/png">
+    <link rel="icon" href="img/Brgy. Estefania Logo (Old).png" type="image/png">
     <title>Barangay Estefania Online Appointment for ID Registration</title>
 </head>
 <body>
@@ -145,10 +145,9 @@ function build_calendar($month, $year) {
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-danger" style="background:#2ecc71; border:none; color:#fff; text-align:center; display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative;">
-                <a href="files/Admin/register.php" style="color: white;"><ion-icon name="arrow-back-outline" style="position: absolute; top: 0; left: 0;"></ion-icon></a>
                     <a href="index.php" style="left: 10px; top: 10px; text-decoration: none; background: #fff; color: #2ecc71; padding: 5px 10px; border-radius: 5px; margin-bottom: 10px;">Back to Driver's Portal</a>
                     <div style="display: flex; align-items: center;">
-                        <img src="img/Brgy Estefania Logo.png" alt="Barangay Estefania Logo" style="height: 75px; margin-right: 10px;">
+                        <img src="img/Brgy. Estefania Logo (Old).png" alt="Barangay Estefania Logo" style="height: 100px; margin-right: 20px;">
                         <h1 style="margin: 0;">Online Appointment Booking for ID Registration</h1>
                     </div>
                     <br>
@@ -161,7 +160,7 @@ function build_calendar($month, $year) {
                 if(isset($_GET['month']) && isset($_GET['year'])){
                     $month = $_GET['month'];
                     $year = $_GET['year'];
-                }else{
+                } else{
                     $month = date('m');
                     $year = date('Y');
                 }

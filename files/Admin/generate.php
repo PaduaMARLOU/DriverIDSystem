@@ -7,7 +7,7 @@
     <meta name="description" content="Neon Admin Panel" />
     <meta name="author" content="" />
 
-    <link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+    <link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
     <title>Barangay Estefania Admin - Driver ID System</title>
 
     <link rel="stylesheet" href="assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
@@ -55,26 +55,47 @@
             <br />
 
             <script type="text/javascript">
-                jQuery(document).ready(function($) {
-                    var $table4 = jQuery("#table-4");
+    jQuery(document).ready(function($) {
+        var $table4 = jQuery("#table-4");
+        var accountType = <?php echo json_encode($account_type); ?>;
 
-                    $table4.DataTable({
-                        dom: 'Bfrtip',
-                        buttons: [
-                            'copyHtml5',
-                            'excelHtml5',
-                            'csvHtml5',
-                            'pdfHtml5'
-                        ]
-                    });
+        $table4.DataTable({
+            dom: 'Bfrtip',
+            buttons: accountType == 1 ? [ // Only show buttons if account_type is 1
+                {
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Exclude the last column (Actions)
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Exclude the last column (Actions)
+                    }
+                },
+                {
+                    extend: 'csvHtml5',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Exclude the last column (Actions)
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':not(:last-child)' // Exclude the last column (Actions)
+                    }
+                }
+            ] : [] // No buttons if account_type is not 1
+        });
 
-                    // Handle button click
-                    $('#table-4').on('click', 'button[data-target="#generateIDModal"]', function() {
-                        var driverId = $(this).data('id');
-                        $('#modal-frame').attr('src', 'ID_generation.php?id=' + driverId);
-                    });
-                });
-            </script>
+        // Handle button click for ID generation modal
+        $('#table-4').on('click', 'button[data-target="#generateIDModal"]', function() {
+            var driverId = $(this).data('id');
+            $('#modal-frame').attr('src', 'ID_generation.php?id=' + driverId);
+        });
+    });
+</script>
 
             <table class="table table-bordered datatable" id="table-4">
                 <thead>

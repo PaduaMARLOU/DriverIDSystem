@@ -20,6 +20,21 @@ if (isset($_SESSION["username"])) {
     exit; // Ensure script stops executing after redirection
 }
 
+
+// Initialize an associative array for vehicle categories
+$vehicleOptions = [];
+
+// Query the database for set_vehicleName under the category 'vehicle'
+$query = "SELECT set_vehicleName FROM tbl_set WHERE set_category = 'vehicle'";
+$result = mysqli_query($connections, $query);
+
+// Check if the query was successful and fetch results into the $vehicleOptions array
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $vehicleOptions[] = htmlspecialchars($row['set_vehicleName']); // Only store the name
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -140,9 +155,14 @@ if (isset($_SESSION["username"])) {
                         <label for="driver_category">Driver Category (E-Bike, Tricycle, or Trisikad):</label>
                         <select class="form-control" name="driver_category" id="driver_category" required>
                             <option value="">Select Driver Category</option>
-                            <option value="E-Bike" <?php if ($driver_row['driver_category'] === 'E-Bike') echo 'selected'; ?>>E-Bike</option>
-                            <option value="Tricycle" <?php if ($driver_row['driver_category'] === 'Tricycle') echo 'selected'; ?>>Tricycle</option>
-                            <option value="Trisikad" <?php if ($driver_row['driver_category'] === 'Trisikad') echo 'selected'; ?>>Trisikad</option>
+                            <?php
+                            // Populate the dropdown options and preselect the current category
+                            foreach ($vehicleOptions as $vehicleName) {
+                                // Check if the current option matches the driver's category
+                                $selected = ($driver_row['driver_category'] === $vehicleName) ? 'selected' : '';
+                                echo "<option value=\"$vehicleName\" $selected>$vehicleName</option>";
+                            }
+                            ?>
                         </select>
                     </div>
 
@@ -216,27 +236,6 @@ if (isset($_SESSION["username"])) {
                     </div>
 
                     <div class="form-group">
-                        <label for="religion">Religion (e.g., Christian, Islam, Buddhism, etc.):</label>
-                        <input type="text" class="form-control" name="religion" id="religion" placeholder="Religion" required value="<?php echo $driver_row['religion']; ?>">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="citizenship">Citizenship (e.g., Filipino):</label>
-                        <input type="text" class="form-control" name="citizenship" id="citizenship" placeholder="Citizenship" required value="<?php echo $driver_row['citizenship']; ?>">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="height">Height (cm, e.g., 170cm):</label>
-                        <input type="text" class="form-control" name="height" id="height" placeholder="Height (cm)" required value="<?php echo $driver_row['height']; ?>">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="weight">Weight (kg, e.g., 70kg):</label>
-                        <input type="text" class="form-control" name="weight" id="weight" placeholder="Weight (kg)" required value="<?php echo $driver_row['weight']; ?>">
-                    </div>
-
-
-                    <div class="form-group">
                         <label for="pic_2x2">Upload 2x2 Picture:</label>
                         <input type="file" class="form-control" name="pic_2x2" id="pic_2x2" accept="image/*">
                         <?php if (!empty($driver_row['pic_2x2'])) : ?>
@@ -244,16 +243,6 @@ if (isset($_SESSION["username"])) {
                             <input type="hidden" name="current_pic_2x2" value="<?php echo $driver_row['pic_2x2']; ?>">
                         <?php endif; ?>
                     </div>
-
-                    <div class="form-group">
-                        <label for="doc_proof">Upload Proof of Document:</label>
-                        <input type="file" class="form-control" name="doc_proof" id="doc_proof">
-                        <?php if (!empty($driver_row['doc_proof'])) : ?>
-                            <p>Current File: <?php echo $driver_row['doc_proof']; ?></p>
-                            <input type="hidden" name="current_doc_proof" value="<?php echo $driver_row['doc_proof']; ?>">
-                        <?php endif; ?>
-                    </div>
-
 
                     <div class="form-group">
                         <label for="name_to_notify">Name of Person to Notify in case of Emergency:</label>
@@ -289,21 +278,8 @@ if (isset($_SESSION["username"])) {
                     </div>
                     <div class="form-group">
                         <label for="owner_phone_num">Owner Phone Number:</label>
-                        <input type="text" class="form-control" name="owner_phone_num" id="owner_phone_num" placeholder="Owner Phone Number" required value="<?php echo $vehicle_row['owner_phone_num']; ?>">
+                        <input type="text" class="form-control" name="owner_phone_num" id="owner_phone_num" placeholder="Owner Phone Number" required value="<?php echo $vehicle_row['owner_phone_num']; ?>" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                     </div>
-                    <div class="form-group">
-                        <label for="vehicle_color">Vehicle Color:</label>
-                        <input type="text" class="form-control" name="vehicle_color" id="vehicle_color" placeholder="Vehicle Color" required value="<?php echo $vehicle_row['vehicle_color']; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="brand">Brand:</label>
-                        <input type="text" class="form-control" name="brand" id="brand" placeholder="Brand" required value="<?php echo $vehicle_row['brand']; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="plate_num">Plate Number:</label>
-                        <input type="text" class="form-control" name="plate_num" id="plate_num" placeholder="Plate Number" value="<?php echo $vehicle_row['plate_num']; ?>">
-                    </div>
-
                     <div class="form-group">
                         <label for="vehicle_img_front">Front Image of Vehicle:</label>
                         <input type="file" class="form-control" name="vehicle_img_front" id="vehicle_img_front" accept="image/*">
@@ -312,16 +288,6 @@ if (isset($_SESSION["username"])) {
                             <input type="hidden" name="current_vehicle_img_front" value="<?php echo $vehicle_row['vehicle_img_front']; ?>">
                         <?php endif; ?>
                     </div>
-
-                    <div class="form-group">
-                        <label for="vehicle_img_back">Back Image of Vehicle:</label>
-                        <input type="file" class="form-control" name="vehicle_img_back" id="vehicle_img_back" accept="image/*">
-                        <?php if (!empty($vehicle_row['vehicle_img_back'])) : ?>
-                            <p>Current File: <?php echo $vehicle_row['vehicle_img_back']; ?></p>
-                            <input type="hidden" name="current_vehicle_img_back" value="<?php echo $vehicle_row['vehicle_img_back']; ?>">
-                        <?php endif; ?>
-                    </div>
-
 
                     <div class="form-group">
                         <label for="association">Select Association:</label>
@@ -360,7 +326,9 @@ if (isset($_SESSION["username"])) {
         </form>
     </div>
     <hr>
+    <!--
     <i style="position: relative; right: -170px; padding-bottom: 20px; font-size: 15px;">Notice: Changing this may require you to upload new files for 2x2 Picture, Proof of Document, and Front and Back Vehicle Image.</i></label>
+    -->
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

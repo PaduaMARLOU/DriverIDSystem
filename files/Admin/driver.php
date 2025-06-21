@@ -1,3 +1,28 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include("../../connections.php");
+
+if (isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
+
+    $authentication = mysqli_query($connections, "SELECT * FROM tbl_admin WHERE username='$username'");
+    $fetch = mysqli_fetch_assoc($authentication);
+    $account_type = $fetch["account_type"];
+
+    if ($account_type != 1 && $account_type != 2) { // Check if account_type is not 1 or 2
+        header("Location: unauthorized.php");
+        exit; // Ensure script stops executing after redirection
+    }
+} else {
+    header("Location: unauthorized.php");
+    exit; // Ensure script stops executing after redirection
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +33,7 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 
-	<link rel="icon" type="image/jpg" href="../../img/Brgy Estefania Logo.png">
+	<link rel="icon" type="image/jpg" href="../../img/Brgy. Estefania Logo (Old).png">
 
 	<title>Barangay Estefania Admin - Driver ID System</title>
 
@@ -57,7 +82,7 @@
 		<hr />
 					
 		
-		<h3 style="color: orange;">Driver Table Summary</h3>
+		<h3 style="color: orange;" title="Driver Summary Table">Manage Driver Information</h3>
 
 		<hr>
 		
@@ -76,26 +101,47 @@
 		// Check if query was successful
 		if ($result) {
 			?>
-			<h3>Export Driver Data</h3>
-			<br />
+			<!--<h3 title="Export Driver Data">Export Driver Data</h3>
+			<br />-->
 
 			<script type="text/javascript">
 				jQuery(document).ready(function($) {
 					let $table4 = jQuery("#table-4");
+					let accountType = <?php echo json_encode($account_type); ?>;
 
 					$table4.DataTable({
 						dom: 'Bfrtip',
-						buttons: [
-							'copyHtml5',
-							'excelHtml5',
-							'csvHtml5',
-							'pdfHtml5'
-						]
+						buttons: accountType == 1 ? [ // Only show buttons if account_type is 1
+							{
+								extend: 'copyHtml5',
+								exportOptions: {
+									columns: ':not(:last-child)' // Exclude the last column (Actions)
+								}
+							},
+							{
+								extend: 'excelHtml5',
+								exportOptions: {
+									columns: ':not(:last-child)' // Exclude the last column (Actions)
+								}
+							},
+							{
+								extend: 'csvHtml5',
+								exportOptions: {
+									columns: ':not(:last-child)' // Exclude the last column (Actions)
+								}
+							},
+							{
+								extend: 'pdfHtml5',
+								exportOptions: {
+									columns: ':not(:last-child)' // Exclude the last column (Actions)
+								}
+							}
+						] : [] // No buttons if account_type is not 1
 					});
 				});
 			</script>
 
-			<table class="table table-bordered datatable" id="table-4">
+			<table class="table table-bordered datatable" id="table-4" title="Driver's Table">
 				<thead>
 					<tr>
 						<th style="color: #48484C;">Driver ID</th>
@@ -116,19 +162,25 @@
 							<td><?php echo $row['last_name'] . ', ' . $row['first_name'] . ' ' . $row['middle_name']; ?></td>
 							<td><?php echo $row['driver_category']; ?></td>
 							<td><?php echo $row['association_name'] . ' - ' . $row['association_area']; ?></td>
-							<td class="center"><?php echo $row['verification_stat'] . ' (' . $row['renew_stat'] . ')'; ?></td>
+							<td class="center">
+								<?php echo $row['verification_stat']; ?><br>
+								(<span style="color: <?php echo ($row['renew_stat'] == 'Active') ? 'green' : 'black'; ?>;">
+									<?php echo $row['renew_stat']; ?>
+								</span>)
+							</td>
+
 							<td>
-								<a href="edit_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-default btn-sm btn-icon icon-left edit-btn">
+								<a href="edit_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-default btn-sm btn-icon icon-left edit-btn" title="Edit">
 									<i class="entypo-pencil"></i>
 									Edit
 								</a>
-								<a href="delete_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-danger btn-sm btn-icon icon-left delete-btn">
-									<i class="entypo-cancel"></i>
-									Delete
-								</a>
-								<a href="driver_profile.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-info btn-sm btn-icon icon-left">
+								<a href="driver_profile.php?id=<?php echo $row['formatted_id']; ?>" class="btn btn-info btn-sm btn-icon icon-left" title="View">
 									<i class="entypo-user"></i>
 									View 
+								</a>
+								<a href="delete_driver.php?formatted_id=<?php echo $row['formatted_id']; ?>" class="btn btn-danger btn-sm btn-icon icon-left delete-btn" title="Delete">
+									<i class="entypo-cancel"></i>
+									Delete
 								</a>
 							</td>
 						</tr>

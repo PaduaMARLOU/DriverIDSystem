@@ -49,7 +49,7 @@ h1 {
 
 .active {
     color: green;
-    animation: blink 1s infinite;
+    animation: blink 1s infinite;   
 }
 
 .invalid {

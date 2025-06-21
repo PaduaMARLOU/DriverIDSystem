@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+:root {
+    --comfort-black: rgb(50, 45, 45);
+    --comfort-blue: rgb(64, 138, 242);
+    --comfort-red: rgba(247, 67, 67, 0.934);
+}
+
+.admin-verify-content * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    color: var(--comfort-black);
+    text-decoration: none;
+}
+
+.admin-verify-content {
+    /* background-image: url('../../img/paper.jpeg'); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 70vh; /* Ensures the content takes up at least the full viewport height */
+    display: flex;
+    flex-direction: column; /* Allows stacking content vertically */
+    justify-content: flex-start; /* Keeps the content aligned at the top */
+}
+
+.admin-verify-content lord-icon {
+    position: absolute;
+    top: 5px;
+    left: 20em;
+    cursor: cell;
+}
+
+.admin-verify-content .center {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.admin-verify-content .container {
+    position: relative;
+    border: 2px solid rgb(78, 75, 75);
+    width: 43%;
+    top: 1em;
+    border-radius: 3px;
+}
+
+.admin-verify-content .container2 {
+    position: relative;
+    border: 2px solid rgb(255, 255, 255);
+    backdrop-filter: blur(40px);
+    width: 43%;
+    top: 5em;
+    border-radius: 3px;
+}
+
+.admin-verify-content .verify {
+    font-size: 38px;
+    text-align: center;  /* Centers the text */
+}
+
+.admin-verify-content #back-btn {
+    position: relative;
+    left: -8em;
+    font-size: 45px;
+    color: rgb(51, 48, 48);
+    transition: .2s;
+}
+
+.admin-verify-content #back-btn:active {
+    color: rgb(131, 37, 219);
+    transform: scale(0.9);
+}
+
+.admin-verify-content table {
+    width: 90%;
+    margin: 20px auto;
+    box-shadow: 1px 1px 5px rgb(196, 190, 190);
+}
+
+.admin-verify-content table, 
+.admin-verify-content th, 
+.admin-verify-content td {
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.admin-verify-content .icon {
+    position: relative;
+    bottom: -5px;
+    font-size: 27px;
+    width: 100%;
+    color: rgb(58, 55, 55);
+    transition: .3s;
+}
+
+.admin-verify-content .icon:hover {
+    font-size: 32px;
+}
+
+.admin-verify-content #verify:hover {
+    color: rgb(53, 211, 53);
+}
+
+.admin-verify-content #delete:hover {
+    color: rgb(255, 0, 0);
+}
+
+.admin-verify-content #verify:active, 
+.admin-verify-content #delete:active {
+    transform: scale(.9);
+}
+
+.admin-verify-content th, 
+.admin-verify-content td {
+    padding: 10px;
+    text-align: center;
+}
+
+.admin-verify-content th {
+    background-color: #f2f2f2;
+}
+
+.admin-verify-content .btn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.admin-verify-content .confirmation {
+    position: relative;
+    font-size: 40px;
+    top: 2.2em;
+    text-shadow: 1px 1px 5px rgb(50, 45, 45);
+}
+
+.admin-verify-content .confirm {
+    text-shadow: 1px 1px 5px rgb(50, 45, 45);
+    position: relative;
+    font-size: 32px;
+    top: 7px;
+}
+
+.admin-verify-content .options {
+    position: relative;
+    font-size: 28px;
+    text-decoration: none;
+    background-color: transparent;
+    box-shadow: 1px 1px 5px rgb(50, 45, 45);
+    text-shadow: 1px 1px 5px rgb(50, 45, 45);
+    transition: .3s;
+}
+
+.admin-verify-content #yes {
+    position: relative;
+    top: 1em;
+    left: -2em;
+    padding-left: 3%;
+    padding-right: 3%;
+    border-radius: 3px;
+    border: 2px solid rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.admin-verify-content #yes:hover {
+    background-color: var(--comfort-blue);
+    color: white;
+    font-size: 32px;
+    text-shadow: 1px 1px 5px white;
+    box-shadow: 1px 1px 10px white;
+}
+
+.admin-verify-content #no {
+    position: relative;
+    padding-top: 2px;
+    right: -2em;
+    bottom: 15px;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 3px;
+    padding-left: 3.5%;
+    padding-right: 3.5%;
+}
+
+.admin-verify-content #no:hover {
+    background-color: var(--comfort-red);
+    color: white;
+    font-size: 32px;
+    text-shadow: 1px 1px 5px white;
+    box-shadow: 1px 1px 10px white;
+}
+
+.admin-verify-content .back {
+    position: relative;
+    left: .2rem;
+    border: 1.5px solid rgb(64, 138, 242);
+    border-radius: 3px;
+    font-size: 25px;
+    color: white;
+    padding-right: .5rem;
+    padding-left: .4rem;
+    background-color: var(--comfort-blue);
+    transition: .3s;
+}
+
+.admin-verify-content .back:hover {
+    box-shadow: 1px 1px 5px rgb(74, 142, 238);
+}
+
+.admin-verify-content .back:active {
+    display: inline-block;
+    transform: scale(.9);
+}
